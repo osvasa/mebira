@@ -1,0 +1,20 @@
+-- Backfill photo_url for existing posts that have a video_url but no thumbnail.
+--
+-- This cannot be done automatically via SQL because the TikTok cover images
+-- need to be fetched from tikwm.com API and uploaded to R2 storage.
+--
+-- Run the following steps manually for each post:
+--
+-- 1. Find posts missing thumbnails:
+--    SELECT id, video_url FROM public.posts WHERE video_url IS NOT NULL AND photo_url IS NULL;
+--
+-- 2. For each post, if you have the original TikTok URL, fetch the cover:
+--    curl -s "https://www.tikwm.com/api/?url=TIKTOK_URL" | jq '.data.cover'
+--
+-- 3. Download that cover image and upload to R2 thumbnails/ folder,
+--    then update the post:
+--    UPDATE public.posts SET photo_url = 'R2_THUMBNAIL_URL' WHERE id = 'POST_ID';
+--
+-- Alternatively, use this API endpoint to process and backfill in one step.
+-- Create a temporary script or use the app's /api/video/process endpoint
+-- which now returns thumbnail_url automatically for TikTok videos.

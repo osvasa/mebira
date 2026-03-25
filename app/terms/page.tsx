@@ -24,58 +24,57 @@ export default function TermsPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">1. Acceptance of Terms</h2>
               <p>
-                By accessing or using Mebira (&ldquo;the Platform&rdquo;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Platform. Mebira reserves the right to update these terms at any time, and continued use of the Platform after changes constitutes acceptance of the updated terms.
+                By accessing or using Mebira (&ldquo;the Platform&rdquo;), you agree to be bound by these Terms of Service. If you do not agree, please do not use the Platform. We may update these terms at any time, and continued use constitutes acceptance.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">2. Description of Service</h2>
               <p>
-                Mebira is a travel recommendation platform that allows users to share travel experiences, discover destinations, and earn commissions through affiliate partnerships with booking platforms including Expedia. The Platform connects travelers with accommodation, dining, and destination recommendations.
+                Mebira is a real estate listing discovery platform where licensed realtors and property owners can post property listings, and users can browse those listings for informational purposes. Mebira is not a real estate agency, brokerage, or transaction facilitator. We do not buy, sell, rent, or manage properties.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">3. User Accounts</h2>
-              <p className="mb-2">To post content or earn commissions, you must create an account. You agree to:</p>
+              <p className="mb-2">To post listings, you must create an account. You agree to:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Provide accurate and truthful information during registration</li>
-                <li>Keep your login credentials secure and not share them with others</li>
+                <li>Keep your login credentials secure</li>
                 <li>Notify us immediately of any unauthorized use of your account</li>
-                <li>Be at least 18 years of age to create an account</li>
+                <li>Be at least 18 years of age</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">4. Content Guidelines</h2>
-              <p className="mb-2">Users are responsible for all content they post. You agree not to post content that:</p>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>Is false, misleading, or fraudulent</li>
-                <li>Infringes on the intellectual property rights of others</li>
-                <li>Contains spam, unsolicited promotions, or malicious code</li>
-                <li>Is offensive, defamatory, or violates applicable laws</li>
-                <li>Misrepresents affiliate relationships or commission structures</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">5. Affiliate Links and Commissions</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">4. Listing Accuracy</h2>
               <p>
-                Mebira participates in affiliate programs with third-party booking platforms. When users make bookings through links on Mebira, we and/or the content creator may earn a commission at no additional cost to the buyer. All affiliate relationships are disclosed with &ldquo;Affiliate link&rdquo; or similar labeling. Commission amounts and payment terms are subject to change and are governed by the terms of each affiliate program.
+                Posters are solely responsible for the accuracy, legality, and completeness of their property listings, including pricing, descriptions, images, and availability. Mebira does not verify listings and makes no guarantees about the accuracy of any content posted by users.
               </p>
+            </section>
+
+            <section>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">5. Content and Removal</h2>
+              <p className="mb-2">We reserve the right to remove any content at our sole discretion, including but not limited to listings that:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Are false, misleading, or fraudulent</li>
+                <li>Infringe on intellectual property rights</li>
+                <li>Contain spam, unsolicited promotions, or malicious content</li>
+                <li>Are offensive, defamatory, or violate applicable laws</li>
+              </ul>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">6. Intellectual Property</h2>
               <p>
-                You retain ownership of content you post on Mebira. By posting content, you grant Mebira a non-exclusive, royalty-free, worldwide license to display, distribute, and promote your content on the Platform and in marketing materials. Mebira&apos;s branding, design, and original content remain the property of Mebira.
+                You retain ownership of content you post. By posting, you grant Mebira a non-exclusive, royalty-free, worldwide license to display and distribute your content on the Platform. Mebira&apos;s branding, design, and original content remain our property.
               </p>
             </section>
 
             <section>
-              <h2 className="text-lg font-bold text-slate-900 mb-3">7. Disclaimer of Warranties</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-3">7. Disclaimer</h2>
               <p>
-                The Platform is provided &ldquo;as is&rdquo; without warranties of any kind. Mebira does not guarantee the accuracy of travel recommendations, pricing information, or availability of third-party services. We are not responsible for the quality or safety of any accommodations, restaurants, or destinations featured on the Platform.
+                The Platform is provided &ldquo;as is&rdquo; without warranties of any kind. Mebira is not responsible for any content posted by users, including property listings, images, pricing, or availability. Users should independently verify all information before making any decisions.
               </p>
             </section>
 
@@ -89,14 +88,14 @@ export default function TermsPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">9. Termination</h2>
               <p>
-                We reserve the right to suspend or terminate accounts that violate these Terms of Service, engage in fraudulent activity, or misuse the affiliate commission system. You may close your account at any time by contacting us.
+                We may suspend or terminate accounts that violate these Terms. You may close your account at any time by contacting us.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">10. Contact</h2>
               <p>
-                For questions about these Terms, please contact us at{' '}
+                For questions about these Terms, contact us at{' '}
                 <a href="mailto:hello@mebira.pro" className="text-sky-600 hover:underline">hello@mebira.pro</a>.
               </p>
             </section>

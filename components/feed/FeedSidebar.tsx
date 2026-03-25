@@ -13,19 +13,20 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
   return (
     <aside className="space-y-5">
 
-      {/* ── Earn banner ── */}
-      <div className="rounded-2xl p-5 bg-gradient-to-br from-sky-500 to-teal-500 text-white shadow-lg shadow-sky-200/60">
+      {/* ── Invite banner ── */}
+      <div className="rounded-2xl p-5 text-white shadow-lg" style={{ backgroundColor: '#C8102E' }}>
         <div className="mb-2">
-          <h3 className="font-bold text-sm">Discover places recommended by travelers</h3>
+          <h3 className="font-bold text-sm">Discover Properties Around the World</h3>
         </div>
-        <p className="text-xs text-sky-100 leading-relaxed mb-3.5">
-          Explore hotels, restaurants, and destinations shared by people like you.
+        <p className="text-xs text-white/80 leading-relaxed mb-3.5">
+          Explore apartments, villas, and homes shared by real estate professionals.
         </p>
         <Link
           href="/invite"
-          className="inline-block px-4 py-2 bg-white text-sky-600 rounded-full text-xs font-bold hover:bg-sky-50 transition-colors"
+          className="inline-block px-4 py-2 bg-white rounded-full text-xs font-bold hover:bg-slate-50 transition-colors"
+          style={{ color: '#C8102E' }}
         >
-          Request an invite →
+          Request an Invite →
         </Link>
       </div>
 

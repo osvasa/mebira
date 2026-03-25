@@ -55,7 +55,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     isAI: false,
     isVerified: (userRow.followers ?? 0) >= 20000,
     isFollowing: false,
-    coverImage: userRow.cover_image_url ?? '',
+    coverImage: '',
   };
 
   const posts = (postRows ?? []).map((row) => {

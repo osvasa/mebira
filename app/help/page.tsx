@@ -5,11 +5,11 @@ import { Navbar } from '@/components/layout/Navbar';
 const faqs = [
   {
     q: 'What is Mebira?',
-    a: 'Mebira is a travel recommendation platform where creators share hotels, restaurants, and destinations they love — and earn real commissions when their followers book through their links.',
+    a: 'Mebira is a travel recommendation platform where realtors share property listings they love — and connect with buyers interested in their listings.',
   },
   {
     q: 'How do I earn commissions?',
-    a: 'Create an account, post travel recommendations, and include your affiliate booking links. When someone clicks your link and completes a booking on Expedia, you earn a commission. Commissions are tracked automatically via your unique creator ID.',
+    a: 'Create an account, post property listings with video tours. When someone clicks your link and completes a booking on Expedia, you earn a commission. Commissions are tracked automatically via your unique realtor ID.',
   },
   {
     q: 'How do I sign up?',
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'Is Mebira free to use?',
-    a: 'Yes — Mebira is completely free for both travelers and creators. We earn a share of affiliate commissions from booking platforms, which allows us to keep the platform free and pay creators.',
+    a: 'Yes — Mebira is completely free for both users and realtors. We earn a share of affiliate commissions from booking platforms, which allows us to keep the platform free and pay realtors.',
   },
   {
     q: 'How do the Expedia booking links work?',

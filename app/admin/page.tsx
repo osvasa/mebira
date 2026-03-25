@@ -274,7 +274,7 @@ export default function AdminPage() {
     });
     const data = await res.json();
     if (!res.ok) {
-      setAiFormError(data.error || 'Failed to create AI creator');
+      setAiFormError(data.error || 'Failed to create AI realtor');
       setAiFormLoading(false);
       return;
     }
@@ -395,8 +395,8 @@ export default function AdminPage() {
   const tabs: { id: TabId; label: string; Icon: typeof Users }[] = [
     { id: 'requests', label: 'Requests', Icon: Users },
     { id: 'codes', label: 'Codes', Icon: Ticket },
-    { id: 'creators', label: 'Creators', Icon: PenLine },
-    { id: 'ai-creators', label: 'AI Creators', Icon: Bot },
+    { id: 'creators', label: 'Realtors', Icon: PenLine },
+    { id: 'ai-creators', label: 'AI Realtors', Icon: Bot },
     { id: 'earnings', label: 'Earnings', Icon: DollarSign },
     { id: 'generate-video', label: 'Generate Video', Icon: Video },
   ];
@@ -422,7 +422,7 @@ export default function AdminPage() {
             </div>
             <div>
               <h1 className="text-xl font-extrabold text-slate-900">Admin Dashboard</h1>
-              <p className="text-xs text-slate-400 font-medium">Manage creators, invites, and codes</p>
+              <p className="text-xs text-slate-400 font-medium">Manage realtors, invites, and codes</p>
             </div>
           </div>
         </div>
@@ -572,7 +572,7 @@ export default function AdminPage() {
                   type="text"
                   value={genName}
                   onChange={(e) => setGenName(e.target.value)}
-                  placeholder="Creator name"
+                  placeholder="Realtor name"
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
                 <input
@@ -658,7 +658,7 @@ export default function AdminPage() {
         {/* ══════════════════════════════════════════════ */}
         {activeTab === 'creators' && (
           <>
-            <p className="text-sm text-slate-500 mb-4">{creators.length} creators signed up via invite code</p>
+            <p className="text-sm text-slate-500 mb-4">{creators.length} realtors signed up via invite code</p>
 
             {loadingData ? (
               <div className="flex justify-center py-12">
@@ -666,7 +666,7 @@ export default function AdminPage() {
               </div>
             ) : creators.length === 0 ? (
               <div className="text-center py-12 text-slate-400 text-sm">
-                No creators have signed up yet.
+                No realtors have signed up yet.
               </div>
             ) : (
               <div className="space-y-3">
@@ -765,13 +765,13 @@ export default function AdminPage() {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-500 text-white rounded-lg text-xs font-semibold hover:bg-violet-600 transition-colors"
               >
                 <Plus className="w-3 h-3" />
-                New AI Creator
+                New AI Realtor
               </button>
             </div>
 
             {showAiForm && (
               <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4 space-y-3 shadow-sm">
-                <p className="text-sm font-bold text-slate-900">Create AI Creator Profile</p>
+                <p className="text-sm font-bold text-slate-900">Create AI Realtor Profile</p>
                 {aiFormError && (
                   <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{aiFormError}</p>
                 )}
@@ -821,7 +821,7 @@ export default function AdminPage() {
               </div>
             ) : aiCreators.length === 0 ? (
               <div className="text-center py-12 text-slate-400 text-sm">
-                No AI creators yet.
+                No AI realtors yet.
               </div>
             ) : (
               <div className="space-y-3">
@@ -1234,7 +1234,7 @@ function EarningsTab({
     <div className="space-y-6">
       {/* Note */}
       <p className="text-xs text-slate-500 bg-slate-50 rounded-lg px-4 py-2.5 border border-slate-100">
-        Track which creators are driving traffic. Cross-reference with your Expedia affiliate dashboard to match completed bookings.
+        Track which realtors are driving traffic. Cross-reference with your Expedia affiliate dashboard to match completed bookings.
       </p>
 
       {/* Summary cards */}
@@ -1251,13 +1251,13 @@ function EarningsTab({
         </div>
         <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm text-center">
           <p className="text-2xl font-extrabold text-slate-900">{creatorMap.size}</p>
-          <p className="text-xs text-slate-500 font-medium mt-1">Active Creators</p>
+          <p className="text-xs text-slate-500 font-medium mt-1">Active Realtors</p>
         </div>
       </div>
 
       {/* Creator breakdown */}
       <div>
-        <h3 className="text-sm font-bold text-slate-900 mb-3">By Creator</h3>
+        <h3 className="text-sm font-bold text-slate-900 mb-3">By Realtor</h3>
         {creatorList.length === 0 ? (
           <p className="text-sm text-slate-400 text-center py-8">No clicks tracked yet.</p>
         ) : (

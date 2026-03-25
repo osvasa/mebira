@@ -64,9 +64,9 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
         </div>
       </div>
 
-      {/* ── Suggested Creators ── */}
+      {/* ── Suggested Realtors ── */}
       <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-        <h3 className="font-bold text-slate-900 text-sm mb-4">Suggested Creators</h3>
+        <h3 className="font-bold text-slate-900 text-sm mb-4">Suggested Realtors</h3>
         <div className="space-y-2.5">
           {suggestedUsers.map((user) => (
             <div
@@ -158,7 +158,7 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
           {' · '}
           <Link href="/help" className="hover:text-slate-600 transition-colors">Help</Link>
         </p>
-        <p>Traveling through a traveler&apos;s post supports the traveler who shared it.</p>
+        <p>Browsing a realtor&apos;s listing supports the realtor who posted it.</p>
       </div>
     </aside>
   );

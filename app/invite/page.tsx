@@ -92,7 +92,7 @@ export default function InvitePage() {
       <div className="hidden lg:flex relative w-[45%] flex-col">
         <img
           src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1200&q=85"
-          alt="Travel creator"
+          alt="Realtor"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-sky-900/80 via-sky-800/50 to-transparent" />
@@ -104,9 +104,9 @@ export default function InvitePage() {
             </h2>
             <div className="space-y-4">
               {[
-                { Icon: Target, text: 'Quality over quantity — every creator is hand-selected' },
+                { Icon: Target, text: 'Quality over quantity — every realtor is verified' },
                 { Icon: DollarSign, text: 'Earn real commissions from your travel recommendations' },
-                { Icon: Globe, text: 'Connect with a curated community of travel creators' },
+                { Icon: Globe, text: 'Connect with a curated community of real estate professionals' },
               ].map((item) => (
                 <div key={item.text} className="flex gap-3">
                   <item.Icon className="w-5 h-5 text-white flex-shrink-0 mt-0.5" />

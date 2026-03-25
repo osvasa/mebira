@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   const { creatorName, tiktokProfile, contentType } = body;
 
   if (!creatorName) {
-    return NextResponse.json({ error: 'Creator name is required' }, { status: 400 });
+    return NextResponse.json({ error: 'Realtor name is required' }, { status: 400 });
   }
 
   const code = `MEBIRA-${randomBytes(3).toString('hex').toUpperCase()}`;

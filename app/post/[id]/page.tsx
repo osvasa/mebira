@@ -60,9 +60,9 @@ export default async function PostPage({ params }: PostPageProps) {
   const displayName = toDisplayName(username);
   const isVerified = (creator?.followers ?? 0) >= 20000;
 
-  const cat = categoryConfig[row.category] ?? categoryConfig.destination;
+  const cat = categoryConfig[row.category] ?? categoryConfig.apartment;
 
-  // Build "View Listing" URL — routed through click tracker
+  // Build "View Property" URL — routed through click tracker
   const goThereUrl = `/api/go?post=${row.id}&creator=${creator?.id ?? ''}`;
 
   // Fetch comments (may not exist yet — gracefully returns empty)
@@ -205,15 +205,16 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
-            {/* View Listing */}
+            {/* View Property */}
             <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
               <a
                 href={goThereUrl}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl font-bold text-sm hover:from-sky-600 hover:to-teal-600 active:scale-[0.98] transition-all shadow-md shadow-sky-200"
+                className="flex items-center justify-center gap-2 w-full py-3.5 text-white rounded-xl font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-md"
+                style={{ backgroundColor: '#2D9B4E' }}
               >
-                View Listing
+                View Property
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>

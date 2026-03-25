@@ -362,7 +362,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
     }
   }
 
-  // Build "View Listing" URL — routed through click tracker
+  // Build "View Property" URL — routed through click tracker
   const goThereUrl = `/api/go?post=${post.id}&creator=${post.user.id}`;
 
   const maxChars = 150;
@@ -761,15 +761,16 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         </div>
       )}
 
-      {/* ── View Listing CTA ── */}
+      {/* ── View Property CTA ── */}
       <div className="px-4 pb-4">
         <a
           href={goThereUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full py-3 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl font-bold text-sm text-center hover:from-sky-600 hover:to-teal-600 transition-colors shadow-md shadow-sky-200"
+          className="block w-full py-3 text-white rounded-xl font-bold text-sm text-center hover:opacity-90 transition-opacity shadow-md"
+          style={{ backgroundColor: '#2D9B4E' }}
         >
-          View Listing{' '}
+          View Property{' '}
           <ExternalLink className="w-4 h-4 inline-block align-middle" />
         </a>
       </div>

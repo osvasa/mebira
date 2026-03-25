@@ -6,7 +6,6 @@ import {
   MessageCircle,
   Bookmark,
   BadgeCheck,
-  ExternalLink,
   ArrowLeft,
   Building2,
   Home,
@@ -62,9 +61,6 @@ export default async function PostPage({ params }: PostPageProps) {
   const isVerified = (creator?.followers ?? 0) >= 20000;
 
   const cat = categoryConfig[row.category] ?? categoryConfig.apartment;
-
-  // Build "View Property" URL — routed through click tracker
-  const goThereUrl = `/api/go?post=${row.id}&creator=${creator?.id ?? ''}`;
 
   // Fetch comments (may not exist yet — gracefully returns empty)
   const { data: commentRows } = await supabase

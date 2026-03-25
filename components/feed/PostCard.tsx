@@ -362,9 +362,6 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
     }
   }
 
-  // Build "View Property" URL — routed through click tracker
-  const goThereUrl = `/api/go?post=${post.id}&creator=${post.user.id}`;
-
   const maxChars = 150;
   const isLong = post.description.length > maxChars;
   const displayDesc = isLong && !expanded

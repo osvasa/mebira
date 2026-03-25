@@ -133,12 +133,12 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
         <h3 className="font-bold text-slate-900 text-sm mb-3">Popular Tags</h3>
         <div className="flex flex-wrap gap-2">
           {[
-            '#bali', '#maldives', '#tokyo', '#santorini',
-            '#paris', '#luxury', '#foodie', '#hotels', '#budgettravel',
+            '#miami', '#dubai', '#barcelona', '#lisbon', '#nyc',
+            '#luxury', '#apartments', '#villas', '#forsale', '#rental',
           ].map((tag) => (
             <Link
               key={tag}
-              href={`/search?q=${encodeURIComponent(tag.slice(1))}&source=tags`}
+              href={`/explore?q=${encodeURIComponent(tag.slice(1))}`}
               className="text-xs text-sky-600 bg-sky-50 px-3 py-1.5 rounded-full hover:bg-sky-100 transition-colors font-medium"
             >
               {tag}

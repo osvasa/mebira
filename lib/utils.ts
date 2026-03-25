@@ -24,7 +24,7 @@ export function formatNumber(n: number): string {
 }
 
 export function buildExpediaUrl(): string {
-  return process.env.NEXT_PUBLIC_EXPEDIA_URL ?? 'https://expedia.com/affiliates/osvasa/socialtravel';
+  return process.env.NEXT_PUBLIC_EXPEDIA_URL ?? 'https://mebira.pro';
 }
 
 export function cn(...classes: (string | undefined | null | false)[]): string {

@@ -134,7 +134,7 @@ export default function AdminPage() {
   // Generate video form
   const [vidPropertyName, setVidPropertyName] = useState('');
   const [vidLocation, setVidLocation] = useState('');
-  const [vidCategory, setVidCategory] = useState('hotel');
+  const [vidCategory, setVidCategory] = useState('apartment');
   const [vidStyle, setVidStyle] = useState('luxury-escape');
   const [vidImage, setVidImage] = useState<File | null>(null);
   const [vidGenerating, setVidGenerating] = useState(false);
@@ -385,7 +385,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <Loader2 className="w-6 h-6 text-[#56C1FF] animate-spin" />
+        <Loader2 className="w-6 h-6 text-[#C8102E] animate-spin" />
       </div>
     );
   }
@@ -929,7 +929,7 @@ export default function AdminPage() {
           <div className="space-y-6">
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
               <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Video className="w-5 h-5" style={{ color: '#56C1FF' }} />
+                <Video className="w-5 h-5" style={{ color: '#C8102E' }} />
                 Generate Travel Video
               </h2>
               <p className="text-sm text-slate-500 mb-6">
@@ -967,12 +967,12 @@ export default function AdminPage() {
                       onChange={(e) => setVidCategory(e.target.value)}
                       className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-sky-400 focus:border-transparent outline-none bg-white"
                     >
-                      <option value="hotel">Hotel</option>
-                      <option value="restaurant">Restaurant</option>
-                      <option value="destination">Destination</option>
-                      <option value="flight">Flight</option>
-                      <option value="activity">Activity</option>
-                      <option value="cruise">Cruise</option>
+                      <option value="apartment">Apartment</option>
+                      <option value="house">House</option>
+                      <option value="villa">Villa</option>
+                      <option value="commercial">Commercial</option>
+                      <option value="land">Land</option>
+                      <option value="rental">Rental</option>
                     </select>
                   </div>
                   <div>
@@ -1064,7 +1064,7 @@ export default function AdminPage() {
                   }}
                   disabled={vidGenerating}
                   className="w-full py-3 text-white font-bold rounded-xl hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-2"
-                  style={{ backgroundColor: '#56C1FF' }}
+                  style={{ backgroundColor: '#C8102E' }}
                 >
                   {vidGenerating ? (
                     <>
@@ -1161,12 +1161,12 @@ export default function AdminPage() {
               <div>
                 <label className="block text-xs font-semibold text-slate-500 mb-1">Category</label>
                 <select value={editCategory} onChange={(e) => setEditCategory(e.target.value)} className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
-                  <option value="hotel">Hotel</option>
-                  <option value="restaurant">Restaurant</option>
-                  <option value="destination">Destination</option>
-                  <option value="flight">Flight</option>
-                  <option value="activity">Activity</option>
-                  <option value="cruise">Cruise</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="house">House</option>
+                  <option value="villa">Villa</option>
+                  <option value="commercial">Commercial</option>
+                  <option value="land">Land</option>
+                  <option value="rental">Rental</option>
                 </select>
               </div>
               <div>

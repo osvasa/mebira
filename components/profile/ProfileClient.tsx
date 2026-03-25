@@ -373,7 +373,7 @@ export function ProfileClient({ user, posts, postCount, followerCount: initialFo
               )}
               <ShareMenu
                 path={`/profile/${user.username}`}
-                title={`${user.displayName} on Osvasa`}
+                title={`${user.displayName} on Mebira`}
               />
             </div>
           </div>

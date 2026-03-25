@@ -4,8 +4,8 @@ import { Navbar } from '@/components/layout/Navbar';
 
 const faqs = [
   {
-    q: 'What is Osvasa?',
-    a: 'Osvasa is a travel recommendation platform where creators share hotels, restaurants, and destinations they love — and earn real commissions when their followers book through their links.',
+    q: 'What is Mebira?',
+    a: 'Mebira is a travel recommendation platform where creators share hotels, restaurants, and destinations they love — and earn real commissions when their followers book through their links.',
   },
   {
     q: 'How do I earn commissions?',
@@ -16,12 +16,12 @@ const faqs = [
     a: 'Click "Sign up free" in the top navigation. You can register with your email and password, or sign in instantly with your Google account. No credit card required.',
   },
   {
-    q: 'Is Osvasa free to use?',
-    a: 'Yes — Osvasa is completely free for both travelers and creators. We earn a share of affiliate commissions from booking platforms, which allows us to keep the platform free and pay creators.',
+    q: 'Is Mebira free to use?',
+    a: 'Yes — Mebira is completely free for both travelers and creators. We earn a share of affiliate commissions from booking platforms, which allows us to keep the platform free and pay creators.',
   },
   {
     q: 'How do the Expedia booking links work?',
-    a: 'Every "Book on Expedia" button on Osvasa includes our affiliate ID. When you click it, you are taken directly to the relevant hotel or destination search on Expedia. The price you pay is the same as going directly to Expedia — no markup.',
+    a: 'Every "Book on Expedia" button on Mebira includes our affiliate ID. When you click it, you are taken directly to the relevant hotel or destination search on Expedia. The price you pay is the same as going directly to Expedia — no markup.',
   },
   {
     q: 'Can I post any type of travel content?',
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: 'How do I delete my account?',
-    a: 'To delete your account and all associated data, email us at hello@osvasa.com with the subject line "Delete my account." We will process your request within 30 days.',
+    a: 'To delete your account and all associated data, email us at hello@mebira.pro with the subject line "Delete my account." We will process your request within 30 days.',
   },
   {
     q: 'Why is the Vibe Search feature not available?',
@@ -41,7 +41,7 @@ const faqs = [
   },
   {
     q: 'How do I contact support?',
-    a: 'Email us at hello@osvasa.com. We aim to respond within 24–48 hours.',
+    a: 'Email us at hello@mebira.pro. We aim to respond within 24–48 hours.',
   },
 ];
 
@@ -62,8 +62,8 @@ export default function HelpPage() {
         <div className="text-center mb-10">
           <h1 className="text-3xl font-extrabold text-slate-900 mb-3">Help Center</h1>
           <p className="text-slate-500 text-sm max-w-md mx-auto">
-            Find answers to common questions about Osvasa. Can&apos;t find what you&apos;re looking for?{' '}
-            <a href="mailto:hello@osvasa.com" className="text-sky-600 hover:underline font-medium">
+            Find answers to common questions about Mebira. Can&apos;t find what you&apos;re looking for?{' '}
+            <a href="mailto:hello@mebira.pro" className="text-sky-600 hover:underline font-medium">
               Email us
             </a>.
           </p>
@@ -94,10 +94,10 @@ export default function HelpPage() {
             Our team is available Monday–Friday, 9 am–6 pm UTC.
           </p>
           <a
-            href="mailto:hello@osvasa.com"
+            href="mailto:hello@mebira.pro"
             className="inline-block px-6 py-2.5 bg-white text-sky-600 rounded-full text-sm font-bold hover:bg-sky-50 transition-colors"
           >
-            Email hello@osvasa.com
+            Email hello@mebira.pro
           </a>
         </div>
 

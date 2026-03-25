@@ -1,6 +1,6 @@
 import { Plane, Hotel, Home, Package, Ticket, Car } from 'lucide-react';
 
-const EXPEDIA = 'https://expedia.com/affiliates/osvasa/socialtravel';
+const EXPEDIA = 'https://mebira.pro';
 
 const categories = [
   { label: 'Hotels',           href: EXPEDIA, icon: Hotel },

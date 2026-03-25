@@ -11,11 +11,11 @@ export function Logo({ className = '', href = '/' }: LogoProps) {
       href={href}
       className={`flex items-center select-none ${className}`}
     >
-      <img
-        src="/images/osvasa-logo.png"
-        alt="Osvasa"
-        style={{ height: '65px', width: 'auto' }}
-      />
+      <span
+        style={{ color: '#C8102E', fontSize: '28px', fontWeight: 800, letterSpacing: '-0.02em' }}
+      >
+        Mebira
+      </span>
     </Link>
   );
 }

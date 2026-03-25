@@ -1,4 +1,4 @@
--- Osvasa Database Schema
+-- Mebira Database Schema
 -- Run in the Supabase SQL Editor: https://supabase.com/dashboard/project/dmwlqseijbodocrxmhwu/sql
 
 -- ============================================================
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS public.posts (
   description    TEXT NOT NULL,
   photo_url      TEXT,
   location       TEXT NOT NULL,
-  category       TEXT NOT NULL CHECK (category IN ('hotel', 'restaurant', 'destination', 'flight', 'activity', 'cruise')),
+  category       TEXT NOT NULL CHECK (category IN ('apartment', 'house', 'villa', 'commercial', 'land', 'rental')),
   agoda_hotel_id TEXT,
   likes          INTEGER DEFAULT 0,
   created_at     TIMESTAMPTZ DEFAULT NOW()

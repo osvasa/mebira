@@ -23,7 +23,7 @@ export function AgodaFlightSearch({ destination }: Props) {
 
       {/* Search flights button */}
       <a
-        href="https://expedia.com/affiliates/osvasa/socialtravel"
+        href="https://mebira.pro"
         target="_blank"
         rel="noopener noreferrer sponsored"
         className="flex items-center justify-center gap-2 w-full mt-4 py-3 bg-gradient-to-r from-sky-500 to-sky-600 text-white rounded-xl font-bold text-sm hover:from-sky-600 hover:to-sky-700 active:scale-[0.98] transition-all shadow-md shadow-sky-200"

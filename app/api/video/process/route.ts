@@ -153,7 +153,7 @@ export async function POST(req: NextRequest) {
           .limit(1);
         if (existing && existing.length > 0) {
           return NextResponse.json(
-            { error: 'This video has already been posted on Osvasa' },
+            { error: 'This video has already been posted on Mebira' },
             { status: 409 }
           );
         }
@@ -177,7 +177,7 @@ export async function POST(req: NextRequest) {
           .limit(1);
         if (existing && existing.length > 0) {
           return NextResponse.json(
-            { error: 'This video has already been posted on Osvasa' },
+            { error: 'This video has already been posted on Mebira' },
             { status: 409 }
           );
         }
@@ -193,7 +193,7 @@ export async function POST(req: NextRequest) {
       }
     } catch (dlErr: unknown) {
       const msg = dlErr instanceof Error ? dlErr.message : 'Download failed';
-      if (msg === 'This video has already been posted on Osvasa') {
+      if (msg === 'This video has already been posted on Mebira') {
         return NextResponse.json({ error: msg }, { status: 409 });
       }
       return NextResponse.json({ error: msg }, { status: 502 });

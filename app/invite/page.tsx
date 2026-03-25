@@ -79,7 +79,7 @@ export default function InvitePage() {
             href="/"
             className="inline-flex items-center justify-center px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-100"
           >
-            Back to Osvasa
+            Back to Mebira
           </Link>
         </div>
       </div>
@@ -134,13 +134,13 @@ export default function InvitePage() {
           </Link>
 
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-[#56C1FF] flex items-center justify-center shadow-md">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-[#C8102E] flex items-center justify-center shadow-md">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900">Request an Invite</h1>
           </div>
           <p className="text-slate-500 text-sm mb-8 leading-relaxed">
-            Osvasa is an invite-only platform for quality travel creators. Tell us about yourself and we&apos;ll review your profile.
+            Mebira is an invite-only platform for quality travel creators. Tell us about yourself and we&apos;ll review your profile.
           </p>
 
           {error && (
@@ -212,7 +212,7 @@ export default function InvitePage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#56C1FF] to-teal-500 hover:from-sky-500 hover:to-teal-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#C8102E] to-teal-500 hover:from-sky-500 hover:to-teal-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
               {loading ? 'Submitting...' : 'Submit Request'}

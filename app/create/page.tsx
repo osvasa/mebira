@@ -53,7 +53,7 @@ export default function CreatePostPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<PostCategory>('destination');
+  const [selectedCategory, setSelectedCategory] = useState<PostCategory>('apartment');
   const [expediaUrl, setExpediaUrl] = useState('');
   const [startingPrice, setStartingPrice] = useState<number | null>(null);
 
@@ -282,7 +282,7 @@ export default function CreatePostPage() {
     setTitle('');
     setDescription('');
     setLocation('');
-    setSelectedCategory('destination');
+    setSelectedCategory('apartment');
     setExpediaUrl('');
     setStartingPrice(null);
   };
@@ -553,12 +553,12 @@ export default function CreatePostPage() {
                     onChange={(e) => setSelectedCategory(e.target.value as PostCategory)}
                     className="input text-sm"
                   >
-                    <option value="hotel">Hotel</option>
-                    <option value="restaurant">Restaurant</option>
-                    <option value="destination">Destination</option>
-                    <option value="flight">Flight</option>
-                    <option value="activity">Activity</option>
-                    <option value="cruise">Cruise</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="house">House</option>
+                    <option value="villa">Villa</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="land">Land</option>
+                    <option value="rental">Rental</option>
                   </select>
                 </div>
               </div>

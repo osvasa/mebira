@@ -2,27 +2,27 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { Compass, Building2, UtensilsCrossed, Globe, Plane, Zap, Ship, LayoutGrid, MapPin, Loader2, Play, ArrowLeft, type LucideIcon } from 'lucide-react';
+import { Compass, Building2, Home, Castle, Briefcase, Map, KeyRound, LayoutGrid, MapPin, Loader2, Play, ArrowLeft, type LucideIcon } from 'lucide-react';
 
 import { Post } from '@/lib/types';
 
 const categories = [
   { id: 'all',         label: 'All',          Icon: LayoutGrid },
-  { id: 'hotel',       label: 'Hotels',       Icon: Building2 },
-  { id: 'restaurant',  label: 'Restaurants',  Icon: UtensilsCrossed },
-  { id: 'destination', label: 'Destinations', Icon: Globe },
-  { id: 'flight',      label: 'Flights',      Icon: Plane },
-  { id: 'activity',    label: 'Activities',   Icon: Zap },
-  { id: 'cruise',      label: 'Cruises',      Icon: Ship },
+  { id: 'apartment',   label: 'Apartments',   Icon: Building2 },
+  { id: 'house',       label: 'Houses',       Icon: Home },
+  { id: 'villa',       label: 'Villas',       Icon: Castle },
+  { id: 'commercial',  label: 'Commercial',   Icon: Briefcase },
+  { id: 'land',        label: 'Land',         Icon: Map },
+  { id: 'rental',      label: 'Rentals',      Icon: KeyRound },
 ];
 
 const categoryConfig: Record<string, { Icon: LucideIcon; color: string }> = {
-  hotel:       { Icon: Building2, color: 'text-sky-700 bg-sky-50' },
-  restaurant:  { Icon: UtensilsCrossed, color: 'text-orange-700 bg-orange-50' },
-  destination: { Icon: Globe, color: 'text-emerald-700 bg-emerald-50' },
-  flight:      { Icon: Plane, color: 'text-purple-700 bg-purple-50' },
-  activity:    { Icon: Zap, color: 'text-yellow-700 bg-yellow-50' },
-  cruise:      { Icon: Ship, color: 'text-cyan-700 bg-cyan-50' },
+  apartment:   { Icon: Building2, color: 'text-red-700 bg-red-50' },
+  house:       { Icon: Home, color: 'text-green-700 bg-green-50' },
+  villa:       { Icon: Castle, color: 'text-yellow-700 bg-yellow-50' },
+  commercial:  { Icon: Briefcase, color: 'text-blue-700 bg-blue-50' },
+  land:        { Icon: Map, color: 'text-emerald-700 bg-emerald-50' },
+  rental:      { Icon: KeyRound, color: 'text-purple-700 bg-purple-50' },
 };
 
 interface ExploreClientProps {
@@ -101,7 +101,7 @@ export function ExploreClient({ initialPosts }: ExploreClientProps) {
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#56C1FF] to-teal-500 flex items-center justify-center shadow-md">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C8102E] to-teal-500 flex items-center justify-center shadow-md">
             <Compass className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -203,7 +203,7 @@ export function ExploreClient({ initialPosts }: ExploreClientProps) {
         {/* Loading / infinite scroll sentinel */}
         {loading && (
           <div className="flex items-center justify-center py-8 gap-2">
-            <Loader2 className="w-5 h-5 text-[#56C1FF] animate-spin" />
+            <Loader2 className="w-5 h-5 text-[#C8102E] animate-spin" />
             <span className="text-sm text-slate-400 font-medium">Loading...</span>
           </div>
         )}

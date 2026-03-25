@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
   }
 
   // Build redirect URL
-  const EXPEDIA_FALLBACK = 'https://expedia.com/affiliates/osvasa/socialtravel';
+  const EXPEDIA_FALLBACK = 'https://mebira.pro';
   const redirectUrl =
     typeof post.expedia_url === 'string' && post.expedia_url.startsWith('http')
       ? post.expedia_url

@@ -48,7 +48,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">3. Affiliate Tracking</h2>
               <p>
-                When you click an affiliate link on Osvasa (e.g., a link to Expedia), third-party cookies and tracking parameters may be set to attribute any resulting bookings to Osvasa or the creator whose post you clicked. This tracking is how commissions are measured. We do not sell this tracking data to third parties.
+                When you click an affiliate link on Mebira (e.g., a link to Expedia), third-party cookies and tracking parameters may be set to attribute any resulting bookings to Mebira or the creator whose post you clicked. This tracking is how commissions are measured. We do not sell this tracking data to third parties.
               </p>
             </section>
 
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
               </ul>
               <p className="mt-2">
                 To exercise these rights, contact us at{' '}
-                <a href="mailto:hello@osvasa.com" className="text-sky-600 hover:underline">hello@osvasa.com</a>.
+                <a href="mailto:hello@mebira.pro" className="text-sky-600 hover:underline">hello@mebira.pro</a>.
               </p>
             </section>
 
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">9. Children</h2>
               <p>
-                Osvasa is not intended for users under the age of 18. We do not knowingly collect personal information from children. If you believe a child has provided us with their information, please contact us to have it removed.
+                Mebira is not intended for users under the age of 18. We do not knowingly collect personal information from children. If you believe a child has provided us with their information, please contact us to have it removed.
               </p>
             </section>
 
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
               <h2 className="text-lg font-bold text-slate-900 mb-3">10. Contact</h2>
               <p>
                 For privacy-related questions or requests, email{' '}
-                <a href="mailto:hello@osvasa.com" className="text-sky-600 hover:underline">hello@osvasa.com</a>.
+                <a href="mailto:hello@mebira.pro" className="text-sky-600 hover:underline">hello@mebira.pro</a>.
               </p>
             </section>
           </div>

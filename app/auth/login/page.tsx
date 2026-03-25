@@ -96,7 +96,7 @@ function LoginForm() {
       </div>
 
       <h1 className="text-2xl font-extrabold text-slate-900 mb-1">Welcome back</h1>
-      <p className="text-slate-500 text-sm mb-8">Sign in to your Osvasa account</p>
+      <p className="text-slate-500 text-sm mb-8">Sign in to your Mebira account</p>
 
       {/* Error banner */}
       {error && (

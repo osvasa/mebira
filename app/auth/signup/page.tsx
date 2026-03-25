@@ -225,7 +225,7 @@ export default function SignupPage() {
                       type="text"
                       value={inviteCode}
                       onChange={(e) => { setInviteCode(e.target.value.toUpperCase()); setCodeError(''); }}
-                      placeholder="OSVASA-XXXXXX"
+                      placeholder="MEBIRA-XXXXXX"
                       className={`input pl-10 font-mono tracking-wider text-center uppercase${codeError ? ' !border-red-400' : ''}`}
                       maxLength={20}
                     />
@@ -245,7 +245,7 @@ export default function SignupPage() {
                 <Link
                   href="/invite"
                   className="block w-full py-2 text-sm text-center transition-colors"
-                  style={{ color: '#56C1FF' }}
+                  style={{ color: '#C8102E' }}
                 >
                   Don&apos;t have a code? Request an invite &rarr;
                 </Link>

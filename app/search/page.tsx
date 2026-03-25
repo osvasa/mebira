@@ -117,13 +117,13 @@ function SearchContent() {
         {query && (
           <div className="flex items-center gap-1.5 mb-4">
             <p className="text-sm text-gray-400">
-              {source === 'destinations' ? 'Top Destinations: ' : source === 'trending' ? 'Trending: ' : source === 'tags' ? 'Popular Tags: ' : 'Results for: '}
+              {source === 'destinations' ? 'Top Markets: ' : source === 'trending' ? 'Trending: ' : source === 'tags' ? 'Popular Tags: ' : 'Results for: '}
               <span className="text-gray-600 font-medium">{query}</span>
             </p>
             <button
               onClick={() => { window.location.href = '/'; }}
               className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#56C1FF' }}
+              style={{ backgroundColor: '#C8102E' }}
               aria-label="Clear search"
             >
               <X className="w-2.5 h-2.5 text-white" />

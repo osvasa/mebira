@@ -1,4 +1,4 @@
-export type PostCategory = 'hotel' | 'restaurant' | 'destination' | 'flight' | 'activity' | 'cruise';
+export type PostCategory = 'apartment' | 'house' | 'villa' | 'commercial' | 'land' | 'rental';
 
 export interface User {
   id: string;

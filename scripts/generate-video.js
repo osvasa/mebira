@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Local video generation script for Osvasa.
+ * Local video generation script for Mebira.
  *
  * Usage:
  *   node scripts/generate-video.js \
@@ -30,10 +30,10 @@ const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 const R2_ENDPOINT = process.env.CLOUDFLARE_R2_ENDPOINT;
 const R2_ACCESS_KEY = process.env.CLOUDFLARE_R2_ACCESS_KEY_ID;
 const R2_SECRET_KEY = process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY;
-const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET || 'osvasa-videos';
+const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET || 'mebira-videos';
 const R2_PUBLIC_URL = process.env.CLOUDFLARE_R2_PUBLIC_URL;
 
-const TEMP_PREFIX = '/tmp/osvasa-';
+const TEMP_PREFIX = '/tmp/mebira-';
 const VOICEOVER_PATH = `${TEMP_PREFIX}voiceover.mp3`;
 const MUSIC_PATH = `${TEMP_PREFIX}music.mp3`;
 const MIXED_PATH = `${TEMP_PREFIX}mixed.mp3`;
@@ -268,7 +268,7 @@ async function main() {
   const { name, location, category, images } = parseArgs();
 
   console.log('='.repeat(50));
-  console.log('  Osvasa Video Generator');
+  console.log('  Mebira Video Generator');
   console.log('='.repeat(50));
   console.log(`  Property: ${name}`);
   console.log(`  Location: ${location}`);

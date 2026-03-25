@@ -71,7 +71,7 @@ export function PricePulse() {
       <div className="mt-4 pt-3.5 border-t border-slate-100 flex items-center justify-between">
         <span className="text-[10px] text-slate-400">Prices update hourly</span>
         <a
-          href="https://expedia.com/affiliates/osvasa/socialtravel"
+          href="https://mebira.pro"
           target="_blank"
           rel="noopener noreferrer sponsored"
           className="flex items-center gap-1 text-xs text-sky-600 font-bold hover:text-sky-800 transition-colors"

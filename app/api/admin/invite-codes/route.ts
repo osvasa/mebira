@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Creator name is required' }, { status: 400 });
   }
 
-  const code = `OSVASA-${randomBytes(3).toString('hex').toUpperCase()}`;
+  const code = `MEBIRA-${randomBytes(3).toString('hex').toUpperCase()}`;
 
   const supabase = await createClient();
   const { data, error } = await supabase

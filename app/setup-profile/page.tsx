@@ -136,7 +136,7 @@ export default function SetupProfilePage() {
   if (!userId) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <Loader2 className="w-6 h-6 text-[#56C1FF] animate-spin" />
+        <Loader2 className="w-6 h-6 text-[#C8102E] animate-spin" />
       </div>
     );
   }
@@ -163,7 +163,7 @@ export default function SetupProfilePage() {
           {/* Cover image area */}
           <div
             className="relative h-32 cursor-pointer group"
-            style={{ background: coverPreview ? undefined : 'linear-gradient(135deg, #56C1FF 0%, #14b8a6 100%)' }}
+            style={{ background: coverPreview ? undefined : 'linear-gradient(135deg, #C8102E 0%, #14b8a6 100%)' }}
             onClick={() => coverInputRef.current?.click()}
           >
             {coverPreview && (
@@ -190,7 +190,7 @@ export default function SetupProfilePage() {
               {avatarPreview ? (
                 <img src={avatarPreview} alt="Avatar preview" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[#56C1FF] to-teal-500 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-[#C8102E] to-teal-500 flex items-center justify-center">
                   <Camera className="w-6 h-6 text-white" />
                 </div>
               )}
@@ -219,7 +219,7 @@ export default function SetupProfilePage() {
             <button
               onClick={handleComplete}
               disabled={saving}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#56C1FF] to-teal-500 hover:from-sky-500 hover:to-teal-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#C8102E] to-teal-500 hover:from-sky-500 hover:to-teal-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
             >
               {saving ? (
                 <>

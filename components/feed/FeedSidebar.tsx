@@ -29,11 +29,11 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
         </Link>
       </div>
 
-      {/* ── Trending ── */}
+      {/* ── Hot Listings ── */}
       <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <TrendingUp className="w-4 h-4 text-sky-500" />
-          <h3 className="font-bold text-slate-900 text-sm">Trending</h3>
+          <h3 className="font-bold text-slate-900 text-sm">Hot Listings</h3>
         </div>
         <div className="space-y-3">
           {trendingDestinations.map((dest, idx) => (
@@ -150,7 +150,7 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
       {/* ── Footer ── */}
       <div className="text-xs text-slate-400 leading-relaxed px-1 space-y-1">
         <p>
-          © 2025 Osvasa ·{' '}
+          © 2025 Mebira ·{' '}
           <Link href="/terms" className="hover:text-slate-600 transition-colors">Terms</Link>
           {' · '}
           <Link href="/privacy" className="hover:text-slate-600 transition-colors">Privacy</Link>

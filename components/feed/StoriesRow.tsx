@@ -9,7 +9,7 @@ export function StoriesRow({ stories }: StoriesRowProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">
       <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-1">
-        Top Destinations
+        Top Markets
       </p>
       <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-0.5">
         {stories.map((story) => (

@@ -42,7 +42,7 @@ const PLACEHOLDER_TIPS: CoachTip[] = [
 function ScoreRing({ score }: { score: number }) {
   const circumference = 2 * Math.PI * 18;
   const strokeDash = (score / 100) * circumference;
-  const color = score >= 70 ? '#10b981' : score >= 45 ? '#56C1FF' : '#f59e0b';
+  const color = score >= 70 ? '#10b981' : score >= 45 ? '#C8102E' : '#f59e0b';
 
   return (
     <div className="relative w-12 h-12 flex-shrink-0">

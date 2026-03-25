@@ -5,7 +5,7 @@ import { EXPEDIA_URL } from '@/lib/agoda';
 const FALLBACK = {
   title: '',
   description: '',
-  category: 'destination',
+  category: 'apartment',
   location: '',
 };
 
@@ -77,45 +77,48 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'user',
-          content: `You are a travel content analyst for a travel recommendation app. Your job is to extract real information from TikTok video metadata and generate an engaging post.
+          content: `You are a real estate content analyst for Mebira, a short-form real estate discovery platform. Your job is to extract property information from TikTok video metadata and generate an engaging listing post.
 
 ${contextBlock}
 
 STEP 1 — EXTRACT LOCATION (most critical field):
-Read the caption word by word and each hashtag individually. Identify city names, region names, and country names.
-Location must be ONLY the city/region and country. NEVER include hotel names, restaurant names, or establishment names in location — those go in the title.
+Read the caption word by word and each hashtag individually. Identify city names, neighborhoods, and country names.
+Location must be ONLY the city/neighborhood. NEVER include property names or developer names in location — those go in the title.
 Examples:
-- Caption mentions "Four Seasons" + hashtag #bali → location: "Bali, Indonesia" (NOT "Four Seasons, Bali, Indonesia")
-- Caption mentions "Nobu" + hashtag #malibu → location: "Malibu, USA" (NOT "Nobu, Malibu, USA")
-- Hashtag #amalficoast → location: "Amalfi Coast, Italy"
-- Hashtag #tokyo → location: "Tokyo, Japan"
-IMPORTANT: If NO city or country appears anywhere in caption or hashtags, return "" for location. Never guess.
+- Caption mentions "penthouse" + hashtag #miami → location: "Miami Beach"
+- Hashtag #tulum → location: "Tulum"
+- Hashtag #dubaimarina → location: "Dubai Marina"
+IMPORTANT: If NO city or area appears anywhere in caption or hashtags, return "" for location. Never guess.
 
-STEP 2 — GENERATE TITLE (max 60 chars):
-Put the establishment/venue name HERE in the title. Make it catchy and specific.
-Good: "Four Seasons Bali — The OG Pool Villa Resort"
-Good: "Sunset Dinner at Nobu Malibu"
-Bad: "Beautiful Resort Experience" (too generic)
+STEP 2 — EXTRACT COUNTRY:
+Return ONLY the country name from the location context. Examples: "Mexico", "USA", "UAE", "Spain".
 
-STEP 3 — GENERATE DESCRIPTION (max 200 chars):
-Write in first person as if YOU visited. Make readers want to book immediately. Be vivid and specific about what makes this place special. Use sensory language — what you see, feel, taste.
-Good: "Waking up to infinity pool views over the Indian Ocean. This place redefined luxury for me — every villa feels like your own private paradise."
-Bad: "Great place with nice views and good service." (boring, generic)
+STEP 3 — GENERATE TITLE (max 60 chars):
+Put the property name or key feature HERE in the title. Make it catchy and specific.
+Good: "Oceanfront Penthouse — 3BR with Private Pool"
+Good: "Modern Loft in the Heart of Roma Norte"
+Bad: "Beautiful Property" (too generic)
 
-STEP 4 — PICK CATEGORY:
-hotel = accommodation (resorts, villas, hotels, stays)
-restaurant = dining (restaurants, cafes, bars, street food)
-destination = attraction or place (beaches, temples, cities, landmarks)
-flight = airline or airport content
-activity = experiences and tours (excursions, adventures, classes, events)
-cruise = cruise ships and river cruises
+STEP 4 — GENERATE DESCRIPTION (max 200 chars):
+Write in first person as if YOU toured this property. Make readers want to inquire immediately. Highlight key features: size, views, amenities, neighborhood vibe, price range if visible.
+Good: "Floor-to-ceiling windows with unobstructed ocean views. This 2,400 sqft penthouse has a private rooftop terrace that makes every sunset feel like an event."
+Bad: "Nice apartment with good views." (boring, generic)
+
+STEP 5 — PICK CATEGORY:
+apartment = condos, apartments, penthouses, lofts, studios
+house = single-family homes, townhouses, duplexes
+villa = luxury villas, estates, mansions, beachfront homes
+commercial = offices, retail, warehouses, mixed-use
+land = plots, lots, development land, farms
+rental = short-term rentals, vacation rentals, furnished apartments
 
 Return ONLY valid JSON (no markdown, no code fences):
 {
-  "title": "Venue/place name in title (max 60 chars)",
+  "title": "Property name or feature in title (max 60 chars)",
   "description": "First-person inspiring description (max 200 chars)",
-  "category": "hotel",
-  "location": "City, Country"
+  "category": "apartment",
+  "location": "City or Neighborhood",
+  "country": "Country"
 }`,
         },
       ],

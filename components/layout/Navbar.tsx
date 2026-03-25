@@ -10,11 +10,11 @@ import {
   X,
   Compass,
   Building2,
-  UtensilsCrossed,
-  Globe,
-  Plane,
-  Zap,
-  Ship,
+  Home,
+  Castle,
+  Briefcase,
+  Map,
+  KeyRound,
   LayoutGrid,
   User,
   Settings,
@@ -28,12 +28,12 @@ import { createClient } from '@/lib/supabase/client';
 
 const categories: { id: string; label: string; Icon: LucideIcon }[] = [
   { id: 'all',         label: 'All',          Icon: LayoutGrid },
-  { id: 'hotel',       label: 'Hotels',       Icon: Building2 },
-  { id: 'restaurant',  label: 'Restaurants',  Icon: UtensilsCrossed },
-  { id: 'destination', label: 'Destinations', Icon: Globe },
-  { id: 'flight',      label: 'Flights',      Icon: Plane },
-  { id: 'activity',    label: 'Activities',   Icon: Zap },
-  { id: 'cruise',      label: 'Cruises',      Icon: Ship },
+  { id: 'apartment',   label: 'Apartments',   Icon: Building2 },
+  { id: 'house',       label: 'Houses',       Icon: Home },
+  { id: 'villa',       label: 'Villas',       Icon: Castle },
+  { id: 'commercial',  label: 'Commercial',   Icon: Briefcase },
+  { id: 'land',        label: 'Land',         Icon: Map },
+  { id: 'rental',      label: 'Rentals',      Icon: KeyRound },
 ];
 
 interface NavbarProps {
@@ -205,8 +205,8 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
                 <Link
                   href="/auth/signup"
                   className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all border"
-                  style={{ backgroundColor: 'transparent', borderColor: '#56C1FF', color: '#000000' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#56C1FF'; e.currentTarget.style.color = '#fff'; }}
+                  style={{ backgroundColor: 'transparent', borderColor: '#C8102E', color: '#000000' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#C8102E'; e.currentTarget.style.color = '#fff'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#000000'; }}
                 >
                   <Ticket className="w-3.5 h-3.5" />
@@ -315,7 +315,7 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
                 className="flex items-center gap-2 px-3 py-2.5 text-sm font-semibold rounded-xl hover:bg-slate-50"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Ticket className="w-4 h-4" style={{ color: '#56C1FF' }} />
+                <Ticket className="w-4 h-4" style={{ color: '#C8102E' }} />
                 <span style={{ color: '#000000' }}>Enter Code</span>
               </Link>
             </>

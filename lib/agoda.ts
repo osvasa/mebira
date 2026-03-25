@@ -1,4 +1,4 @@
-export const EXPEDIA_URL = process.env.NEXT_PUBLIC_EXPEDIA_URL ?? 'https://expedia.com/affiliates/osvasa/socialtravel';
+export const EXPEDIA_URL = process.env.NEXT_PUBLIC_EXPEDIA_URL ?? 'https://mebira.pro';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

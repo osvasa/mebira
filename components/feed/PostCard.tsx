@@ -21,11 +21,11 @@ import {
   Play,
   CheckCircle2,
   Building2,
-  UtensilsCrossed,
-  Globe,
-  Plane,
-  Zap,
-  Ship,
+  Home,
+  Castle,
+  Briefcase,
+  Map,
+  KeyRound,
   type LucideIcon,
 } from 'lucide-react';
 import { ShareMenu } from '@/components/ui/ShareMenu';
@@ -40,12 +40,12 @@ const categoryConfig: Record<
   string,
   { label: string; Icon: LucideIcon; bg: string; text: string }
 > = {
-  hotel: { label: 'Hotel', Icon: Building2, bg: 'bg-sky-50', text: 'text-sky-700' },
-  restaurant: { label: 'Restaurant', Icon: UtensilsCrossed, bg: 'bg-orange-50', text: 'text-orange-700' },
-  destination: { label: 'Destination', Icon: Globe, bg: 'bg-emerald-50', text: 'text-emerald-700' },
-  flight: { label: 'Flight', Icon: Plane, bg: 'bg-purple-50', text: 'text-purple-700' },
-  activity: { label: 'Activity', Icon: Zap, bg: 'bg-yellow-50', text: 'text-yellow-700' },
-  cruise: { label: 'Cruise', Icon: Ship, bg: 'bg-cyan-50', text: 'text-cyan-700' },
+  apartment: { label: 'Apartment', Icon: Building2, bg: 'bg-red-50', text: 'text-red-700' },
+  house: { label: 'House', Icon: Home, bg: 'bg-green-50', text: 'text-green-700' },
+  villa: { label: 'Villa', Icon: Castle, bg: 'bg-yellow-50', text: 'text-yellow-700' },
+  commercial: { label: 'Commercial', Icon: Briefcase, bg: 'bg-blue-50', text: 'text-blue-700' },
+  land: { label: 'Land', Icon: Map, bg: 'bg-emerald-50', text: 'text-emerald-700' },
+  rental: { label: 'Rental', Icon: KeyRound, bg: 'bg-purple-50', text: 'text-purple-700' },
 };
 
 interface PostCardProps {
@@ -362,7 +362,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
     }
   }
 
-  // Build "Go There" URL — routed through click tracker
+  // Build "View Listing" URL — routed through click tracker
   const goThereUrl = `/api/go?post=${post.id}&creator=${post.user.id}`;
 
   const maxChars = 150;
@@ -761,7 +761,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         </div>
       )}
 
-      {/* ── Go There CTA ── */}
+      {/* ── View Listing CTA ── */}
       <div className="px-4 pb-4">
         <a
           href={goThereUrl}
@@ -769,7 +769,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
           rel="noopener noreferrer"
           className="block w-full py-3 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl font-bold text-sm text-center hover:from-sky-600 hover:to-teal-600 transition-colors shadow-md shadow-sky-200"
         >
-          Go There{' '}
+          View Listing{' '}
           <ExternalLink className="w-4 h-4 inline-block align-middle" />
         </a>
       </div>

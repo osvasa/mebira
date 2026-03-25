@@ -24,14 +24,14 @@ export default function TermsPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">1. Acceptance of Terms</h2>
               <p>
-                By accessing or using Osvasa (&ldquo;the Platform&rdquo;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Platform. Osvasa reserves the right to update these terms at any time, and continued use of the Platform after changes constitutes acceptance of the updated terms.
+                By accessing or using Mebira (&ldquo;the Platform&rdquo;), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Platform. Mebira reserves the right to update these terms at any time, and continued use of the Platform after changes constitutes acceptance of the updated terms.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">2. Description of Service</h2>
               <p>
-                Osvasa is a travel recommendation platform that allows users to share travel experiences, discover destinations, and earn commissions through affiliate partnerships with booking platforms including Expedia. The Platform connects travelers with accommodation, dining, and destination recommendations.
+                Mebira is a travel recommendation platform that allows users to share travel experiences, discover destinations, and earn commissions through affiliate partnerships with booking platforms including Expedia. The Platform connects travelers with accommodation, dining, and destination recommendations.
               </p>
             </section>
 
@@ -61,28 +61,28 @@ export default function TermsPage() {
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">5. Affiliate Links and Commissions</h2>
               <p>
-                Osvasa participates in affiliate programs with third-party booking platforms. When users make bookings through links on Osvasa, we and/or the content creator may earn a commission at no additional cost to the buyer. All affiliate relationships are disclosed with &ldquo;Affiliate link&rdquo; or similar labeling. Commission amounts and payment terms are subject to change and are governed by the terms of each affiliate program.
+                Mebira participates in affiliate programs with third-party booking platforms. When users make bookings through links on Mebira, we and/or the content creator may earn a commission at no additional cost to the buyer. All affiliate relationships are disclosed with &ldquo;Affiliate link&rdquo; or similar labeling. Commission amounts and payment terms are subject to change and are governed by the terms of each affiliate program.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">6. Intellectual Property</h2>
               <p>
-                You retain ownership of content you post on Osvasa. By posting content, you grant Osvasa a non-exclusive, royalty-free, worldwide license to display, distribute, and promote your content on the Platform and in marketing materials. Osvasa&apos;s branding, design, and original content remain the property of Osvasa.
+                You retain ownership of content you post on Mebira. By posting content, you grant Mebira a non-exclusive, royalty-free, worldwide license to display, distribute, and promote your content on the Platform and in marketing materials. Mebira&apos;s branding, design, and original content remain the property of Mebira.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">7. Disclaimer of Warranties</h2>
               <p>
-                The Platform is provided &ldquo;as is&rdquo; without warranties of any kind. Osvasa does not guarantee the accuracy of travel recommendations, pricing information, or availability of third-party services. We are not responsible for the quality or safety of any accommodations, restaurants, or destinations featured on the Platform.
+                The Platform is provided &ldquo;as is&rdquo; without warranties of any kind. Mebira does not guarantee the accuracy of travel recommendations, pricing information, or availability of third-party services. We are not responsible for the quality or safety of any accommodations, restaurants, or destinations featured on the Platform.
               </p>
             </section>
 
             <section>
               <h2 className="text-lg font-bold text-slate-900 mb-3">8. Limitation of Liability</h2>
               <p>
-                To the maximum extent permitted by law, Osvasa shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Platform or reliance on any content posted thereon.
+                To the maximum extent permitted by law, Mebira shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Platform or reliance on any content posted thereon.
               </p>
             </section>
 
@@ -97,7 +97,7 @@ export default function TermsPage() {
               <h2 className="text-lg font-bold text-slate-900 mb-3">10. Contact</h2>
               <p>
                 For questions about these Terms, please contact us at{' '}
-                <a href="mailto:hello@osvasa.com" className="text-sky-600 hover:underline">hello@osvasa.com</a>.
+                <a href="mailto:hello@mebira.pro" className="text-sky-600 hover:underline">hello@mebira.pro</a>.
               </p>
             </section>
           </div>

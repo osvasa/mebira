@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Request not found' }, { status: 404 });
   }
 
-  const code = `OSVASA-${randomBytes(3).toString('hex').toUpperCase()}`;
+  const code = `MEBIRA-${randomBytes(3).toString('hex').toUpperCase()}`;
 
   const { data: inviteCode, error: codeError } = await supabase
     .from('invite_codes')

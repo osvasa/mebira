@@ -1,5 +1,5 @@
 -- ============================================================
--- Osvasa Seed Data — 20 Posts, 10 Creators
+-- Mebira Seed Data — 20 Posts, 10 Creators
 -- Run in: https://supabase.com/dashboard/project/dmwlqseijbodocrxmhwu/sql/new
 -- ============================================================
 
@@ -15,31 +15,31 @@ DELETE FROM public.users;
 INSERT INTO public.users (id, email, username, avatar, bio, followers, earnings) VALUES
 
   ('b1000000-0000-0000-0000-000000000001',
-   'maya.chen@osvasa.com', 'maya_chen',
+   'maya.chen@mebira.pro', 'maya_chen',
    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&q=80',
    'Travel photographer based in Miami. I live out of a carry-on and shoot hotels for a living.',
    38400, 6210.50),
 
   ('b1000000-0000-0000-0000-000000000002',
-   'sofia.rivera@osvasa.com', 'sofia_rivera',
+   'sofia.rivera@mebira.pro', 'sofia_rivera',
    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&q=80',
    'Luxury travel writer from Barcelona. I find the places that make you forget your real life.',
    24700, 3890.20),
 
   ('b1000000-0000-0000-0000-000000000003',
-   'james.park@osvasa.com', 'james_park',
+   'james.park@mebira.pro', 'james_park',
    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&q=80',
    'Hotel critic and food writer based in Seoul. Obsessed with architecture, kaiseki, and a good view.',
    19200, 2140.80),
 
   ('b1000000-0000-0000-0000-000000000004',
-   'emma.laurent@osvasa.com', 'emma_laurent',
+   'emma.laurent@mebira.pro', 'emma_laurent',
    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&q=80',
    'Paris-born, perpetually elsewhere. I write about the hotels that feel like a second life.',
    51300, 8740.00),
 
   ('b1000000-0000-0000-0000-000000000005',
-   'marcus.webb@osvasa.com', 'marcus_webb',
+   'marcus.webb@mebira.pro', 'marcus_webb',
    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&q=80',
    'Adventure travel photographer from Portland. Chasing light in places most people never find.',
    29600, 4320.60)
@@ -104,31 +104,31 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO public.users (id, email, username, avatar, bio, followers, earnings) VALUES
 
   ('c1000000-0000-0000-0000-000000000001',
-   'priya.sharma@osvasa.com', 'priya_sharma',
+   'priya.sharma@mebira.pro', 'priya_sharma',
    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&q=80',
    'Food and travel writer from Mumbai. I eat my way across every city I land in.',
    22400, 3100.40),
 
   ('c1000000-0000-0000-0000-000000000002',
-   'lucas.oliveira@osvasa.com', 'lucas_oliveira',
+   'lucas.oliveira@mebira.pro', 'lucas_oliveira',
    'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&q=80',
    'Adventure photographer from São Paulo. I chase landscapes that make you feel small.',
    17800, 2240.90),
 
   ('c1000000-0000-0000-0000-000000000003',
-   'aiko.tanaka@osvasa.com', 'aiko_tanaka',
+   'aiko.tanaka@mebira.pro', 'aiko_tanaka',
    'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=150&h=150&fit=crop&q=80',
    'Luxury travel writer based in Kyoto. I write about places that honour slowness.',
    31500, 5410.20),
 
   ('c1000000-0000-0000-0000-000000000004',
-   'nadia.hassan@osvasa.com', 'nadia_hassan',
+   'nadia.hassan@mebira.pro', 'nadia_hassan',
    'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop&q=80',
    'Travel journalist based between Cairo and Dubai. The world is bigger than you think.',
    28900, 4870.00),
 
   ('c1000000-0000-0000-0000-000000000005',
-   'finn.eriksen@osvasa.com', 'finn_eriksen',
+   'finn.eriksen@mebira.pro', 'finn_eriksen',
    'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&q=80',
    'Wilderness photographer from Bergen. I find beauty in the most uncomfortable places.',
    44200, 7380.50)

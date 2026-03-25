@@ -9,11 +9,11 @@ import {
   ExternalLink,
   ArrowLeft,
   Building2,
-  UtensilsCrossed,
-  Globe,
-  Plane,
-  Zap,
-  Ship,
+  Home,
+  Castle,
+  Briefcase,
+  Map,
+  KeyRound,
   type LucideIcon,
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
@@ -29,12 +29,12 @@ interface PostPageProps {
 }
 
 const categoryConfig: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
-  hotel: { label: 'Hotel', Icon: Building2, color: 'text-sky-700 bg-sky-50' },
-  restaurant: { label: 'Restaurant', Icon: UtensilsCrossed, color: 'text-orange-700 bg-orange-50' },
-  destination: { label: 'Destination', Icon: Globe, color: 'text-emerald-700 bg-emerald-50' },
-  flight: { label: 'Flight', Icon: Plane, color: 'text-purple-700 bg-purple-50' },
-  activity: { label: 'Activity', Icon: Zap, color: 'text-yellow-700 bg-yellow-50' },
-  cruise: { label: 'Cruise', Icon: Ship, color: 'text-cyan-700 bg-cyan-50' },
+  apartment: { label: 'Apartment', Icon: Building2, color: 'text-red-700 bg-red-50' },
+  house: { label: 'House', Icon: Home, color: 'text-green-700 bg-green-50' },
+  villa: { label: 'Villa', Icon: Castle, color: 'text-yellow-700 bg-yellow-50' },
+  commercial: { label: 'Commercial', Icon: Briefcase, color: 'text-blue-700 bg-blue-50' },
+  land: { label: 'Land', Icon: Map, color: 'text-emerald-700 bg-emerald-50' },
+  rental: { label: 'Rental', Icon: KeyRound, color: 'text-purple-700 bg-purple-50' },
 };
 
 function toDisplayName(username: string): string {
@@ -62,7 +62,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const cat = categoryConfig[row.category] ?? categoryConfig.destination;
 
-  // Build "Go There" URL — routed through click tracker
+  // Build "View Listing" URL — routed through click tracker
   const goThereUrl = `/api/go?post=${row.id}&creator=${creator?.id ?? ''}`;
 
   // Fetch comments (may not exist yet — gracefully returns empty)
@@ -205,7 +205,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
-            {/* Go There */}
+            {/* View Listing */}
             <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
               <a
                 href={goThereUrl}
@@ -213,7 +213,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 rel="noopener noreferrer sponsored"
                 className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl font-bold text-sm hover:from-sky-600 hover:to-teal-600 active:scale-[0.98] transition-all shadow-md shadow-sky-200"
               >
-                Go There
+                View Listing
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>

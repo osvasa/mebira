@@ -10,7 +10,7 @@ export const runtime = 'nodejs';
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
-const CATEGORIES = ['hotel', 'restaurant', 'destination', 'flight', 'activity', 'cruise'];
+const CATEGORIES = ['apartment', 'house', 'villa', 'commercial', 'land', 'rental'];
 
 const STYLE_PROMPTS: Record<string, string> = {
   'luxury-escape': 'Cinematic luxury travel video. Hook: stunning aerial or wide establishing shot. Experience: guests enjoying pool, dining, or suite with beautiful views. Detail: close-up of premium textures, design elements, or signature feature. Closing: golden hour wide shot, emotional and aspirational. Style: smooth camera motion, warm cinematic tones, fast cuts 2-3 seconds each. Goal: make viewer want to book immediately.',

@@ -12,7 +12,7 @@ export function ShareButton({ postId, shareCount }: ShareButtonProps) {
   return (
     <ShareMenu
       path={`/post/${postId}`}
-      title="Check out this travel recommendation on Osvasa"
+      title="Check out this travel recommendation on Mebira"
       count={formatNumber(shareCount)}
     />
   );

@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'user',
-          content: `You are an expert travel content coach helping creators on Osvasa maximize engagement and affiliate earnings. Analyze this post draft and give exactly 3 coaching tips.
+          content: `You are an expert travel content coach helping creators on Mebira maximize engagement and affiliate earnings. Analyze this post draft and give exactly 3 coaching tips.
 
 Draft:
 - Title: ${title || '(empty)'}

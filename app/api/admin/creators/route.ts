@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
   }
 
   const id = randomUUID();
-  const email = `${username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '')}@ai.osvasa.local`;
+  const email = `${username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '')}@ai.mebira.local`;
 
   const supabase = await createClient();
   const { data, error } = await supabase

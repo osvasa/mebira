@@ -58,7 +58,7 @@ export function ShareMenu({ path, title, count, className = '' }: ShareMenuProps
     if (path.startsWith('http')) return path;
     const base = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
       ? window.location.origin
-      : 'https://www.osvasa.com';
+      : 'https://www.mebira.pro';
     return `${base}${path}`;
   }
 

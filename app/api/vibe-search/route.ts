@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       messages: [
         {
           role: 'user',
-          content: `You are a travel vibe matcher for Osvasa, a social travel platform. Match the user's vibe description to the most relevant travel posts based on mood, atmosphere, style — not just keywords.
+          content: `You are a travel vibe matcher for Mebira, a social travel platform. Match the user's vibe description to the most relevant travel posts based on mood, atmosphere, style — not just keywords.
 
 User vibe: "${vibe}"
 

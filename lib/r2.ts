@@ -9,7 +9,7 @@ export const r2 = new S3Client({
   },
 });
 
-export const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET ?? 'osvasa-videos';
+export const R2_BUCKET = process.env.CLOUDFLARE_R2_BUCKET ?? 'mebira-videos';
 
 /** Build the public URL for a stored object key. */
 export function getPublicUrl(key: string): string {

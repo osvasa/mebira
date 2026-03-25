@@ -21,7 +21,7 @@ export const pricePulseDeals: PriceDeal[] = [
     wasPrice: '$1,200',
     nowPrice: '$828',
     nightlyRate: '$828/night',
-    expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel',
+    expediaUrl: 'https://mebira.pro',
     expiresIn: '2 days',
   },
   {
@@ -33,7 +33,7 @@ export const pricePulseDeals: PriceDeal[] = [
     wasPrice: '$620',
     nowPrice: '$453',
     nightlyRate: '$453/night',
-    expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel',
+    expediaUrl: 'https://mebira.pro',
     expiresIn: '5 days',
   },
   {
@@ -45,14 +45,14 @@ export const pricePulseDeals: PriceDeal[] = [
     wasPrice: '$380',
     nowPrice: '$312',
     nightlyRate: '$312/night',
-    expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel',
+    expediaUrl: 'https://mebira.pro',
     expiresIn: '1 day',
   },
 ];
 
 // Post IDs that have active price drops (keyed by post ID from mockData)
 export const postPriceDrops: Record<string, { discount: number; expediaUrl: string }> = {
-  '1': { discount: 31, expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel' },
-  '2': { discount: 18, expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel' },
-  '4': { discount: 27, expediaUrl: 'https://expedia.com/affiliates/osvasa/socialtravel' },
+  '1': { discount: 31, expediaUrl: 'https://mebira.pro' },
+  '2': { discount: 18, expediaUrl: 'https://mebira.pro' },
+  '4': { discount: 27, expediaUrl: 'https://mebira.pro' },
 };

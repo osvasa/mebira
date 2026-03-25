@@ -8,7 +8,7 @@ import { Logo } from '@/components/ui/Logo';
 import { createClient } from '@/lib/supabase/client';
 
 const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1200&q=85';
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200';
 
 function GoogleIcon() {
   return (
@@ -223,10 +223,10 @@ export default function LoginPage() {
 
           <div>
             <blockquote className="text-white text-2xl font-bold leading-snug mb-4 drop-shadow">
-              &ldquo;Discover the world through the eyes of those who&apos;ve been there.&rdquo;
+              &ldquo;Find your perfect property through the eyes of those who live there.&rdquo;
             </blockquote>
             <p className="text-sky-200 text-sm leading-relaxed">
-              Join thousands of travel lovers sharing recommendations and earning real commissions.
+              Browse exclusive property listings shared by top realtors worldwide.
             </p>
           </div>
         </div>

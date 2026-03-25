@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, AtSign, Eye, EyeOff, AlertCircle, CheckCircle2, Loader2, Ticket, Target, DollarSign, Plane } from 'lucide-react';
+import { Mail, Lock, AtSign, Eye, EyeOff, AlertCircle, CheckCircle2, Loader2, Ticket, Target, Video, Users } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
 import { createClient } from '@/lib/supabase/client';
 
 const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&q=85';
+  'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200';
 
 const USERNAME_RE = /^[a-zA-Z0-9_]{3,20}$/;
 
@@ -187,9 +187,9 @@ export default function SignupPage() {
           <Logo />
           <div className="space-y-7">
             {[
-              { Icon: Target, title: 'Invite-only platform', desc: 'Every creator is hand-selected for quality content.' },
-              { Icon: DollarSign, title: 'Earn affiliate commissions', desc: 'Get paid when your followers book through your links.' },
-              { Icon: Plane, title: 'Join top travel creators', desc: 'Be part of an exclusive community of travel influencers.' },
+              { Icon: Target, title: 'Invite-only platform', desc: 'Every realtor is verified for quality listings.' },
+              { Icon: Video, title: 'Showcase your properties', desc: 'Post video tours and reach thousands of buyers.' },
+              { Icon: Users, title: 'Connect with serious buyers', desc: 'Get inquiries directly from interested prospects.' },
             ].map((perk) => (
               <div key={perk.title} className="flex gap-4">
                 <perk.Icon className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
@@ -214,7 +214,7 @@ export default function SignupPage() {
           {step === 'code-entry' && (
             <>
               <h1 className="text-2xl font-extrabold text-slate-900 mb-1">Enter your invite code</h1>
-              <p className="text-slate-500 text-sm mb-6">Paste the code you received via TikTok DM</p>
+              <p className="text-slate-500 text-sm mb-6">Paste the code you received from Mebira</p>
 
               <div className="space-y-4">
                 <div>

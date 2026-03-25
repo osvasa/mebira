@@ -16,6 +16,7 @@ import {
   // FileVideo,  // uncomment when re-enabling file upload tab
   AlertCircle,
   PenLine,
+  ImageIcon,
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { PostCategory } from '@/lib/types';
@@ -55,10 +56,14 @@ export default function CreatePostPage() {
   const [location, setLocation] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<PostCategory>('apartment');
   const [expediaUrl, setExpediaUrl] = useState('');
-  const [startingPrice, setStartingPrice] = useState<number | null>(null);
+  const [, setStartingPrice] = useState<number | null>(null);
 
   // File upload: user-provided place name — uncomment when re-enabling file upload
   // const [fileLocation, setFileLocation] = useState('');
+
+  // Property photos
+  const [propertyPhotos, setPropertyPhotos] = useState<File[]>([]);
+  const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
 
   // Submit
   const [submitting, setSubmitting] = useState(false);
@@ -239,16 +244,30 @@ export default function CreatePostPage() {
     const effectiveUserId = postingAsId || userId;
 
     try {
+      // Upload property photos to R2 via upload-image endpoint
+      const uploadedPhotoUrls: string[] = [];
+      if (propertyPhotos.length > 0) {
+        for (const photo of propertyPhotos) {
+          const fd = new FormData();
+          fd.append('image', photo);
+          const upRes = await fetch('/api/admin/upload-image', { method: 'POST', body: fd });
+          if (upRes.ok) {
+            const upData = await upRes.json();
+            if (upData.url) uploadedPhotoUrls.push(upData.url);
+          }
+        }
+      }
+
       const { error } = await supabase.from('posts').insert({
         user_id: effectiveUserId,
-        title: title.trim() || 'Travel Recommendation',
+        title: title.trim() || 'Property Listing',
         description: description.trim(),
-        photo_url: thumbnailUrl || null,
+        photo_url: thumbnailUrl || (uploadedPhotoUrls[0] ?? null),
         video_url: processedVideoUrl,
         location: location.trim() || 'Unknown',
         category: selectedCategory,
         expedia_url: expediaUrl || null,
-        starting_price: startingPrice,
+        ...(uploadedPhotoUrls.length > 0 ? { photo_urls: uploadedPhotoUrls } : {}),
       });
 
       if (error) {
@@ -563,13 +582,47 @@ export default function CreatePostPage() {
                 </div>
               </div>
 
-              {/* Expedia link */}
+              {/* Listing link */}
               {expediaUrl && (
                 <div className="flex items-center gap-2 pt-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-teal-500" />
-                  <p className="text-[10px] text-teal-600 font-medium">Expedia booking link auto-generated</p>
+                  <p className="text-[10px] text-teal-600 font-medium">Listing link auto-generated</p>
                 </div>
               )}
+
+              {/* Property Photos */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-2">
+                  <ImageIcon className="w-3.5 h-3.5 inline mr-1" />
+                  Property Photos (up to 6)
+                </label>
+                <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-sky-400 hover:bg-sky-50/50 transition-colors">
+                  <span className="text-sm text-slate-500">Click to upload photos</span>
+                  <span className="text-xs text-slate-400">JPG, PNG — up to 6 images</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        const files = Array.from(e.target.files).slice(0, 6);
+                        setPropertyPhotos(files);
+                        setPhotoPreviewUrls(files.map(f => URL.createObjectURL(f)));
+                      }
+                    }}
+                  />
+                </label>
+                {photoPreviewUrls.length > 0 && (
+                  <div className="grid grid-cols-3 gap-2 mt-2">
+                    {photoPreviewUrls.map((url, i) => (
+                      <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden bg-slate-100">
+                        <img src={url} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           )}
 

@@ -3,13 +3,13 @@ import { SupabaseSessionRefresh } from "@/components/auth/SupabaseSessionRefresh
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mebira — Discover & Book Travel",
+  title: "Mebira — Discover Properties Worldwide",
   description:
-    "A social travel discovery platform where creators and AI share stunning hotels, restaurants, and destinations. Book through Expedia and earn commissions.",
-  keywords: "travel, hotels, restaurants, destinations, Expedia, booking, social",
+    "Browse exclusive property listings shared by top realtors. Find apartments, houses, villas, and more.",
+  keywords: "real estate, properties, apartments, houses, villas, listings, realtors",
   openGraph: {
-    title: "Mebira — Discover & Book Travel",
-    description: "Social travel discovery — beautiful recommendations, instant booking.",
+    title: "Mebira — Discover Properties Worldwide",
+    description: "Browse exclusive property listings shared by top realtors. Find apartments, houses, villas, and more.",
     url: "https://mebira.pro",
     siteName: "Mebira",
     type: "website",

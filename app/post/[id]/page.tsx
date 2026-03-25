@@ -215,7 +215,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Photos */}
             <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Photos</p>
-              <PhotoGallery category={row.category} location={row.location} />
+              <PhotoGallery photoUrls={row.photo_urls} category={row.category} location={row.location} />
             </div>
 
             {/* Location */}

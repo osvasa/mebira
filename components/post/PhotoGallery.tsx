@@ -1,16 +1,19 @@
 'use client';
 
 interface PhotoGalleryProps {
+  photoUrls?: string[] | null;
   category: string;
   location: string;
 }
 
-export function PhotoGallery({ category, location }: PhotoGalleryProps) {
-  // Generate 6 unique Unsplash source URLs with cache-busting via sig param
-  const photos = Array.from({ length: 6 }, (_, i) => {
-    const query = `real-estate,${category},${location}`.replace(/\s+/g, '-');
-    return `https://source.unsplash.com/400x300/?${encodeURIComponent(query)}&sig=${i}`;
-  });
+export function PhotoGallery({ photoUrls, category, location }: PhotoGalleryProps) {
+  // Use uploaded photos if available, otherwise fall back to Unsplash
+  const photos = (photoUrls && photoUrls.length > 0)
+    ? photoUrls.slice(0, 6)
+    : Array.from({ length: 6 }, (_, i) => {
+        const query = `real-estate,${category},${location}`.replace(/\s+/g, '-');
+        return `https://source.unsplash.com/400x300/?${encodeURIComponent(query)}&sig=${i}`;
+      });
 
   return (
     <div className="grid grid-cols-3 gap-2">

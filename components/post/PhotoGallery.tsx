@@ -6,14 +6,19 @@ interface PhotoGalleryProps {
   location: string;
 }
 
-export function PhotoGallery({ photoUrls, category, location }: PhotoGalleryProps) {
-  // Use uploaded photos if available, otherwise fall back to Unsplash
+const FALLBACK_PHOTOS = [
+  'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?w=400',
+  'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?w=400',
+  'https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?w=400',
+  'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?w=400',
+  'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?w=400',
+  'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?w=400',
+];
+
+export function PhotoGallery({ photoUrls }: PhotoGalleryProps) {
   const photos = (photoUrls && photoUrls.length > 0)
     ? photoUrls.slice(0, 6)
-    : Array.from({ length: 6 }, (_, i) => {
-        const query = `real-estate,${category},${location}`.replace(/\s+/g, '-');
-        return `https://source.unsplash.com/400x300/?${encodeURIComponent(query)}&sig=${i}`;
-      });
+    : FALLBACK_PHOTOS;
 
   return (
     <div className="grid grid-cols-3 gap-2">

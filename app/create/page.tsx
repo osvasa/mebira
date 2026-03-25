@@ -65,6 +65,13 @@ export default function CreatePostPage() {
   const [propertyPhotos, setPropertyPhotos] = useState<File[]>([]);
   const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
 
+  // Property details
+  const [price, setPrice] = useState('');
+  const [bedrooms, setBedrooms] = useState<number | ''>('');
+  const [bathrooms, setBathrooms] = useState<number | ''>('');
+  const [sizeSqft, setSizeSqft] = useState<number | ''>('');
+  const [features, setFeatures] = useState('');
+
   // Submit
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -271,6 +278,11 @@ export default function CreatePostPage() {
           category: selectedCategory,
           expedia_url: expediaUrl || null,
           ...(uploadedPhotoUrls.length > 0 ? { photo_urls: uploadedPhotoUrls } : {}),
+          ...(price ? { price } : {}),
+          ...(bedrooms !== '' ? { bedrooms } : {}),
+          ...(bathrooms !== '' ? { bathrooms } : {}),
+          ...(sizeSqft !== '' ? { size_sqft: sizeSqft } : {}),
+          ...(features.trim() ? { property_features: features.split(',').map(f => f.trim()).filter(Boolean) } : {}),
         }),
       });
       const createData = await createRes.json();
@@ -553,6 +565,68 @@ export default function CreatePostPage() {
                   placeholder="First-person description of your experience…"
                 />
                 <p className="text-[10px] text-slate-400 mt-0.5 text-right">{description.length}/200</p>
+              </div>
+
+              {/* Property Details */}
+              <div className="border border-slate-200 rounded-xl p-4 space-y-3">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Property Details (optional)</p>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-600 mb-1">Price</label>
+                  <input
+                    type="text"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    className="input text-sm"
+                    placeholder="e.g. $450,000 or $2,500/mo"
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 mb-1">Bedrooms</label>
+                    <input
+                      type="number"
+                      min={0}
+                      max={20}
+                      value={bedrooms}
+                      onChange={(e) => setBedrooms(e.target.value === '' ? '' : parseInt(e.target.value))}
+                      className="input text-sm"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 mb-1">Bathrooms</label>
+                    <input
+                      type="number"
+                      min={0}
+                      max={20}
+                      value={bathrooms}
+                      onChange={(e) => setBathrooms(e.target.value === '' ? '' : parseInt(e.target.value))}
+                      className="input text-sm"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 mb-1">Size (sqft)</label>
+                    <input
+                      type="number"
+                      min={0}
+                      value={sizeSqft}
+                      onChange={(e) => setSizeSqft(e.target.value === '' ? '' : parseInt(e.target.value))}
+                      className="input text-sm"
+                      placeholder="sqft"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-600 mb-1">Features</label>
+                  <input
+                    type="text"
+                    value={features}
+                    onChange={(e) => setFeatures(e.target.value)}
+                    className="input text-sm"
+                    placeholder="Pool, Gym, Parking, Ocean View — comma separated"
+                  />
+                </div>
               </div>
 
               {/* Location + Category row */}

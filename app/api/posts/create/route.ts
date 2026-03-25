@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { user_id, title, description, photo_url, video_url, location, category, expedia_url, photo_urls } = body;
+    const { user_id, title, description, photo_url, video_url, location, category, expedia_url, photo_urls, price, bedrooms, bathrooms, size_sqft, property_features } = body;
 
     if (!title || !location || !category) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -43,6 +43,11 @@ export async function POST(req: NextRequest) {
         category,
         expedia_url: expedia_url || null,
         ...(photo_urls && photo_urls.length > 0 ? { photo_urls } : {}),
+        ...(price ? { price } : {}),
+        ...(bedrooms != null ? { bedrooms } : {}),
+        ...(bathrooms != null ? { bathrooms } : {}),
+        ...(size_sqft != null ? { size_sqft } : {}),
+        ...(property_features && property_features.length > 0 ? { property_features } : {}),
       })
       .select()
       .single();

@@ -212,11 +212,13 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* Contact Realtor */}
             <ContactRealtorForm />
 
-            {/* Photos */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Photos</p>
-              <PhotoGallery photoUrls={row.photo_urls} category={row.category} location={row.location} />
-            </div>
+            {/* Photos — only shown when post has uploaded photos */}
+            {row.photo_urls && row.photo_urls.length > 0 && (
+              <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Photos</p>
+                <PhotoGallery photoUrls={row.photo_urls} category={row.category} location={row.location} />
+              </div>
+            )}
 
             {/* Location */}
             <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">

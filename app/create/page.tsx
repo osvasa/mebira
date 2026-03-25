@@ -258,20 +258,25 @@ export default function CreatePostPage() {
         }
       }
 
-      const { error } = await supabase.from('posts').insert({
-        user_id: effectiveUserId,
-        title: title.trim() || 'Property Listing',
-        description: description.trim(),
-        photo_url: thumbnailUrl || (uploadedPhotoUrls[0] ?? null),
-        video_url: processedVideoUrl,
-        location: location.trim() || 'Unknown',
-        category: selectedCategory,
-        expedia_url: expediaUrl || null,
-        ...(uploadedPhotoUrls.length > 0 ? { photo_urls: uploadedPhotoUrls } : {}),
+      const createRes = await fetch('/api/posts/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: effectiveUserId,
+          title: title.trim() || 'Property Listing',
+          description: description.trim(),
+          photo_url: thumbnailUrl || (uploadedPhotoUrls[0] ?? null),
+          video_url: processedVideoUrl,
+          location: location.trim() || 'Unknown',
+          category: selectedCategory,
+          expedia_url: expediaUrl || null,
+          ...(uploadedPhotoUrls.length > 0 ? { photo_urls: uploadedPhotoUrls } : {}),
+        }),
       });
+      const createData = await createRes.json();
 
-      if (error) {
-        setSubmitError(error.message);
+      if (!createRes.ok) {
+        setSubmitError(createData.error || 'Failed to create post');
         return;
       }
 
@@ -645,7 +650,8 @@ export default function CreatePostPage() {
             <button
               type="submit"
               disabled={!canSubmit}
-              className="flex-2 flex-grow-[2] py-3 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-xl font-bold text-sm hover:from-sky-600 hover:to-teal-600 transition-all shadow-md shadow-sky-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-2 flex-grow-[2] py-3 text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              style={{ backgroundColor: '#2D9B4E' }}
             >
               {submitting ? (
                 <>

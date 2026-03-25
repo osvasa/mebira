@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
+
+function getAdminSupabase() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 async function isAdmin() {
   const supabase = await createClient();
@@ -45,8 +53,8 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: 'postId required' }, { status: 400 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase
+  const admin = getAdminSupabase();
+  const { error } = await admin
     .from('posts')
     .update({
       title: title ?? undefined,
@@ -74,8 +82,8 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'postId required' }, { status: 400 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase
+  const admin = getAdminSupabase();
+  const { error } = await admin
     .from('posts')
     .delete()
     .eq('id', postId);

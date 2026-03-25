@@ -1,5 +1,5 @@
-// Deployed: 2026-02-24
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 import { HomeFeed } from '@/components/feed/HomeFeed';
 import {

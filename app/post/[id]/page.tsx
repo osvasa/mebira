@@ -22,6 +22,7 @@ import { formatDistanceToNow, formatNumber } from '@/lib/utils';
 import { CommentsSection } from '@/components/post/CommentsSection';
 import { ShareButton } from '@/components/post/ShareButton';
 import { PostVideoPlayer } from '@/components/post/PostVideoPlayer';
+import { ContactRealtorForm } from '@/components/post/ContactRealtorForm';
 
 
 interface PostPageProps {
@@ -205,19 +206,8 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             )}
 
-            {/* View Property */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
-              <a
-                href={goThereUrl}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
-                className="flex items-center justify-center gap-2 w-full py-3.5 text-white rounded-xl font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-md"
-                style={{ backgroundColor: '#2D9B4E' }}
-              >
-                View Property
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
+            {/* Contact Realtor */}
+            <ContactRealtorForm />
           </div>
         </div>
 

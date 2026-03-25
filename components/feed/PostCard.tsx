@@ -763,16 +763,14 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
 
       {/* ── View Property CTA ── */}
       <div className="px-4 pb-4">
-        <a
-          href={goThereUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/post/${post.id}`}
           className="block w-full py-3 text-white rounded-xl font-bold text-sm text-center hover:opacity-90 transition-opacity shadow-md"
           style={{ backgroundColor: '#2D9B4E' }}
         >
           View Property{' '}
           <ExternalLink className="w-4 h-4 inline-block align-middle" />
-        </a>
+        </Link>
       </div>
 
       {/* ── Delete confirmation dialog ── */}

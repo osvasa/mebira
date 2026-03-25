@@ -22,6 +22,13 @@ import { CommentsSection } from '@/components/post/CommentsSection';
 import { ShareButton } from '@/components/post/ShareButton';
 import { PostVideoPlayer } from '@/components/post/PostVideoPlayer';
 import { ContactRealtorForm } from '@/components/post/ContactRealtorForm';
+import { PhotoGallery } from '@/components/post/PhotoGallery';
+import dynamic from 'next/dynamic';
+
+const LocationMap = dynamic(
+  () => import('@/components/post/LocationMap').then(mod => mod.LocationMap),
+  { ssr: false, loading: () => <div className="w-full rounded-xl bg-slate-100 animate-pulse" style={{ height: '300px' }} /> }
+);
 
 
 interface PostPageProps {
@@ -204,6 +211,18 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Contact Realtor */}
             <ContactRealtorForm />
+
+            {/* Photos */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Photos</p>
+              <PhotoGallery category={row.category} location={row.location} />
+            </div>
+
+            {/* Location */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Location</p>
+              <LocationMap location={row.location} />
+            </div>
           </div>
         </div>
 

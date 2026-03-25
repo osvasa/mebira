@@ -149,42 +149,28 @@ export async function fetchTrendingDestinations(): Promise<TrendingDestination[]
       id: `trending-${i}`,
       name,
       country,
-      image: DESTINATION_IMAGES[country] || '',
+      image: DESTINATION_IMAGES[country] || DEFAULT_DESTINATION_IMAGE,
       postCount: count,
     }));
 }
 
-// Curated destination images keyed by country name
+// Curated destination images keyed by country name (Pexels static URLs)
 const DESTINATION_IMAGES: Record<string, string> = {
-  'United States': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800&q=80',
-  'United Kingdom': 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80',
-  'France': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
-  'Italy': 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&q=80',
-  'Indonesia': 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80',
-  'Japan': 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80',
-  'Vietnam': 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=80',
-  'Singapore': 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&q=80',
-  'Turkey': 'https://images.unsplash.com/photo-1527838832700-5059252407fa?w=800&q=80',
-  'Denmark': 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800&q=80',
-  'Thailand': 'https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800&q=80',
-  'Peru': 'https://images.unsplash.com/photo-1531968455001-5c5272a67c71?w=800&q=80',
-  'India': 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=800&q=80',
-  'Mexico': 'https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?w=800&q=80',
-  'Chile': 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80',
-  'Argentina': 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=800&q=80',
-  'China': 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&q=80',
-  'Saudi Arabia': 'https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=800&q=80',
-  'United Arab Emirates': 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80',
-  'Greece': 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80',
-  'Maldives': 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80',
-  'Spain': 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800&q=80',
-  'Australia': 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&q=80',
-  'Brazil': 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800&q=80',
-  'Bahamas': 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&q=80',
-  'French Polynesia': 'https://images.unsplash.com/photo-1589979481223-deb893043163?w=800&q=80',
-  'Switzerland': 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&q=80',
-  'Bora Bora, French Polynesia': 'https://images.unsplash.com/photo-1589979481223-deb893043163?w=800&q=80',
+  'United States': 'https://images.pexels.com/photos/1239162/pexels-photo-1239162.jpeg?w=300',
+  'United Arab Emirates': 'https://images.pexels.com/photos/1470405/pexels-photo-1470405.jpeg?w=300',
+  'Spain': 'https://images.pexels.com/photos/819764/pexels-photo-819764.jpeg?w=300',
+  'Portugal': 'https://images.pexels.com/photos/1534560/pexels-photo-1534560.jpeg?w=300',
+  'United Kingdom': 'https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?w=300',
+  'France': 'https://images.pexels.com/photos/532826/pexels-photo-532826.jpeg?w=300',
+  'Italy': 'https://images.pexels.com/photos/1701595/pexels-photo-1701595.jpeg?w=300',
+  'Mexico': 'https://images.pexels.com/photos/3290070/pexels-photo-3290070.jpeg?w=300',
+  'Japan': 'https://images.pexels.com/photos/590478/pexels-photo-590478.jpeg?w=300',
+  'Brazil': 'https://images.pexels.com/photos/2868242/pexels-photo-2868242.jpeg?w=300',
+  'Greece': 'https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?w=300',
+  'Australia': 'https://images.pexels.com/photos/1878293/pexels-photo-1878293.jpeg?w=300',
 };
+
+const DEFAULT_DESTINATION_IMAGE = 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=300';
 
 // Build stories from live posts: one card per unique country, up to 7
 // Only include countries that have a curated image in DESTINATION_IMAGES
@@ -202,8 +188,8 @@ export async function buildStories(): Promise<Story[]> {
   for (const row of data) {
     const country = row.country;
     if (!country) continue;
-    const image = DESTINATION_IMAGES[country];
-    if (!image || seen.has(country) || stories.length >= 7) continue;
+    if (seen.has(country) || stories.length >= 7) continue;
+    const image = DESTINATION_IMAGES[country] || DEFAULT_DESTINATION_IMAGE;
     seen.add(country);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user = row.users ? mapUser(row.users as any) : { id: row.user_id, username: 'unknown', displayName: 'Unknown', avatar: '', bio: '', followerCount: 0, followingCount: 0, postCount: 0, totalEarnings: 0, isAI: false, isVerified: false, isFollowing: false };

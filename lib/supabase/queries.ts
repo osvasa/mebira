@@ -67,7 +67,7 @@ function mapPost(row: any): Post {
     createdAt: row.created_at,
     tags: [],
     videoUrl: row.video_url ?? undefined,
-    price: row.starting_price ? `$${Number(row.starting_price).toFixed(0)}` : undefined,
+    price: row.starting_price ? `$${Number(row.starting_price).toFixed(0)}` : (row.price ? `$${row.price}` : undefined),
   };
 }
 
@@ -99,7 +99,7 @@ export async function fetchPosts(seed: number): Promise<Post[]> {
 
   const { data, error } = await supabase
     .from('posts')
-    .select('*, starting_price, users(id, username, avatar, bio, followers, earnings)');
+    .select('*, users(id, username, avatar, bio, followers, earnings)');
 
   if (error) { console.error('[fetchPosts] full error:', error); return []; }
   if (!data) return [];
@@ -226,7 +226,7 @@ export async function fetchExplorePosts(
   const supabase = await createClient();
   let query = supabase
     .from('posts')
-    .select('*, starting_price, users(id, username, avatar, bio, followers, earnings)')
+    .select('*, users(id, username, avatar, bio, followers, earnings)')
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);
 

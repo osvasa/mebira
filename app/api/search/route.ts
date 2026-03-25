@@ -55,7 +55,7 @@ function mapRow(row: any) {
     createdAt: row.created_at,
     tags: [],
     videoUrl: row.video_url ?? undefined,
-    price: row.starting_price ? `$${Number(row.starting_price).toFixed(0)}` : undefined,
+    price: undefined,
   };
 }
 
@@ -82,7 +82,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('posts')
-    .select('*, starting_price, users(id, username, avatar, bio, followers, earnings)')
+    .select('*, users(id, username, avatar, bio, followers, earnings)')
     .or(orFilter)
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);

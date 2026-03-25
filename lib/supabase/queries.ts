@@ -169,6 +169,8 @@ const DESTINATION_IMAGES: Record<string, string> = {
   'Brazil': 'https://images.pexels.com/photos/2868242/pexels-photo-2868242.jpeg?w=300',
   'Greece': 'https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?w=300',
   'Australia': 'https://images.pexels.com/photos/1878293/pexels-photo-1878293.jpeg?w=300',
+  'Canada': 'https://images.pexels.com/photos/1868676/pexels-photo-1868676.jpeg?w=300',
+  'Costa Rica': 'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?w=300',
 };
 
 const DEFAULT_DESTINATION_IMAGE = 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?w=300';

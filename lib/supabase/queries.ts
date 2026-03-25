@@ -125,13 +125,13 @@ export async function fetchTrendingDestinations(): Promise<TrendingDestination[]
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('posts')
-    .select('location, country');
+    .select('location, country, photo_url');
 
   if (error) { console.error('[fetchTrendingDestinations]', error.message); return []; }
   if (!data) return [];
 
-  // Group by location (precise city/place)
-  const locationMap = new Map<string, { count: number; country: string }>();
+  // Group by location — keep first photo_url as thumbnail
+  const locationMap = new Map<string, { count: number; country: string; photo_url: string }>();
   for (const row of data) {
     const loc = row.location;
     if (!loc) continue;
@@ -139,17 +139,18 @@ export async function fetchTrendingDestinations(): Promise<TrendingDestination[]
     locationMap.set(loc, {
       count: (existing?.count ?? 0) + 1,
       country: row.country || '',
+      photo_url: existing?.photo_url || row.photo_url || '',
     });
   }
 
   return Array.from(locationMap.entries())
     .sort((a, b) => b[1].count - a[1].count)
-    .slice(0, 4)
-    .map(([name, { count, country }], i) => ({
+    .slice(0, 6)
+    .map(([name, { count, country, photo_url }], i) => ({
       id: `trending-${i}`,
       name,
       country,
-      image: DESTINATION_IMAGES[country] || DEFAULT_DESTINATION_IMAGE,
+      image: photo_url || DESTINATION_IMAGES[country] || DEFAULT_DESTINATION_IMAGE,
       postCount: count,
     }));
 }

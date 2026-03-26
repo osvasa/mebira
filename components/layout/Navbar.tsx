@@ -125,7 +125,7 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
           <nav className="hidden sm:flex items-center gap-1 ml-auto">
             <Link
               href="/explore"
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-[#2D9B4E] hover:bg-[#258442] rounded-full transition-colors shadow-sm"
             >
               <Compass className="w-4 h-4" />
               Explore

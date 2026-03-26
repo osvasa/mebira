@@ -77,8 +77,8 @@ export async function GET(req: NextRequest) {
   const qLower = q.toLowerCase();
   const isUSA = usaVariants.some((v) => qLower.includes(v));
   const orFilter = isUSA
-    ? `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild},location.ilike.%United States%,location.ilike.%USA%`
-    : `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild}`;
+    ? `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild},country.ilike.${wild},location.ilike.%United States%,location.ilike.%USA%,country.ilike.%United States%`
+    : `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild},country.ilike.${wild}`;
 
   const { data, error } = await supabase
     .from('posts')

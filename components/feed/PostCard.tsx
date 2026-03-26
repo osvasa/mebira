@@ -765,7 +765,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
           className="block w-full py-3 text-white rounded-xl font-bold text-sm text-center hover:opacity-90 transition-opacity shadow-md"
           style={{ backgroundColor: '#2D9B4E' }}
         >
-          View Property{' '}
+          Show More{' '}
           <ExternalLink className="w-4 h-4 inline-block align-middle" />
         </Link>
       </div>

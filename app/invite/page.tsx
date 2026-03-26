@@ -7,19 +7,18 @@ import { Logo } from '@/components/ui/Logo';
 import { createClient } from '@/lib/supabase/client';
 
 const CONTENT_TYPES = [
-  { value: 'hotels', label: 'Hotels' },
-  { value: 'restaurants', label: 'Restaurants' },
-  { value: 'destinations', label: 'Destinations' },
-  { value: 'flights', label: 'Flights' },
-  { value: 'activities', label: 'Activities' },
-  { value: 'cruises', label: 'Cruises' },
-  { value: 'travel', label: 'Travel (General)' },
+  { value: 'residential', label: 'Residential' },
+  { value: 'luxury', label: 'Luxury' },
+  { value: 'commercial', label: 'Commercial' },
+  { value: 'rentals', label: 'Rentals' },
+  { value: 'land', label: 'Land' },
+  { value: 'new-developments', label: 'New Developments' },
 ];
 
 export default function InvitePage() {
   const [fullName, setFullName] = useState('');
   const [tiktokProfile, setTiktokProfile] = useState('');
-  const [contentType, setContentType] = useState('travel');
+  const [contentType, setContentType] = useState('residential');
   const [travelStyle, setTravelStyle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -91,7 +90,7 @@ export default function InvitePage() {
       {/* Left hero */}
       <div className="hidden lg:flex relative w-[45%] flex-col">
         <img
-          src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1200&q=85"
+          src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?w=1200"
           alt="Realtor"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -100,12 +99,12 @@ export default function InvitePage() {
           <Logo />
           <div className="space-y-6">
             <h2 className="text-white text-3xl font-extrabold leading-tight drop-shadow">
-              Join the world&apos;s most exclusive travel creator community
+              Join the world&apos;s most exclusive real estate community
             </h2>
             <div className="space-y-4">
               {[
                 { Icon: Target, text: 'Quality over quantity — every realtor is verified' },
-                { Icon: DollarSign, text: 'Earn real commissions from your travel recommendations' },
+                { Icon: DollarSign, text: 'Showcase your listings to thousands of buyers' },
                 { Icon: Globe, text: 'Connect with a curated community of real estate professionals' },
               ].map((item) => (
                 <div key={item.text} className="flex gap-3">
@@ -140,7 +139,7 @@ export default function InvitePage() {
             <h1 className="text-2xl font-extrabold text-slate-900">Request an Invite</h1>
           </div>
           <p className="text-slate-500 text-sm mb-8 leading-relaxed">
-            Mebira is an invite-only platform for quality travel creators. Tell us about yourself and we&apos;ll review your profile.
+            Mebira is an invite-only platform for real estate professionals. Tell us about yourself and we&apos;ll review your profile.
           </p>
 
           {error && (
@@ -172,11 +171,11 @@ export default function InvitePage() {
                 placeholder="https://www.tiktok.com/@yourhandle"
                 className={`input${fieldErrors.tiktokProfile ? ' !border-red-400' : ''}`}
               />
-              {fieldErrors.tiktokProfile ? <p className="text-[11px] text-red-500 mt-1">{fieldErrors.tiktokProfile}</p> : <p className="text-[11px] text-slate-400 mt-1">We&apos;ll review your content to ensure quality</p>}
+              {fieldErrors.tiktokProfile ? <p className="text-[11px] text-red-500 mt-1">{fieldErrors.tiktokProfile}</p> : <p className="text-[11px] text-slate-400 mt-1">We&apos;ll review your profile to ensure quality</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Content Type</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Property Focus</label>
               <select
                 value={contentType}
                 onChange={(e) => setContentType(e.target.value)}
@@ -190,13 +189,13 @@ export default function InvitePage() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Travel Style <span className="text-slate-400 font-normal">(optional)</span>
+                Markets You Cover <span className="text-slate-400 font-normal">(optional)</span>
               </label>
               <textarea
                 rows={3}
                 value={travelStyle}
                 onChange={(e) => setTravelStyle(e.target.value)}
-                placeholder="Luxury hotels, budget backpacking, food tours, adventure travel..."
+                placeholder="Miami, NYC, Dubai, Barcelona..."
                 maxLength={300}
                 className="input resize-none"
               />

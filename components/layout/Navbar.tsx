@@ -15,7 +15,7 @@ import {
   Briefcase,
   Map,
   KeyRound,
-  HardHat,
+  Hammer,
   LayoutGrid,
   User,
   Settings,
@@ -28,14 +28,14 @@ import { Logo } from '@/components/ui/Logo';
 import { createClient } from '@/lib/supabase/client';
 
 const categories: { id: string; label: string; Icon: LucideIcon }[] = [
-  { id: 'all',         label: 'All',          Icon: LayoutGrid },
-  { id: 'apartment',   label: 'Apartments',   Icon: Building2 },
-  { id: 'house',       label: 'Houses',       Icon: Home },
-  { id: 'villa',       label: 'Villas',       Icon: Castle },
-  { id: 'commercial',  label: 'Commercial',   Icon: Briefcase },
-  { id: 'land',        label: 'Land',         Icon: Map },
-  { id: 'rental',      label: 'Rentals',      Icon: KeyRound },
-  { id: 'preconstruction', label: 'Pre-construction', Icon: HardHat },
+  { id: 'all',              label: 'All',              Icon: LayoutGrid },
+  { id: 'house',            label: 'Houses',           Icon: Home },
+  { id: 'apartment',        label: 'Apartments',       Icon: Building2 },
+  { id: 'villa',            label: 'Villas',           Icon: Castle },
+  { id: 'rental',           label: 'Rentals',          Icon: KeyRound },
+  { id: 'commercial',       label: 'Commercial',       Icon: Briefcase },
+  { id: 'preconstruction',  label: 'Pre-construction', Icon: Hammer },
+  { id: 'land',             label: 'Land',             Icon: Map },
 ];
 
 interface NavbarProps {

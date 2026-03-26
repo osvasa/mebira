@@ -749,13 +749,13 @@ export default function CreatePostPage() {
                     onChange={(e) => setSelectedCategory(e.target.value as PostCategory)}
                     className="input text-sm"
                   >
-                    <option value="apartment">Apartment</option>
                     <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
                     <option value="villa">Villa</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="land">Land</option>
                     <option value="rental">Rental</option>
+                    <option value="commercial">Commercial</option>
                     <option value="preconstruction">Pre-construction</option>
+                    <option value="land">Land</option>
                   </select>
                 </div>
               </div>

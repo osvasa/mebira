@@ -6,19 +6,9 @@ import { Sparkles, Send, CheckCircle2, AlertCircle, Loader2, ArrowLeft, Target, 
 import { Logo } from '@/components/ui/Logo';
 import { createClient } from '@/lib/supabase/client';
 
-const CONTENT_TYPES = [
-  { value: 'residential', label: 'Residential' },
-  { value: 'luxury', label: 'Luxury' },
-  { value: 'commercial', label: 'Commercial' },
-  { value: 'rentals', label: 'Rentals' },
-  { value: 'land', label: 'Land' },
-  { value: 'new-developments', label: 'New Developments' },
-];
-
 export default function InvitePage() {
   const [fullName, setFullName] = useState('');
   const [tiktokProfile, setTiktokProfile] = useState('');
-  const [contentType, setContentType] = useState('residential');
   const [travelStyle, setTravelStyle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -44,7 +34,6 @@ export default function InvitePage() {
         .insert({
           full_name: fullName.trim(),
           tiktok_profile: tiktokProfile.trim(),
-          content_type: contentType,
           travel_style: travelStyle.trim() || null,
           status: 'pending',
         });
@@ -172,19 +161,6 @@ export default function InvitePage() {
                 className={`input${fieldErrors.tiktokProfile ? ' !border-red-400' : ''}`}
               />
               {fieldErrors.tiktokProfile ? <p className="text-[11px] text-red-500 mt-1">{fieldErrors.tiktokProfile}</p> : <p className="text-[11px] text-slate-400 mt-1">We&apos;ll review your profile to ensure quality</p>}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Property Focus</label>
-              <select
-                value={contentType}
-                onChange={(e) => setContentType(e.target.value)}
-                className="input bg-white"
-              >
-                {CONTENT_TYPES.map((ct) => (
-                  <option key={ct.value} value={ct.value}>{ct.label}</option>
-                ))}
-              </select>
             </div>
 
             <div>

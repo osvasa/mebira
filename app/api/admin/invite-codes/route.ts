@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { randomBytes } from 'crypto';
 
 async function isAdmin() {
@@ -33,7 +34,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { creatorName, tiktokProfile, contentType } = body;
+  const { creatorName, tiktokProfile } = body;
 
   if (!creatorName) {
     return NextResponse.json({ error: 'Realtor name is required' }, { status: 400 });
@@ -41,15 +42,17 @@ export async function POST(req: NextRequest) {
 
   const code = `MEBIRA-${randomBytes(3).toString('hex').toUpperCase()}`;
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  const admin = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  const { data, error } = await admin
     .from('invite_codes')
     .insert({
       code,
       creator_name: creatorName,
       tiktok_profile: tiktokProfile || null,
-      content_type: contentType || 'travel',
-      created_by_admin: true,
+      used: false,
     })
     .select()
     .single();

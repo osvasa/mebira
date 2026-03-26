@@ -135,7 +135,7 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
               <>
                 <Link
                   href="/create"
-                  className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-full text-sm font-semibold hover:from-sky-600 hover:to-teal-600 transition-all shadow-sm ml-1"
+                  className="flex items-center gap-1.5 px-4 py-2 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-full text-sm font-semibold transition-all shadow-sm ml-1"
                 >
                   <PlusCircle className="w-4 h-4" />
                   Post

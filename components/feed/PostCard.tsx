@@ -26,6 +26,7 @@ import {
   Briefcase,
   Map,
   KeyRound,
+  HardHat,
   type LucideIcon,
 } from 'lucide-react';
 import { ShareMenu } from '@/components/ui/ShareMenu';
@@ -46,6 +47,7 @@ const categoryConfig: Record<
   commercial: { label: 'Commercial', Icon: Briefcase, bg: 'bg-blue-50', text: 'text-blue-700' },
   land: { label: 'Land', Icon: Map, bg: 'bg-emerald-50', text: 'text-emerald-700' },
   rental: { label: 'Rental', Icon: KeyRound, bg: 'bg-purple-50', text: 'text-purple-700' },
+  preconstruction: { label: 'Pre-construction', Icon: HardHat, bg: 'bg-orange-50', text: 'text-orange-700' },
 };
 
 interface PostCardProps {

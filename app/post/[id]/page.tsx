@@ -13,6 +13,7 @@ import {
   Briefcase,
   Map,
   KeyRound,
+  HardHat,
   Bed,
   Bath,
   Ruler,
@@ -45,6 +46,7 @@ const categoryConfig: Record<string, { label: string; Icon: LucideIcon; color: s
   commercial: { label: 'Commercial', Icon: Briefcase, color: 'text-blue-700 bg-blue-50' },
   land: { label: 'Land', Icon: Map, color: 'text-emerald-700 bg-emerald-50' },
   rental: { label: 'Rental', Icon: KeyRound, color: 'text-purple-700 bg-purple-50' },
+  preconstruction: { label: 'Pre-construction', Icon: HardHat, color: 'text-orange-700 bg-orange-50' },
 };
 
 function toDisplayName(username: string): string {

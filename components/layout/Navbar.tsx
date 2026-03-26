@@ -15,6 +15,7 @@ import {
   Briefcase,
   Map,
   KeyRound,
+  HardHat,
   LayoutGrid,
   User,
   Settings,
@@ -34,6 +35,7 @@ const categories: { id: string; label: string; Icon: LucideIcon }[] = [
   { id: 'commercial',  label: 'Commercial',   Icon: Briefcase },
   { id: 'land',        label: 'Land',         Icon: Map },
   { id: 'rental',      label: 'Rentals',      Icon: KeyRound },
+  { id: 'preconstruction', label: 'Pre-construction', Icon: HardHat },
 ];
 
 interface NavbarProps {

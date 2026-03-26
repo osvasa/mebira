@@ -990,7 +990,7 @@ export default function AdminPage() {
                       <option value="commercial">Commercial</option>
                       <option value="land">Land</option>
                       <option value="rental">Rental</option>
-                    </select>
+<option value="preconstruction">Pre-construction</option>                    </select>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-1">Style</label>
@@ -1184,7 +1184,7 @@ export default function AdminPage() {
                   <option value="commercial">Commercial</option>
                   <option value="land">Land</option>
                   <option value="rental">Rental</option>
-                </select>
+<option value="preconstruction">Pre-construction</option>                </select>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-500 mb-1">Listing URL</label>

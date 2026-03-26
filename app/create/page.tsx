@@ -755,6 +755,7 @@ export default function CreatePostPage() {
                     <option value="commercial">Commercial</option>
                     <option value="land">Land</option>
                     <option value="rental">Rental</option>
+                    <option value="preconstruction">Pre-construction</option>
                   </select>
                 </div>
               </div>

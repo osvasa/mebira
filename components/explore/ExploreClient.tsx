@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { Compass, Building2, Home, Castle, Briefcase, Map, KeyRound, LayoutGrid, MapPin, Loader2, Play, ArrowLeft, type LucideIcon } from 'lucide-react';
+import { Compass, Building2, Home, Castle, Briefcase, Map, KeyRound, HardHat, LayoutGrid, MapPin, Loader2, Play, ArrowLeft, type LucideIcon } from 'lucide-react';
 
 import { Post } from '@/lib/types';
 
@@ -14,6 +14,7 @@ const categories = [
   { id: 'commercial',  label: 'Commercial',   Icon: Briefcase },
   { id: 'land',        label: 'Land',         Icon: Map },
   { id: 'rental',      label: 'Rentals',      Icon: KeyRound },
+  { id: 'preconstruction', label: 'Pre-construction', Icon: HardHat },
 ];
 
 const categoryConfig: Record<string, { Icon: LucideIcon; color: string }> = {
@@ -23,6 +24,7 @@ const categoryConfig: Record<string, { Icon: LucideIcon; color: string }> = {
   commercial:  { Icon: Briefcase, color: 'text-blue-700 bg-blue-50' },
   land:        { Icon: Map, color: 'text-emerald-700 bg-emerald-50' },
   rental:      { Icon: KeyRound, color: 'text-purple-700 bg-purple-50' },
+  preconstruction: { Icon: HardHat, color: 'text-orange-700 bg-orange-50' },
 };
 
 interface ExploreClientProps {

@@ -111,6 +111,7 @@ villa = luxury villas, estates, mansions, beachfront homes
 commercial = offices, retail, warehouses, mixed-use
 land = plots, lots, development land, farms
 rental = short-term rentals, vacation rentals, furnished apartments
+preconstruction = pre-construction projects, new developments, off-plan properties, upcoming builds
 
 Return ONLY valid JSON (no markdown, no code fences):
 {

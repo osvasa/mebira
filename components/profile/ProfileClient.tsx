@@ -353,10 +353,10 @@ export function ProfileClient({ user, posts, postCount, followerCount: initialFo
                 <button
                   onClick={handleFollow}
                   disabled={followLoading}
-                  className={`px-4 sm:px-5 py-2 rounded-full text-sm font-bold transition-all ${
+                  className={`px-4 sm:px-5 py-2 rounded-full text-sm font-bold transition-all text-white shadow-sm ${
                     isFollowing
-                      ? 'bg-slate-900 text-white border border-slate-900 hover:bg-slate-700'
-                      : 'bg-gradient-to-r from-sky-500 to-teal-500 text-white hover:from-sky-600 hover:to-teal-600 shadow-sm'
+                      ? 'bg-slate-900 hover:bg-slate-700'
+                      : 'bg-[#C8102E] hover:bg-[#a80d25]'
                   }`}
                 >
                   {followLoading ? (
@@ -366,7 +366,7 @@ export function ProfileClient({ user, posts, postCount, followerCount: initialFo
               ) : (
                 <Link
                   href="/auth/login"
-                  className="px-4 sm:px-5 py-2 bg-gradient-to-r from-sky-500 to-teal-500 text-white rounded-full text-sm font-bold hover:from-sky-600 hover:to-teal-600 transition-all shadow-sm"
+                  className="px-4 sm:px-5 py-2 bg-[#C8102E] hover:bg-[#a80d25] text-white rounded-full text-sm font-bold transition-all shadow-sm"
                 >
                   Follow
                 </Link>

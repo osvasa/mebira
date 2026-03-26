@@ -152,6 +152,11 @@ export default function AdminPage() {
   const [editLocation, setEditLocation] = useState('');
   const [editCategory, setEditCategory] = useState('');
   const [editExpediaUrl, setEditExpediaUrl] = useState('');
+  const [editPrice, setEditPrice] = useState('');
+  const [editBedrooms, setEditBedrooms] = useState('');
+  const [editBathrooms, setEditBathrooms] = useState('');
+  const [editSizeSqft, setEditSizeSqft] = useState('');
+  const [editFeatures, setEditFeatures] = useState('');
   const [editSaving, setEditSaving] = useState(false);
 
   // Auth check
@@ -333,6 +338,13 @@ export default function AdminPage() {
     setEditLocation(post.location);
     setEditCategory(post.category);
     setEditExpediaUrl(post.expedia_url || '');
+    // Property details — cast to any since CreatorPost may not have these typed
+    const p = post as unknown as Record<string, unknown>;
+    setEditPrice((p.price as string) || '');
+    setEditBedrooms(p.bedrooms != null ? String(p.bedrooms) : '');
+    setEditBathrooms(p.bathrooms != null ? String(p.bathrooms) : '');
+    setEditSizeSqft(p.size_sqft != null ? String(p.size_sqft) : '');
+    setEditFeatures(Array.isArray(p.property_features) ? (p.property_features as string[]).join(', ') : '');
   }
 
   async function handleEditPostSave() {
@@ -348,6 +360,11 @@ export default function AdminPage() {
         location: editLocation.trim(),
         category: editCategory,
         expedia_url: editExpediaUrl.trim() || null,
+        price: editPrice.trim() || null,
+        bedrooms: editBedrooms ? parseInt(editBedrooms) : null,
+        bathrooms: editBathrooms ? parseInt(editBathrooms) : null,
+        size_sqft: editSizeSqft ? parseInt(editSizeSqft) : null,
+        property_features: editFeatures.trim() ? editFeatures.split(',').map((f: string) => f.trim()).filter(Boolean) : null,
       }),
     });
     if (res.ok) {
@@ -603,7 +620,7 @@ export default function AdminPage() {
                   <button
                     onClick={handleGenerateCode}
                     disabled={genLoading || !genName.trim()}
-                    className="flex-1 py-2 bg-sky-500 text-white rounded-xl text-sm font-semibold hover:bg-sky-600 disabled:opacity-50 flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] disabled:opacity-50 flex items-center justify-center gap-1.5"
                   >
                     {genLoading && <Loader2 className="w-3 h-3 animate-spin" />}
                     Generate
@@ -1170,13 +1187,40 @@ export default function AdminPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1">Expedia URL</label>
+                <label className="block text-xs font-semibold text-slate-500 mb-1">Listing URL</label>
                 <input value={editExpediaUrl} onChange={(e) => setEditExpediaUrl(e.target.value)} placeholder="https://..." className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              </div>
+              <div className="border-t border-slate-100 pt-3 mt-1">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Property Details</p>
+                <div className="space-y-2">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Price</label>
+                    <input value={editPrice} onChange={(e) => setEditPrice(e.target.value)} placeholder="e.g. $450,000" className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-500 mb-1">Beds</label>
+                      <input type="number" min={0} max={20} value={editBedrooms} onChange={(e) => setEditBedrooms(e.target.value)} className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-500 mb-1">Baths</label>
+                      <input type="number" min={0} max={20} value={editBathrooms} onChange={(e) => setEditBathrooms(e.target.value)} className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-500 mb-1">Sqft</label>
+                      <input type="number" min={0} value={editSizeSqft} onChange={(e) => setEditSizeSqft(e.target.value)} className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-500 mb-1">Features</label>
+                    <input value={editFeatures} onChange={(e) => setEditFeatures(e.target.value)} placeholder="Pool, Gym, Parking — comma separated" className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="flex gap-2 pt-1">
               <button onClick={() => setEditingPost(null)} className="flex-1 py-2 border border-slate-200 text-slate-600 rounded-xl text-sm font-semibold hover:bg-slate-50">Cancel</button>
-              <button onClick={handleEditPostSave} disabled={editSaving || !editTitle.trim()} className="flex-1 py-2 bg-sky-500 text-white rounded-xl text-sm font-semibold hover:bg-sky-600 disabled:opacity-50 flex items-center justify-center gap-1.5">
+              <button onClick={handleEditPostSave} disabled={editSaving || !editTitle.trim()} className="flex-1 py-2 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] disabled:opacity-50 flex items-center justify-center gap-1.5">
                 {editSaving && <Loader2 className="w-3 h-3 animate-spin" />}
                 Save
               </button>

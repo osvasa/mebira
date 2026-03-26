@@ -47,22 +47,28 @@ export async function PATCH(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { postId, title, description, location, category, expedia_url } = body;
+  const { postId, title, description, location, category, expedia_url, price, bedrooms, bathrooms, size_sqft, property_features } = body;
 
   if (!postId) {
     return NextResponse.json({ error: 'postId required' }, { status: 400 });
   }
 
   const admin = getAdminSupabase();
+  const updateData: Record<string, unknown> = {};
+  if (title !== undefined) updateData.title = title;
+  if (description !== undefined) updateData.description = description;
+  if (location !== undefined) updateData.location = location;
+  if (category !== undefined) updateData.category = category;
+  if (expedia_url !== undefined) updateData.expedia_url = expedia_url;
+  if (price !== undefined) updateData.price = price;
+  if (bedrooms !== undefined) updateData.bedrooms = bedrooms;
+  if (bathrooms !== undefined) updateData.bathrooms = bathrooms;
+  if (size_sqft !== undefined) updateData.size_sqft = size_sqft;
+  if (property_features !== undefined) updateData.property_features = property_features;
+
   const { error } = await admin
     .from('posts')
-    .update({
-      title: title ?? undefined,
-      description: description ?? undefined,
-      location: location ?? undefined,
-      category: category ?? undefined,
-      expedia_url: expedia_url ?? undefined,
-    })
+    .update(updateData)
     .eq('id', postId);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

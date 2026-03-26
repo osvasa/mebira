@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { VideoOverlay } from '@/components/ui/VideoOverlay';
 
 interface PostVideoPlayerProps {
   src: string;
@@ -11,6 +12,7 @@ interface PostVideoPlayerProps {
 export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -21,7 +23,19 @@ export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
     return () => { video.removeEventListener('canplay', tryPlay); };
   }, []);
 
-  const toggleMute = () => {
+  // Pause inline video when overlay opens, resume when closed
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (overlayOpen) {
+      video.pause();
+    } else {
+      video.play().catch(() => {});
+    }
+  }, [overlayOpen]);
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
     const video = videoRef.current;
     if (!video) return;
     const newMuted = !video.muted;
@@ -30,12 +44,14 @@ export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
     setMuted(newMuted);
   };
 
+  const handleClose = useCallback(() => setOverlayOpen(false), []);
+
   return (
     <>
       <video
         ref={videoRef}
         src={src}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover cursor-pointer"
         autoPlay
         muted
         playsInline
@@ -44,6 +60,7 @@ export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
         disablePictureInPicture
         controlsList="nodownload nofullscreen noremoteplayback nopictureinpicture"
         poster={poster}
+        onClick={() => setOverlayOpen(true)}
       />
 
       {/* Mute / unmute toggle */}
@@ -54,6 +71,9 @@ export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
       >
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
+
+      {/* Fullscreen overlay */}
+      <VideoOverlay src={src} open={overlayOpen} onClose={handleClose} />
     </>
   );
 }

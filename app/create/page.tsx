@@ -356,7 +356,7 @@ export default function CreatePostPage() {
 
         {/* "Posting as" banner for admin */}
         {postingAsName && (
-          <div className="flex items-center justify-between bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 mb-5">
+          <div className="flex items-center justify-between bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-5">
             <div className="flex items-center gap-2">
               <PenLine className="w-4 h-4 text-violet-500" />
               <span className="text-sm font-bold text-violet-800">
@@ -407,7 +407,7 @@ export default function CreatePostPage() {
                   type="button"
                   onClick={handleProcessVideo}
                   disabled={videoProcessing || !videoUrl.trim()}
-                  className="px-4 py-2.5 bg-sky-500 text-white rounded-xl text-sm font-semibold hover:bg-sky-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+                  className="px-4 py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
                 >
                   {videoProcessing ? (
                     <>
@@ -451,12 +451,12 @@ export default function CreatePostPage() {
                   }}
                 />
                 {videoProcessing ? (
-                  <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-sky-200 rounded-xl bg-sky-50/30">
+                  <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-red-200 rounded-xl bg-red-50/30">
                     <Upload className="w-8 h-8 text-sky-500 mb-3" />
                     <p className="text-sm font-semibold text-slate-700">Uploading video… {uploadProgress}%</p>
                     <div className="w-48 h-2 bg-slate-200 rounded-full mt-3 overflow-hidden">
                       <div
-                        className="h-full bg-sky-500 rounded-full transition-all duration-300"
+                        className="h-full bg-[#2D9B4E] rounded-full transition-all duration-300"
                         style={{ width: `${uploadProgress}%` }}
                       />
                     </div>

@@ -199,7 +199,7 @@ export default async function PostPage({ params }: PostPageProps) {
                     @{username} · {formatDistanceToNow(row.created_at)}
                   </p>
                 </div>
-                <button className="px-4 py-1.5 text-xs font-bold text-sky-600 border border-sky-200 rounded-full hover:bg-sky-50 transition-colors">
+                <button className="px-4 py-1.5 text-xs font-bold text-white rounded-full transition-colors bg-[#C8102E] hover:bg-[#a80d25]">
                   Follow
                 </button>
               </Link>

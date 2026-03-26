@@ -147,7 +147,7 @@ export default function ResetPasswordPage() {
           </p>
           <Link
             href="/auth/login"
-            className="inline-flex items-center justify-center px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-100"
+            className="inline-flex items-center justify-center px-6 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-green-100"
           >
             Sign in now
           </Link>
@@ -168,7 +168,7 @@ export default function ResetPasswordPage() {
           <p className="text-slate-500 text-sm leading-relaxed mb-8">{sessionError}</p>
           <Link
             href="/auth/forgot-password"
-            className="inline-flex items-center justify-center px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-100"
+            className="inline-flex items-center justify-center px-6 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-green-100"
           >
             Request new link
           </Link>
@@ -256,7 +256,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60 mt-1"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-green-100 disabled:opacity-60 mt-1"
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {loading ? 'Updating…' : 'Update password'}

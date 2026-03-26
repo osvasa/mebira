@@ -168,7 +168,7 @@ export default function SignupPage() {
           </p>
           <Link
             href="/auth/login"
-            className="inline-flex items-center justify-center px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-sky-100"
+            className="inline-flex items-center justify-center px-6 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm transition-colors shadow-md shadow-green-100"
           >
             Back to sign in
           </Link>
@@ -182,7 +182,7 @@ export default function SignupPage() {
       {/* Left hero */}
       <div className="hidden lg:flex relative w-[45%] flex-col">
         <img src={HERO_IMAGE} alt="Tokyo at night" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-900/75 via-sky-800/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-transparent" />
         <div className="relative flex flex-col justify-between h-full p-12">
           <Logo />
           <div className="space-y-7">
@@ -236,7 +236,7 @@ export default function SignupPage() {
                 <button
                   onClick={handleValidateCode}
                   disabled={codeLoading}
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-green-100 disabled:opacity-60"
                 >
                   {codeLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {codeLoading ? 'Validating...' : 'Continue'}
@@ -330,7 +330,7 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60 mt-1"
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-green-100 disabled:opacity-60 mt-1"
                 >
                   {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {loading ? 'Creating account...' : 'Create account'}

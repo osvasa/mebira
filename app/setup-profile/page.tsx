@@ -190,7 +190,7 @@ export default function SetupProfilePage() {
               {avatarPreview ? (
                 <img src={avatarPreview} alt="Avatar preview" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[#C8102E] to-teal-500 flex items-center justify-center">
+                <div className="w-full h-full bg-[#C8102E] flex items-center justify-center">
                   <Camera className="w-6 h-6 text-white" />
                 </div>
               )}
@@ -219,7 +219,7 @@ export default function SetupProfilePage() {
             <button
               onClick={handleComplete}
               disabled={saving}
-              className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#C8102E] to-teal-500 hover:from-sky-500 hover:to-teal-600 text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-sky-100 disabled:opacity-60"
+              className="w-full flex items-center justify-center gap-2 py-3 bg-[#2D9B4E] hover:bg-[#258442] text-white rounded-xl font-bold text-sm active:scale-[0.98] transition-all shadow-md shadow-green-100 disabled:opacity-60"
             >
               {saving ? (
                 <>

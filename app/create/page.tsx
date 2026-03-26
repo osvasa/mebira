@@ -51,6 +51,8 @@ export default function CreatePostPage() {
   const [videoFilePreview, setVideoFilePreview] = useState<string | null>(null);
   const [videoUploading, setVideoUploading] = useState(false);
   const [videoUploadProgress, setVideoUploadProgress] = useState(0);
+  const [videoProcessingStage, setVideoProcessingStage] = useState('');
+  const [videoLargeWarning, setVideoLargeWarning] = useState(false);
 
   // AI-generated fields (editable by user)
   const [aiGenerating, setAiGenerating] = useState(false);
@@ -149,7 +151,10 @@ export default function CreatePostPage() {
     if (!videoUrl.trim()) return;
     setVideoProcessing(true);
     setVideoError(null);
+    setVideoProcessingStage('Fetching video...');
     try {
+      const stageTimer1 = setTimeout(() => setVideoProcessingStage('Downloading...'), 3000);
+      const stageTimer2 = setTimeout(() => setVideoProcessingStage('Uploading to storage...'), 8000);
       const res = await fetch('/api/video/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -160,6 +165,9 @@ export default function CreatePostPage() {
         setVideoError(data.error || 'Failed to process video. Check the URL and try again.');
         return;
       }
+      clearTimeout(stageTimer1);
+      clearTimeout(stageTimer2);
+      setVideoProcessingStage('Done!');
       console.log('[create] video processed OK, url:', data.url, 'platform:', data.platform, 'thumbnail:', data.thumbnail_url);
       setProcessedVideoUrl(data.url);
       setThumbnailUrl(data.thumbnail_url || null);
@@ -171,6 +179,7 @@ export default function CreatePostPage() {
       setVideoError(`Network error: ${err instanceof Error ? err.message : 'Could not reach server'}`);
     } finally {
       setVideoProcessing(false);
+      setVideoProcessingStage('');
     }
   };
 
@@ -445,6 +454,17 @@ export default function CreatePostPage() {
                         )}
                       </button>
                     </div>
+                    {videoProcessing && videoProcessingStage && (
+                      <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Loader2 className="w-3.5 h-3.5 text-[#2D9B4E] animate-spin" />
+                          <p className="text-xs font-semibold text-slate-700">{videoProcessingStage}</p>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                          <div className="h-full bg-[#2D9B4E] rounded-full animate-pulse" style={{ width: '60%' }} />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -456,10 +476,10 @@ export default function CreatePostPage() {
                       <div className="flex flex-col items-center justify-center py-10 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50">
                         <Loader2 className="w-8 h-8 text-[#2D9B4E] animate-spin mb-3" />
                         <p className="text-sm font-semibold text-slate-700">Uploading video…</p>
-                        <div className="w-48 h-2 bg-slate-200 rounded-full mt-3 overflow-hidden">
-                          <div className="h-full bg-[#2D9B4E] rounded-full transition-all duration-300" style={{ width: `${videoUploadProgress}%` }} />
+                        <div className="w-full max-w-[200px] h-2.5 bg-slate-200 rounded-full mt-3 overflow-hidden">
+                          <div className="h-full bg-[#2D9B4E] rounded-full transition-all duration-300 ease-out" style={{ width: `${videoUploadProgress}%` }} />
                         </div>
-                        <p className="text-xs text-slate-400 mt-2">{videoUploadProgress}%</p>
+                        <p className="text-xs text-slate-500 font-semibold mt-2">{videoUploadProgress}%</p>
                       </div>
                     ) : videoFilePreview ? (
                       <div className="space-y-3">
@@ -467,54 +487,74 @@ export default function CreatePostPage() {
                           <video src={videoFilePreview} className="h-full w-auto mx-auto" controls muted playsInline />
                           <button
                             type="button"
-                            onClick={() => { setVideoFile(null); setVideoFilePreview(null); }}
-                            className="absolute top-2 right-2 p-1.5 bg-black/50 text-white rounded-full hover:bg-black/70"
+                            onClick={() => { setVideoFile(null); setVideoFilePreview(null); setVideoLargeWarning(false); }}
+                            className="absolute top-2 right-2 p-2 bg-black/50 text-white rounded-full hover:bg-black/70"
                           >
-                            <X className="w-4 h-4" />
+                            <X className="w-5 h-5" />
                           </button>
                         </div>
+                        {videoLargeWarning && (
+                          <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+                            <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-amber-700">Large file detected. For faster uploads, trim your video to under 2 minutes before uploading.</p>
+                          </div>
+                        )}
                         <button
                           type="button"
-                          onClick={async () => {
+                          onClick={() => {
                             if (!videoFile) return;
                             setVideoUploading(true);
                             setVideoError(null);
-                            setVideoUploadProgress(10);
-                            try {
-                              const fd = new FormData();
-                              fd.append('video', videoFile);
-                              setVideoUploadProgress(30);
-                              const res = await fetch('/api/upload-video', { method: 'POST', body: fd });
-                              setVideoUploadProgress(80);
-                              const text = await res.text();
-                              let data;
-                              try { data = JSON.parse(text); } catch { throw new Error(`Upload failed: ${text.substring(0, 200)}`); }
-                              if (!res.ok) throw new Error(data.error || 'Upload failed');
-                              setProcessedVideoUrl(data.url);
-                              setVideoUploadProgress(100);
-                              setVideoFile(null);
-                              setVideoFilePreview(null);
-                            } catch (err: unknown) {
-                              setVideoError(err instanceof Error ? err.message : 'Upload failed');
-                            } finally {
+                            setVideoUploadProgress(0);
+
+                            const fd = new FormData();
+                            fd.append('video', videoFile);
+
+                            const xhr = new XMLHttpRequest();
+                            xhr.upload.addEventListener('progress', (e) => {
+                              if (e.lengthComputable) {
+                                setVideoUploadProgress(Math.round((e.loaded / e.total) * 100));
+                              }
+                            });
+                            xhr.addEventListener('load', () => {
+                              try {
+                                const data = JSON.parse(xhr.responseText);
+                                if (xhr.status >= 200 && xhr.status < 300 && data.url) {
+                                  setProcessedVideoUrl(data.url);
+                                  setVideoFile(null);
+                                  setVideoFilePreview(null);
+                                  setVideoLargeWarning(false);
+                                } else {
+                                  setVideoError(data.error || 'Upload failed');
+                                }
+                              } catch {
+                                setVideoError('Upload failed — invalid server response');
+                              }
                               setVideoUploading(false);
                               setVideoUploadProgress(0);
-                            }
+                            });
+                            xhr.addEventListener('error', () => {
+                              setVideoError('Network error during upload');
+                              setVideoUploading(false);
+                              setVideoUploadProgress(0);
+                            });
+                            xhr.open('POST', '/api/upload-video');
+                            xhr.send(fd);
                           }}
-                          className="w-full py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors flex items-center justify-center gap-2"
+                          className="w-full py-3.5 bg-[#2D9B4E] text-white rounded-xl text-base font-bold hover:bg-[#258442] transition-colors flex items-center justify-center gap-2 min-h-[48px]"
                         >
-                          <Upload className="w-4 h-4" />
-                          Upload &amp; Use This Video
+                          <Upload className="w-5 h-5" />
+                          Upload Video
                         </button>
                       </div>
                     ) : (
-                      <label className="flex flex-col items-center justify-center py-10 border-2 border-dashed border-slate-300 rounded-xl hover:border-[#2D9B4E] hover:bg-green-50/30 transition-colors cursor-pointer">
-                        <Upload className="w-8 h-8 text-slate-300 mb-2" />
-                        <p className="text-sm font-semibold text-slate-600">Click to select a video</p>
+                      <label className="flex flex-col items-center justify-center min-h-[120px] py-10 border-2 border-dashed border-slate-300 rounded-xl hover:border-[#2D9B4E] hover:bg-green-50/30 transition-colors cursor-pointer active:bg-green-50/50">
+                        <Upload className="w-10 h-10 text-slate-300 mb-2" />
+                        <p className="text-base font-semibold text-slate-600">Tap to select video</p>
                         <p className="text-xs text-slate-400 mt-1">MP4, MOV — up to 500MB</p>
                         <input
                           type="file"
-                          accept="video/mp4,video/quicktime,video/mov"
+                          accept="video/*"
                           className="hidden"
                           onChange={(e) => {
                             const file = e.target.files?.[0];
@@ -524,6 +564,7 @@ export default function CreatePostPage() {
                               return;
                             }
                             setVideoError(null);
+                            setVideoLargeWarning(file.size > 200 * 1024 * 1024);
                             setVideoFile(file);
                             setVideoFilePreview(URL.createObjectURL(file));
                           }}

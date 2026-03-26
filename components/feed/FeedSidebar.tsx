@@ -16,17 +16,17 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
       {/* ── Invite banner ── */}
       <div className="rounded-2xl p-5 text-white shadow-lg" style={{ backgroundColor: '#C8102E' }}>
         <div className="mb-2">
-          <h3 className="font-bold text-sm">Discover Properties Around the World</h3>
+          <h3 className="font-bold text-sm">Are you a realtor or property owner?</h3>
         </div>
         <p className="text-xs text-white/80 leading-relaxed mb-3.5">
-          Explore apartments, villas, and homes shared by real estate professionals.
+          Join Mebira and showcase your properties to thousands of potential buyers.
         </p>
         <Link
           href="/invite"
           className="inline-block px-4 py-2 bg-white rounded-full text-xs font-bold hover:bg-slate-50 transition-colors"
           style={{ color: '#C8102E' }}
         >
-          Request an Invite →
+          Request Access →
         </Link>
       </div>
 

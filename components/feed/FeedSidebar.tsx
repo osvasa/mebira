@@ -19,7 +19,7 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
           <h3 className="font-bold text-sm">Are you a realtor or property owner?</h3>
         </div>
         <p className="text-xs text-white/80 leading-relaxed mb-3.5">
-          Join Mebira and showcase your properties to thousands of potential buyers.
+          Get noticed. Don&apos;t be left behind.
         </p>
         <Link
           href="/invite"

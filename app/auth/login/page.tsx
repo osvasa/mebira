@@ -223,10 +223,10 @@ export default function LoginPage() {
 
           <div>
             <blockquote className="text-white text-2xl font-bold leading-snug mb-4 drop-shadow">
-              &ldquo;Find your perfect property through the eyes of those who live there.&rdquo;
+              &ldquo;Your next sale is one video away.&rdquo;
             </blockquote>
             <p className="text-sky-200 text-sm leading-relaxed">
-              Browse exclusive property listings shared by top realtors worldwide.
+              Join Mebira and showcase your properties to thousands of potential buyers.
             </p>
           </div>
         </div>

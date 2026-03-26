@@ -34,7 +34,7 @@ import { formatDistanceToNow, formatNumber } from '@/lib/utils';
 import { postPriceDrops } from '@/lib/pricePulseData';
 
 import { createClient } from '@/lib/supabase/client';
-import { Pencil, Trash2, Loader2, X as XIcon, ArrowLeft } from 'lucide-react';
+import { Pencil, Trash2, Loader2, X as XIcon } from 'lucide-react';
 
 const categoryConfig: Record<
   string,
@@ -477,10 +477,10 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         </div>
       </div>
 
-      {/* ── Backdrop when video is expanded (mobile only) ── */}
+      {/* ── Backdrop when video is expanded ── */}
       {videoExpanded && isNativeVideo && (
         <div
-          className="fixed inset-0 z-[9998] bg-black"
+          className="fixed inset-0 z-[9998] bg-black/90 sm:bg-black/80"
           onClick={() => setVideoExpanded(false)}
         />
       )}
@@ -492,7 +492,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
           ref={videoContainerRef}
           className={
             videoExpanded && isNativeVideo
-              ? 'fixed inset-0 z-[9999] flex items-center justify-center bg-black'
+              ? 'fixed inset-0 z-[9999] flex items-center justify-center'
               : `relative mx-0 sm:mx-3 rounded-none sm:rounded-xl overflow-hidden bg-slate-100 ${isShorts ? '' : 'aspect-[4/3]'}`
           }
           style={!videoExpanded && isShorts ? { paddingBottom: '177.78%' } : undefined}
@@ -511,34 +511,26 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
                 controlsList="nodownload nofullscreen noremoteplayback nopictureinpicture"
                 className={
                   videoExpanded
-                    ? 'w-full h-full object-contain bg-black'
+                    ? 'w-auto h-full max-h-[90vh] sm:max-h-[85vh] aspect-[9/16] object-contain bg-black rounded-none sm:rounded-2xl'
                     : 'absolute inset-0 w-full h-full object-cover'
                 }
               />
-              {/* Mobile: tap to expand fullscreen. Desktop: navigate to post detail */}
+              {/* Tap to expand video overlay */}
               {!videoExpanded && (
-                isMobile ? (
-                  <button
-                    onClick={() => setVideoExpanded(true)}
-                    className="absolute inset-0 z-[5]"
-                    aria-label="Expand video"
-                  />
-                ) : (
-                  <Link
-                    href={`/post/${post.id}`}
-                    className="absolute inset-0 z-[5]"
-                    aria-label="View post"
-                  />
-                )
+                <button
+                  onClick={() => setVideoExpanded(true)}
+                  className="absolute inset-0 z-[5]"
+                  aria-label="Expand video"
+                />
               )}
-              {/* Back button — only when expanded (mobile) */}
+              {/* Close button when expanded */}
               {videoExpanded && (
                 <button
                   onClick={() => setVideoExpanded(false)}
-                  className="fixed top-4 left-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
+                  className="fixed top-4 right-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
                   aria-label="Close"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <XIcon className="w-5 h-5" />
                 </button>
               )}
             </>

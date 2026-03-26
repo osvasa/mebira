@@ -26,7 +26,7 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
           className="inline-block px-4 py-2 bg-white rounded-full text-xs font-bold hover:bg-slate-50 transition-colors"
           style={{ color: '#C8102E' }}
         >
-          Request Access →
+          Request Early Access →
         </Link>
       </div>
 

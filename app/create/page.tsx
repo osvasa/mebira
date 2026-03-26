@@ -39,7 +39,7 @@ export default function CreatePostPage() {
   const [postingAsName, setPostingAsName] = useState<string | null>(null);
 
   // Video
-  // const [videoInputMode, setVideoInputMode] = useState<VideoInputMode>('url'); // uncomment when re-enabling file upload
+  const [videoInputMode, setVideoInputMode] = useState<'url' | 'upload'>('url');
   const [videoUrl, setVideoUrl] = useState('');
   const [processedVideoUrl, setProcessedVideoUrl] = useState<string | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -47,6 +47,10 @@ export default function CreatePostPage() {
   const [videoProcessing, setVideoProcessing] = useState(false);
   const [videoError, setVideoError] = useState<string | null>(null);
   const [, setUploadProgress] = useState<number>(0);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videoFilePreview, setVideoFilePreview] = useState<string | null>(null);
+  const [videoUploading, setVideoUploading] = useState(false);
+  const [videoUploadProgress, setVideoUploadProgress] = useState(0);
 
   // AI-generated fields (editable by user)
   const [aiGenerating, setAiGenerating] = useState(false);
@@ -388,96 +392,149 @@ export default function CreatePostPage() {
                 Your Video
               </span>
             </label>
-            <p className="text-xs text-slate-400 mb-4">
-              Paste a TikTok link and AI will generate your post
-            </p>
 
-            {/* URL input */}
+            {/* Tabs */}
             {!processedVideoUrl && (
-              <div className="flex gap-2">
-                <input
-                  type="url"
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  placeholder="Paste your TikTok link here"
-                  className="input flex-1 font-mono text-xs"
-                  disabled={videoProcessing}
-                />
-                <button
-                  type="button"
-                  onClick={handleProcessVideo}
-                  disabled={videoProcessing || !videoUrl.trim()}
-                  className="px-4 py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
-                >
-                  {videoProcessing ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Processing…
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-4 h-4" />
-                      Go
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
-
-            {/* File upload mode — hidden for now, TikTok URL only
-            {videoInputMode === 'file' && !processedVideoUrl && (
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 mb-1">
-                    Where is this? <span className="text-slate-400 font-normal">(hotel, restaurant, destination)</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={fileLocation}
-                    onChange={(e) => setFileLocation(e.target.value)}
-                    placeholder="e.g. Four Seasons Bali, Nobu Malibu, Santorini"
-                    className="input text-sm"
-                    disabled={videoProcessing}
-                  />
-                </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="video/mp4,video/quicktime,video/webm,video/*"
-                  className="sr-only"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) handleFileUpload(file);
-                  }}
-                />
-                {videoProcessing ? (
-                  <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-red-200 rounded-xl bg-red-50/30">
-                    <Upload className="w-8 h-8 text-sky-500 mb-3" />
-                    <p className="text-sm font-semibold text-slate-700">Uploading video… {uploadProgress}%</p>
-                    <div className="w-48 h-2 bg-slate-200 rounded-full mt-3 overflow-hidden">
-                      <div
-                        className="h-full bg-[#2D9B4E] rounded-full transition-all duration-300"
-                        style={{ width: `${uploadProgress}%` }}
-                      />
-                    </div>
-                    <p className="text-xs text-slate-400 mt-2">Uploading directly to storage</p>
-                  </div>
-                ) : (
+              <div className="mb-4">
+                <div className="flex gap-0 border-b border-slate-200 mb-4">
                   <button
                     type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full flex flex-col items-center justify-center py-12 border-2 border-dashed border-slate-200 rounded-xl hover:border-sky-300 hover:bg-slate-50 transition-colors cursor-pointer"
+                    onClick={() => setVideoInputMode('url')}
+                    className={`px-4 py-2 text-xs font-bold -mb-px transition-colors ${videoInputMode === 'url' ? 'text-sky-600 border-b-2 border-sky-500' : 'text-slate-400 hover:text-slate-600'}`}
                   >
-                    <FileVideo className="w-10 h-10 text-slate-300 mb-3" />
-                    <p className="text-sm font-semibold text-slate-600">
-                      Click to select a video file
-                    </p>
-                    <p className="text-xs text-slate-400 mt-1">MP4, MOV, WebM up to 100MB</p>
+                    TikTok URL
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setVideoInputMode('upload')}
+                    className={`px-4 py-2 text-xs font-bold -mb-px transition-colors ${videoInputMode === 'upload' ? 'text-sky-600 border-b-2 border-sky-500' : 'text-slate-400 hover:text-slate-600'}`}
+                  >
+                    Upload Video
+                  </button>
+                </div>
+
+                {/* TikTok URL tab */}
+                {videoInputMode === 'url' && (
+                  <div>
+                    <p className="text-xs text-slate-400 mb-3">Paste a TikTok link and AI will generate your post</p>
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        value={videoUrl}
+                        onChange={(e) => setVideoUrl(e.target.value)}
+                        placeholder="Paste your TikTok link here"
+                        className="input flex-1 font-mono text-xs"
+                        disabled={videoProcessing}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleProcessVideo}
+                        disabled={videoProcessing || !videoUrl.trim()}
+                        className="px-4 py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+                      >
+                        {videoProcessing ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Processing…
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="w-4 h-4" />
+                            Go
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Upload Video tab */}
+                {videoInputMode === 'upload' && (
+                  <div>
+                    <p className="text-xs text-slate-400 mb-3">Upload a video directly from your device</p>
+                    {videoUploading ? (
+                      <div className="flex flex-col items-center justify-center py-10 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50">
+                        <Loader2 className="w-8 h-8 text-[#2D9B4E] animate-spin mb-3" />
+                        <p className="text-sm font-semibold text-slate-700">Uploading video…</p>
+                        <div className="w-48 h-2 bg-slate-200 rounded-full mt-3 overflow-hidden">
+                          <div className="h-full bg-[#2D9B4E] rounded-full transition-all duration-300" style={{ width: `${videoUploadProgress}%` }} />
+                        </div>
+                        <p className="text-xs text-slate-400 mt-2">{videoUploadProgress}%</p>
+                      </div>
+                    ) : videoFilePreview ? (
+                      <div className="space-y-3">
+                        <div className="relative rounded-xl overflow-hidden aspect-[9/16] max-h-[300px] bg-black mx-auto w-fit">
+                          <video src={videoFilePreview} className="h-full w-auto mx-auto" controls muted playsInline />
+                          <button
+                            type="button"
+                            onClick={() => { setVideoFile(null); setVideoFilePreview(null); }}
+                            className="absolute top-2 right-2 p-1.5 bg-black/50 text-white rounded-full hover:bg-black/70"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            if (!videoFile) return;
+                            setVideoUploading(true);
+                            setVideoError(null);
+                            setVideoUploadProgress(10);
+                            try {
+                              const fd = new FormData();
+                              fd.append('video', videoFile);
+                              setVideoUploadProgress(30);
+                              const res = await fetch('/api/upload-video', { method: 'POST', body: fd });
+                              setVideoUploadProgress(80);
+                              const text = await res.text();
+                              let data;
+                              try { data = JSON.parse(text); } catch { throw new Error(`Upload failed: ${text.substring(0, 200)}`); }
+                              if (!res.ok) throw new Error(data.error || 'Upload failed');
+                              setProcessedVideoUrl(data.url);
+                              setVideoUploadProgress(100);
+                              setVideoFile(null);
+                              setVideoFilePreview(null);
+                            } catch (err: unknown) {
+                              setVideoError(err instanceof Error ? err.message : 'Upload failed');
+                            } finally {
+                              setVideoUploading(false);
+                              setVideoUploadProgress(0);
+                            }
+                          }}
+                          className="w-full py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors flex items-center justify-center gap-2"
+                        >
+                          <Upload className="w-4 h-4" />
+                          Upload &amp; Use This Video
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="flex flex-col items-center justify-center py-10 border-2 border-dashed border-slate-300 rounded-xl hover:border-[#2D9B4E] hover:bg-green-50/30 transition-colors cursor-pointer">
+                        <Upload className="w-8 h-8 text-slate-300 mb-2" />
+                        <p className="text-sm font-semibold text-slate-600">Click to select a video</p>
+                        <p className="text-xs text-slate-400 mt-1">MP4, MOV — up to 500MB</p>
+                        <input
+                          type="file"
+                          accept="video/mp4,video/quicktime,video/mov"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            if (file.size > 500 * 1024 * 1024) {
+                              setVideoError('File exceeds 500MB limit');
+                              return;
+                            }
+                            setVideoError(null);
+                            setVideoFile(file);
+                            setVideoFilePreview(URL.createObjectURL(file));
+                          }}
+                        />
+                      </label>
+                    )}
+                  </div>
                 )}
               </div>
             )}
-            */}
+
 
             {/* Error */}
             {videoError && (

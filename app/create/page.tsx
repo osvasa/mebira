@@ -79,6 +79,9 @@ export default function CreatePostPage() {
   const [sizeSqft, setSizeSqft] = useState<number | ''>('');
   const [features, setFeatures] = useState('');
 
+  // Video required hint (shown on submit attempt)
+  const [triedSubmit, setTriedSubmit] = useState(false);
+
   // MLS lookup
   const [mlsQuery, setMlsQuery] = useState('');
   const [mlsLoading, setMlsLoading] = useState(false);
@@ -409,7 +412,7 @@ export default function CreatePostPage() {
         <div className="mb-8">
           <h1 className="text-2xl font-extrabold text-slate-900">List Your Property</h1>
           <p className="text-slate-500 text-sm mt-1">
-            Add a video tour and we&apos;ll handle the rest with AI.
+            Add a video tour and our AI will handle the rest.
           </p>
         </div>
 
@@ -498,8 +501,12 @@ export default function CreatePostPage() {
               <span className="flex items-center gap-2">
                 <Video className="w-4 h-4 text-sky-500" />
                 Your Video
+                <span className="text-rose-500 text-sm">*</span>
               </span>
             </label>
+            {triedSubmit && !processedVideoUrl && (
+              <p className="text-[11px] text-rose-500 mb-1">* Required</p>
+            )}
 
             {/* Tabs */}
             {!processedVideoUrl && (
@@ -927,12 +934,6 @@ export default function CreatePostPage() {
           )}
 
           {/* ── Submit ── */}
-          {!processedVideoUrl && !videoProcessing && !videoUploading && (
-            <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-xl">
-              <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0" />
-              <p className="text-xs text-amber-700 font-medium">A video is required to post</p>
-            </div>
-          )}
           <div className="flex gap-3 pb-8">
             <Link
               href="/"
@@ -943,6 +944,7 @@ export default function CreatePostPage() {
             <button
               type="submit"
               disabled={!canSubmit}
+              onClick={() => { if (!processedVideoUrl) setTriedSubmit(true); }}
               className="flex-2 flex-grow-[2] py-3 text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               style={{ backgroundColor: '#2D9B4E' }}
             >

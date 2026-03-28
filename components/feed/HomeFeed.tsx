@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { StoriesRow } from '@/components/feed/StoriesRow';
 import { PostCard } from '@/components/feed/PostCard';
 import { FeedSidebar } from '@/components/feed/FeedSidebar';
+import { FilterPanel, Filters, emptyFilters, isFiltersEmpty } from '@/components/feed/FilterPanel';
 import { Post, Story, TrendingDestination, User } from '@/lib/types';
 import { createClient } from '@/lib/supabase/client';
 import { Loader2 } from 'lucide-react';
@@ -25,6 +26,10 @@ export function HomeFeed({ posts: initialPosts, seed, totalPosts, stories, trend
   const [hasMore, setHasMore] = useState(initialPosts.length < totalPosts);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Filters
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filters, setFilters] = useState<Filters>(emptyFilters);
 
   // Get current user on mount
   useEffect(() => {
@@ -72,14 +77,72 @@ export function HomeFeed({ posts: initialPosts, seed, totalPosts, stories, trend
     return () => observer.disconnect();
   }, [loadMore]);
 
-  const displayPosts =
-    activeCategory === 'all'
-      ? posts
-      : posts.filter((p) => p.category === activeCategory);
+  // Count active filters for badge
+  const activeFilterCount =
+    (filters.minPrice ? 1 : 0) +
+    (filters.maxPrice ? 1 : 0) +
+    (filters.bedrooms !== null ? 1 : 0) +
+    (filters.bathrooms !== null ? 1 : 0) +
+    filters.categories.length +
+    (filters.location ? 1 : 0);
+
+  // Apply category tab + filters
+  const displayPosts = posts.filter((p) => {
+    // Category tab
+    if (activeCategory !== 'all' && p.category !== activeCategory) return false;
+
+    // Filters
+    if (isFiltersEmpty(filters)) return true;
+
+    // Property type filter
+    if (filters.categories.length > 0 && !filters.categories.includes(p.category)) return false;
+
+    // Location filter
+    if (filters.location) {
+      const loc = filters.location.toLowerCase();
+      const matchesLocation =
+        (p.location?.toLowerCase().includes(loc)) ||
+        (p.country?.toLowerCase().includes(loc));
+      if (!matchesLocation) return false;
+    }
+
+    // Bedrooms filter
+    if (filters.bedrooms !== null) {
+      if (!p.bedrooms || p.bedrooms < filters.bedrooms) return false;
+    }
+
+    // Bathrooms filter
+    if (filters.bathrooms !== null) {
+      if (!p.bathrooms || p.bathrooms < filters.bathrooms) return false;
+    }
+
+    // Price filter — parse numeric value from price string
+    if (filters.minPrice || filters.maxPrice) {
+      const priceNum = p.price ? parseFloat(p.price.replace(/[^0-9.]/g, '')) : null;
+      if (priceNum === null || isNaN(priceNum)) return false;
+      const min = filters.minPrice ? parseFloat(filters.minPrice.replace(/[^0-9.]/g, '')) : 0;
+      const max = filters.maxPrice ? parseFloat(filters.maxPrice.replace(/[^0-9.]/g, '')) : Infinity;
+      if (!isNaN(min) && priceNum < min) return false;
+      if (!isNaN(max) && priceNum > max) return false;
+    }
+
+    return true;
+  });
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Navbar activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+      <Navbar
+        activeCategory={activeCategory}
+        onCategoryChange={setActiveCategory}
+        onOpenFilters={() => setFiltersOpen(true)}
+        activeFilterCount={activeFilterCount}
+      />
+      <FilterPanel
+        open={filtersOpen}
+        filters={filters}
+        onApply={setFilters}
+        onClose={() => setFiltersOpen(false)}
+      />
 
       <main className="max-w-5xl mx-auto px-0 sm:px-4 md:px-6 py-4 sm:py-6">
         <div className="flex gap-6 items-start">
@@ -91,8 +154,12 @@ export function HomeFeed({ posts: initialPosts, seed, totalPosts, stories, trend
             {displayPosts.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-100 p-12 text-center">
                 <GlobeIcon className="w-10 h-10 text-slate-200 mx-auto mb-3" />
-                <p className="font-semibold text-slate-700 text-lg">No posts in this category yet</p>
-                <p className="text-slate-400 text-sm mt-1">Be the first to share a recommendation!</p>
+                <p className="font-semibold text-slate-700 text-lg">
+                  {activeFilterCount > 0 ? 'No properties match your filters' : 'No posts in this category yet'}
+                </p>
+                <p className="text-slate-400 text-sm mt-1">
+                  {activeFilterCount > 0 ? 'Try adjusting your filters or clearing them.' : 'Be the first to share a recommendation!'}
+                </p>
               </div>
             ) : (
               displayPosts.map((post) => (

@@ -37,6 +37,9 @@ export interface Post {
   createdAt: string;
   tags: string[];
   price?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  sizeSqft?: number;
   rating?: number;
   propertyType?: string;
   videoUrl?: string;

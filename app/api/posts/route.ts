@@ -56,7 +56,10 @@ function mapRow(row: any) {
     createdAt: row.created_at,
     tags: [],
     videoUrl: row.video_url ?? undefined,
-    price: undefined,
+    price: row.price ?? undefined,
+    bedrooms: row.bedrooms ?? undefined,
+    bathrooms: row.bathrooms ?? undefined,
+    sizeSqft: row.size_sqft ?? undefined,
   };
 }
 

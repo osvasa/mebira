@@ -22,6 +22,7 @@ import {
   LogOut,
   Shield,
   Ticket,
+  SlidersHorizontal,
   type LucideIcon,
 } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
@@ -41,9 +42,11 @@ const categories: { id: string; label: string; Icon: LucideIcon }[] = [
 interface NavbarProps {
   activeCategory?: string;
   onCategoryChange?: (category: string) => void;
+  onOpenFilters?: () => void;
+  activeFilterCount?: number;
 }
 
-export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps) {
+export function Navbar({ activeCategory = 'all', onCategoryChange, onOpenFilters, activeFilterCount = 0 }: NavbarProps) {
   const router = useRouter();
   const supabase = createClient();
 
@@ -122,6 +125,22 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
               />
             </div>
           </div>
+
+          {/* Filters button */}
+          {onOpenFilters && (
+            <button
+              onClick={onOpenFilters}
+              className="relative flex items-center gap-1.5 px-3 py-2 bg-[#2D9B4E] text-white rounded-full text-sm font-semibold hover:bg-[#258442] transition-colors shadow-sm flex-shrink-0"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              <span className="hidden sm:inline">Filters</span>
+              {activeFilterCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+          )}
 
           {/* Desktop right nav */}
           <nav className="hidden sm:flex items-center gap-1 ml-auto">

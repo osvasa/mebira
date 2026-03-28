@@ -3,13 +3,15 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { VideoOverlay } from '@/components/ui/VideoOverlay';
+import { User } from '@/lib/types';
 
 interface PostVideoPlayerProps {
   src: string;
   poster?: string;
+  user?: User;
 }
 
-export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
+export function PostVideoPlayer({ src, poster, user }: PostVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const [overlayOpen, setOverlayOpen] = useState(false);
@@ -73,7 +75,7 @@ export function PostVideoPlayer({ src, poster }: PostVideoPlayerProps) {
       </button>
 
       {/* Fullscreen overlay */}
-      <VideoOverlay src={src} open={overlayOpen} onClose={handleClose} />
+      <VideoOverlay src={src} open={overlayOpen} onClose={handleClose} user={user} />
     </>
   );
 }

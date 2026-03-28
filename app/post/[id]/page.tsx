@@ -128,6 +128,20 @@ export default async function PostPage({ params }: PostPageProps) {
                 <PostVideoPlayer
                   src={row.video_url}
                   poster={row.photo_url || undefined}
+                  user={{
+                    id: creator?.id ?? '',
+                    username,
+                    displayName,
+                    avatar,
+                    bio: creator?.bio ?? '',
+                    followerCount: creator?.followers ?? 0,
+                    followingCount: 0,
+                    postCount: 0,
+                    totalEarnings: 0,
+                    isAI: false,
+                    isVerified: (creator?.followers ?? 0) >= 20000,
+                    isFollowing: false,
+                  }}
                 />
               ) : row.photo_url ? (
                 <img

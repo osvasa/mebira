@@ -2,14 +2,17 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { X, Volume2, VolumeX } from 'lucide-react';
+import { RealtorOverlay } from '@/components/feed/RealtorOverlay';
+import { User } from '@/lib/types';
 
 interface VideoOverlayProps {
   src: string;
   open: boolean;
   onClose: () => void;
+  user?: User;
 }
 
-export function VideoOverlay({ src, open, onClose }: VideoOverlayProps) {
+export function VideoOverlay({ src, open, onClose, user }: VideoOverlayProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
@@ -71,6 +74,9 @@ export function VideoOverlay({ src, open, onClose }: VideoOverlayProps) {
       >
         {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
+
+      {/* Realtor overlay */}
+      {user && <RealtorOverlay user={user} />}
     </div>
   );
 }

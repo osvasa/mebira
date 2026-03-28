@@ -36,6 +36,7 @@ import { postPriceDrops } from '@/lib/pricePulseData';
 
 import { createClient } from '@/lib/supabase/client';
 import { Pencil, Trash2, Loader2, X as XIcon } from 'lucide-react';
+import { RealtorOverlay } from '@/components/feed/RealtorOverlay';
 
 const categoryConfig: Record<
   string,
@@ -527,13 +528,16 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
               )}
               {/* Close button when expanded */}
               {videoExpanded && (
-                <button
-                  onClick={() => setVideoExpanded(false)}
-                  className="fixed top-4 right-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
-                  aria-label="Close"
-                >
-                  <XIcon className="w-5 h-5" />
-                </button>
+                <>
+                  <button
+                    onClick={() => setVideoExpanded(false)}
+                    className="fixed top-4 right-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
+                    aria-label="Close"
+                  >
+                    <XIcon className="w-5 h-5" />
+                  </button>
+                  <RealtorOverlay user={post.user} />
+                </>
               )}
             </>
           ) : ytId && isMobile ? (
@@ -918,6 +922,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
             allowFullScreen
             onClick={(e) => e.stopPropagation()}
           />
+          <RealtorOverlay user={post.user} className="z-[51]" />
         </div>
       )}
     </article>

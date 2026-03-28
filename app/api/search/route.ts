@@ -59,6 +59,12 @@ function mapRow(row: any) {
   };
 }
 
+// Extract bedroom count from queries like "3 bedroom", "3br", "3 bed"
+function extractBedrooms(query: string): number | null {
+  const match = query.match(/(\d+)\s*(?:bed(?:room)?s?|br)\b/i);
+  return match ? parseInt(match[1], 10) : null;
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get('q')?.trim();
@@ -71,28 +77,79 @@ export async function GET(req: NextRequest) {
 
   const supabase = await createClient();
   const wild = `%${q}%`;
+  const qLower = q.toLowerCase();
 
   // Handle USA / United States synonym
   const usaVariants = ['usa', 'united states'];
-  const qLower = q.toLowerCase();
   const isUSA = usaVariants.some((v) => qLower.includes(v));
-  const orFilter = isUSA
-    ? `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild},country.ilike.${wild},location.ilike.%United States%,location.ilike.%USA%,country.ilike.%United States%`
-    : `title.ilike.${wild},location.ilike.${wild},description.ilike.${wild},country.ilike.${wild}`;
 
+  // Build OR conditions for text matching
+  const orParts = [
+    `title.ilike.${wild}`,
+    `location.ilike.${wild}`,
+    `description.ilike.${wild}`,
+    `country.ilike.${wild}`,
+    `category.ilike.${wild}`,
+    `price.ilike.${wild}`,
+    `users.username.ilike.${wild}`,
+  ];
+
+  if (isUSA) {
+    orParts.push(
+      'location.ilike.%United States%',
+      'location.ilike.%USA%',
+      'country.ilike.%United States%',
+    );
+  }
+
+  const orFilter = orParts.join(',');
+
+  // Primary query: text search across posts + user fields
   const { data, error } = await supabase
     .from('posts')
-    .select('*, users(id, username, avatar, bio, followers, earnings)')
+    .select('*, users!inner(id, username, avatar, bio, followers, earnings)')
     .or(orFilter)
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1);
 
   if (error) {
-    return NextResponse.json({ posts: [], hasMore: false }, { status: 500 });
+    // Fallback: if !inner join fails (e.g. user filter syntax), retry without user filter
+    const fallbackOr = orParts.filter((p) => !p.startsWith('users.')).join(',');
+    const { data: fbData, error: fbError } = await supabase
+      .from('posts')
+      .select('*, users(id, username, avatar, bio, followers, earnings)')
+      .or(fallbackOr)
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (fbError) {
+      return NextResponse.json({ posts: [], hasMore: false }, { status: 500 });
+    }
+
+    let results = (fbData ?? []);
+
+    // Apply bedroom filter if present
+    const bedroomCount = extractBedrooms(q);
+    if (bedroomCount !== null) {
+      results = results.filter((r) => r.bedrooms != null && r.bedrooms >= bedroomCount);
+    }
+
+    return NextResponse.json({
+      posts: results.map(mapRow),
+      hasMore: results.length === limit,
+    });
+  }
+
+  let results = (data ?? []);
+
+  // Apply bedroom filter if query mentions bedrooms
+  const bedroomCount = extractBedrooms(q);
+  if (bedroomCount !== null) {
+    results = results.filter((r) => r.bedrooms != null && r.bedrooms >= bedroomCount);
   }
 
   return NextResponse.json({
-    posts: (data ?? []).map(mapRow),
-    hasMore: (data?.length ?? 0) === limit,
+    posts: results.map(mapRow),
+    hasMore: results.length === limit,
   });
 }

@@ -117,7 +117,7 @@ export function Navbar({ activeCategory = 'all', onCategoryChange }: NavbarProps
                     router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
                   }
                 }}
-                placeholder="Destinations, hotels, restaurants..."
+                placeholder="Search properties, cities, realtors..."
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/60 focus:border-transparent focus:bg-white transition-all"
               />
             </div>

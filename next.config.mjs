@@ -8,6 +8,11 @@ const nextConfig = {
       { protocol: 'https', hostname: 'pix8.agoda.net' },
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '100mb',
+    },
+  },
 };
 
 export default nextConfig;

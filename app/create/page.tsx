@@ -17,6 +17,7 @@ import {
   AlertCircle,
   PenLine,
   ImageIcon,
+  Search,
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
 import { PostCategory } from '@/lib/types';
@@ -77,6 +78,12 @@ export default function CreatePostPage() {
   const [bathrooms, setBathrooms] = useState<number | ''>('');
   const [sizeSqft, setSizeSqft] = useState<number | ''>('');
   const [features, setFeatures] = useState('');
+
+  // MLS lookup
+  const [mlsQuery, setMlsQuery] = useState('');
+  const [mlsLoading, setMlsLoading] = useState(false);
+  const [mlsError, setMlsError] = useState<string | null>(null);
+  const [mlsLoaded, setMlsLoaded] = useState(false);
 
   // Submit
   const [submitting, setSubmitting] = useState(false);
@@ -253,6 +260,45 @@ export default function CreatePostPage() {
     }
   };
 
+  // ── MLS Lookup ──
+  const handleMlsLookup = async () => {
+    const q = mlsQuery.trim();
+    if (!q) return;
+    setMlsLoading(true);
+    setMlsError(null);
+    setMlsLoaded(false);
+    try {
+      const isId = /^\d+$/.test(q);
+      const res = await fetch('/api/mls/lookup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isId ? { mlsId: q } : { address: q }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setMlsError(data.error || 'Lookup failed');
+        return;
+      }
+      if (data.title) setTitle(data.title);
+      if (data.description) setDescription(data.description);
+      if (data.price) setPrice(data.price);
+      if (data.bedrooms != null) setBedrooms(data.bedrooms);
+      if (data.bathrooms != null) setBathrooms(data.bathrooms);
+      if (data.sqft != null) setSizeSqft(data.sqft);
+      if (data.location) {
+        setLocation(data.location);
+        buildExpediaLink(data.location);
+      }
+      if (data.category) setSelectedCategory(data.category);
+      setAiGenerated(true);
+      setMlsLoaded(true);
+    } catch (err) {
+      setMlsError(err instanceof Error ? err.message : 'Network error');
+    } finally {
+      setMlsLoading(false);
+    }
+  };
+
   // ── Submit ──
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -361,9 +407,9 @@ export default function CreatePostPage() {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-slate-900">Share a Recommendation</h1>
+          <h1 className="text-2xl font-extrabold text-slate-900">List Your Property</h1>
           <p className="text-slate-500 text-sm mt-1">
-            Paste your video link and we&apos;ll handle the rest with AI.
+            Add a video tour and we&apos;ll handle the rest with AI.
           </p>
         </div>
 
@@ -392,6 +438,59 @@ export default function CreatePostPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* ── MLS Lookup (optional) ── */}
+          <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <label className="block text-sm font-bold text-slate-900 mb-1">
+              <span className="flex items-center gap-2">
+                <Search className="w-4 h-4 text-emerald-500" />
+                MLS Lookup
+                <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">optional</span>
+              </span>
+            </label>
+            <p className="text-xs text-slate-400 mb-3">Enter an MLS ID or property address to auto-fill details</p>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={mlsQuery}
+                onChange={(e) => setMlsQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleMlsLookup(); } }}
+                placeholder="MLS ID or property address"
+                className="input flex-1 text-sm"
+                disabled={mlsLoading}
+              />
+              <button
+                type="button"
+                onClick={handleMlsLookup}
+                disabled={mlsLoading || !mlsQuery.trim()}
+                className="px-4 py-2.5 bg-[#2D9B4E] text-white rounded-xl text-sm font-semibold hover:bg-[#258442] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 whitespace-nowrap"
+              >
+                {mlsLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Looking up…
+                  </>
+                ) : (
+                  <>
+                    <Search className="w-4 h-4" />
+                    Look Up
+                  </>
+                )}
+              </button>
+            </div>
+            {mlsError && (
+              <div className="flex items-start gap-2 mt-3 p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                <AlertCircle className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-rose-600">{mlsError}</p>
+              </div>
+            )}
+            {mlsLoaded && (
+              <div className="flex items-center gap-2 mt-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                <p className="text-xs text-emerald-700 font-medium">Property details loaded from MLS</p>
+              </div>
+            )}
+          </div>
 
           {/* ── Video Input ── */}
           <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
@@ -501,45 +600,60 @@ export default function CreatePostPage() {
                         )}
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             if (!videoFile) return;
                             setVideoUploading(true);
                             setVideoError(null);
                             setVideoUploadProgress(0);
 
-                            const fd = new FormData();
-                            fd.append('video', videoFile);
+                            try {
+                              // Step 1: Get presigned URL (small JSON request, no size limit issues)
+                              const presignRes = await fetch('/api/video/presign', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ filename: videoFile.name, contentType: videoFile.type }),
+                              });
+                              if (!presignRes.ok) {
+                                const errData = await presignRes.json().catch(() => ({}));
+                                setVideoError(errData.error || `Failed to prepare upload (${presignRes.status})`);
+                                setVideoUploading(false);
+                                return;
+                              }
+                              const { uploadUrl, publicUrl } = await presignRes.json();
 
-                            const xhr = new XMLHttpRequest();
-                            xhr.upload.addEventListener('progress', (e) => {
-                              if (e.lengthComputable) {
-                                setVideoUploadProgress(Math.round((e.loaded / e.total) * 100));
-                              }
-                            });
-                            xhr.addEventListener('load', () => {
-                              try {
-                                const data = JSON.parse(xhr.responseText);
-                                if (xhr.status >= 200 && xhr.status < 300 && data.url) {
-                                  setProcessedVideoUrl(data.url);
-                                  setVideoFile(null);
-                                  setVideoFilePreview(null);
-                                  setVideoLargeWarning(false);
-                                } else {
-                                  setVideoError(data.error || 'Upload failed');
-                                }
-                              } catch {
-                                setVideoError('Upload failed — invalid server response');
-                              }
-                              setVideoUploading(false);
-                              setVideoUploadProgress(0);
-                            });
-                            xhr.addEventListener('error', () => {
-                              setVideoError('Network error during upload');
-                              setVideoUploading(false);
-                              setVideoUploadProgress(0);
-                            });
-                            xhr.open('POST', '/api/upload-video');
-                            xhr.send(fd);
+                              // Step 2: Upload directly to R2 via presigned URL (bypasses Vercel 4.5MB limit)
+                              await new Promise<void>((resolve, reject) => {
+                                const xhr = new XMLHttpRequest();
+                                xhr.upload.addEventListener('progress', (e) => {
+                                  if (e.lengthComputable) {
+                                    setVideoUploadProgress(Math.round((e.loaded / e.total) * 100));
+                                  }
+                                });
+                                xhr.addEventListener('load', () => {
+                                  if (xhr.status >= 200 && xhr.status < 300) {
+                                    resolve();
+                                  } else {
+                                    reject(new Error(`R2 upload failed (${xhr.status})`));
+                                  }
+                                });
+                                xhr.addEventListener('error', () => reject(new Error('Network error during upload')));
+                                xhr.open('PUT', uploadUrl);
+                                xhr.setRequestHeader('Content-Type', videoFile.type);
+                                xhr.send(videoFile);
+                              });
+
+                              setProcessedVideoUrl(publicUrl);
+                              setVideoFile(null);
+                              setVideoFilePreview(null);
+                              setVideoLargeWarning(false);
+                              setVideoPlatform('upload');
+                              console.log('[create] presigned upload complete:', publicUrl);
+                            } catch (err) {
+                              console.error('[create] upload error:', err);
+                              setVideoError(err instanceof Error ? err.message : 'Upload failed');
+                            }
+                            setVideoUploading(false);
+                            setVideoUploadProgress(0);
                           }}
                           className="w-full py-3.5 bg-[#2D9B4E] text-white rounded-xl text-base font-bold hover:bg-[#258442] transition-colors flex items-center justify-center gap-2 min-h-[48px]"
                         >
@@ -813,6 +927,12 @@ export default function CreatePostPage() {
           )}
 
           {/* ── Submit ── */}
+          {!processedVideoUrl && !videoProcessing && !videoUploading && (
+            <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-xl">
+              <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+              <p className="text-xs text-amber-700 font-medium">A video is required to post</p>
+            </div>
+          )}
           <div className="flex gap-3 pb-8">
             <Link
               href="/"

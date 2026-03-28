@@ -23,9 +23,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#C8102E" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Mebira" />
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+      </head>
       <body className="antialiased">
         <SupabaseSessionRefresh />
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}`,
+          }}
+        />
       </body>
     </html>
   );

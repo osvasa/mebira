@@ -225,29 +225,15 @@ export default function CreatePostPage() {
 
       const { uploadUrl, publicUrl } = await presignRes.json();
 
-      // Step 2: Upload file directly to R2 via XHR for progress tracking
-      await new Promise<void>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', uploadUrl);
-        xhr.setRequestHeader('Content-Type', file.type);
-
-        xhr.upload.onprogress = (e) => {
-          if (e.lengthComputable) {
-            setUploadProgress(Math.round((e.loaded / e.total) * 100));
-          }
-        };
-
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve();
-          } else {
-            reject(new Error(`Upload failed (${xhr.status})`));
-          }
-        };
-
-        xhr.onerror = () => reject(new Error('Network error during upload'));
-        xhr.send(file);
+      // Step 2: Upload file directly to R2 via fetch PUT
+      const putRes = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
       });
+      if (!putRes.ok) {
+        throw new Error(`Upload failed (${putRes.status})`);
+      }
 
       // Step 3: Use the public URL
       console.log('[create] file upload complete, publicUrl:', publicUrl);
@@ -629,25 +615,14 @@ export default function CreatePostPage() {
                               const { uploadUrl, publicUrl } = await presignRes.json();
 
                               // Step 2: Upload directly to R2 via presigned URL (bypasses Vercel 4.5MB limit)
-                              await new Promise<void>((resolve, reject) => {
-                                const xhr = new XMLHttpRequest();
-                                xhr.upload.addEventListener('progress', (e) => {
-                                  if (e.lengthComputable) {
-                                    setVideoUploadProgress(Math.round((e.loaded / e.total) * 100));
-                                  }
-                                });
-                                xhr.addEventListener('load', () => {
-                                  if (xhr.status >= 200 && xhr.status < 300) {
-                                    resolve();
-                                  } else {
-                                    reject(new Error(`R2 upload failed (${xhr.status})`));
-                                  }
-                                });
-                                xhr.addEventListener('error', () => reject(new Error('Network error during upload')));
-                                xhr.open('PUT', uploadUrl);
-                                xhr.setRequestHeader('Content-Type', videoFile.type);
-                                xhr.send(videoFile);
+                              const putRes = await fetch(uploadUrl, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': videoFile.type },
+                                body: videoFile,
                               });
+                              if (!putRes.ok) {
+                                throw new Error(`R2 upload failed (${putRes.status})`);
+                              }
 
                               setProcessedVideoUrl(publicUrl);
                               setVideoFile(null);

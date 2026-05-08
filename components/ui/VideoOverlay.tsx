@@ -8,18 +8,19 @@ import { User } from '@/lib/types';
 interface VideoOverlayProps {
   src: string;
   open: boolean;
-  onClose: () => void;
+  onClose: (currentTime?: number) => void;
   user?: User;
+  initialTime?: number;
 }
 
-export function VideoOverlay({ src, open, onClose, user }: VideoOverlayProps) {
+export function VideoOverlay({ src, open, onClose, user, initialTime }: VideoOverlayProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') onClose(videoRef.current?.currentTime);
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -27,9 +28,12 @@ export function VideoOverlay({ src, open, onClose, user }: VideoOverlayProps) {
 
   useEffect(() => {
     if (open && videoRef.current) {
+      if (initialTime != null) {
+        videoRef.current.currentTime = initialTime;
+      }
       videoRef.current.play().catch(() => {});
     }
-  }, [open]);
+  }, [open, initialTime]);
 
   if (!open) return null;
 
@@ -38,7 +42,7 @@ export function VideoOverlay({ src, open, onClose, user }: VideoOverlayProps) {
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/90 sm:bg-black/80"
-        onClick={onClose}
+        onClick={() => onClose(videoRef.current?.currentTime)}
       />
 
       {/* Video container */}
@@ -56,7 +60,7 @@ export function VideoOverlay({ src, open, onClose, user }: VideoOverlayProps) {
 
       {/* Close button */}
       <button
-        onClick={onClose}
+        onClick={() => onClose(videoRef.current?.currentTime)}
         className="fixed top-4 right-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
         aria-label="Close"
       >

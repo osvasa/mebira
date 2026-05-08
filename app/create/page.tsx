@@ -639,6 +639,11 @@ export default function CreatePostPage() {
                               setVideoFilePreview(null);
                               setVideoLargeWarning(false);
                               setVideoPlatform('upload');
+                              // Show form with defaults for uploaded videos (no AI generation needed)
+                              if (!title) setTitle('Property Listing');
+                              if (!description) setDescription('');
+                              if (!location) setLocation('');
+                              setAiGenerated(true);
                               console.log('[create] presigned upload complete:', publicUrl);
                             } catch (err) {
                               console.error('[create] upload error:', err);

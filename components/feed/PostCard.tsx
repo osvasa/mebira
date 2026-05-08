@@ -494,8 +494,18 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         <VideoOverlay
           src={post.videoUrl!}
           open={true}
-          onClose={() => setVideoExpanded(false)}
+          onClose={(time) => {
+            setVideoExpanded(false);
+            const v = videoRef.current;
+            if (v && time != null) {
+              v.currentTime = time;
+              v.muted = true;
+              setMuted(true);
+              v.play().catch(() => {});
+            }
+          }}
           user={post.user}
+          initialTime={videoRef.current?.currentTime}
         />
       )}
 
@@ -532,7 +542,14 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
               {/* Tap to expand video overlay */}
               {!videoExpanded && (
                 <button
-                  onClick={() => setVideoExpanded(true)}
+                  onClick={() => {
+                    // Pause and mute inline video before expanding to prevent audio doubling
+                    if (videoRef.current) {
+                      videoRef.current.pause();
+                      videoRef.current.muted = true;
+                    }
+                    setVideoExpanded(true);
+                  }}
                   className="absolute inset-0 z-[5]"
                   aria-label="Expand video"
                 />

@@ -228,7 +228,7 @@ export default function CreatePostPage() {
       // Step 2: Upload file directly to R2 via fetch PUT
       const putRes = await fetch(uploadUrl, {
         method: 'PUT',
-        headers: { 'Content-Type': file.type },
+        headers: { 'Content-Type': file.type || 'video/mp4' },
         body: file,
       });
       if (!putRes.ok) {
@@ -575,8 +575,18 @@ export default function CreatePostPage() {
                       </div>
                     ) : videoFilePreview ? (
                       <div className="space-y-3">
-                        <div className="relative rounded-xl overflow-hidden aspect-[9/16] max-h-[300px] bg-black mx-auto w-fit">
-                          <video src={videoFilePreview} className="h-full w-auto mx-auto" controls muted playsInline />
+                        <div className="relative rounded-xl overflow-hidden max-h-[300px] bg-black mx-auto w-fit">
+                          {videoFilePreview === 'mov-no-preview' ? (
+                            <div className="flex flex-col items-center justify-center py-12 px-8 text-white">
+                              <Upload className="w-10 h-10 text-slate-400 mb-3" />
+                              <p className="text-sm font-semibold">{videoFile?.name}</p>
+                              <p className="text-xs text-slate-400 mt-1">{videoFile ? `${(videoFile.size / 1024 / 1024).toFixed(1)} MB` : ''}</p>
+                            </div>
+                          ) : (
+                            <div className="aspect-[9/16]">
+                              <video src={videoFilePreview} className="h-full w-auto mx-auto" controls muted playsInline />
+                            </div>
+                          )}
                           <button
                             type="button"
                             onClick={() => { setVideoFile(null); setVideoFilePreview(null); setVideoLargeWarning(false); }}
@@ -617,7 +627,7 @@ export default function CreatePostPage() {
                               // Step 2: Upload directly to R2 via presigned URL (bypasses Vercel 4.5MB limit)
                               const putRes = await fetch(uploadUrl, {
                                 method: 'PUT',
-                                headers: { 'Content-Type': videoFile.type },
+                                headers: { 'Content-Type': videoFile.type || 'video/mp4' },
                                 body: videoFile,
                               });
                               if (!putRes.ok) {
@@ -650,7 +660,7 @@ export default function CreatePostPage() {
                         <p className="text-xs text-slate-400 mt-1">MP4, MOV — up to 500MB</p>
                         <input
                           type="file"
-                          accept="video/*"
+                          accept="video/mp4,video/quicktime,video/mov,video/*"
                           className="hidden"
                           onChange={(e) => {
                             const file = e.target.files?.[0];
@@ -662,7 +672,9 @@ export default function CreatePostPage() {
                             setVideoError(null);
                             setVideoLargeWarning(file.size > 200 * 1024 * 1024);
                             setVideoFile(file);
-                            setVideoFilePreview(URL.createObjectURL(file));
+                            // .mov/quicktime files can't preview in <video> on iOS Safari
+                            const isMov = file.type === 'video/quicktime' || file.name.toLowerCase().endsWith('.mov');
+                            setVideoFilePreview(isMov ? 'mov-no-preview' : URL.createObjectURL(file));
                           }}
                         />
                       </label>

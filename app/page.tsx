@@ -10,9 +10,8 @@ import {
 } from '@/lib/supabase/queries';
 
 export default async function HomePage() {
-  const seed = Math.floor(Math.random() * 2147483647);
   const [allPosts, suggestedUsers, trendingDestinations, stories] = await Promise.all([
-    fetchPosts(seed),
+    fetchPosts(),
     fetchSuggestedUsers(),
     fetchTrendingDestinations(),
     buildStories(),
@@ -21,7 +20,6 @@ export default async function HomePage() {
   return (
     <HomeFeed
       posts={allPosts.slice(0, 10)}
-      seed={seed}
       totalPosts={allPosts.length}
       stories={stories}
       trendingDestinations={trendingDestinations}

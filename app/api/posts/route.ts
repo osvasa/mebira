@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { EXPEDIA_URL } from '@/lib/agoda';
-import { seededShuffle } from '@/lib/supabase/queries';
 
 function toDisplayName(username: string): string {
   return username.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
@@ -119,22 +118,22 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const offset = parseInt(searchParams.get('offset') ?? '0', 10);
   const limit = parseInt(searchParams.get('limit') ?? '10', 10);
-  const seed = parseInt(searchParams.get('seed') ?? '0', 10);
 
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('posts')
-    .select('*, users(id, username, avatar, bio, followers, earnings)');
+    .select('*, users(id, username, avatar, bio, followers, earnings)')
+    .order('created_at', { ascending: false })
+    .range(offset, offset + limit - 1);
 
   if (error) {
     return NextResponse.json({ posts: [], hasMore: false }, { status: 500 });
   }
 
-  const all = seededShuffle((data ?? []).map(mapRow), seed);
-  const page = all.slice(offset, offset + limit);
+  const posts = (data ?? []).map(mapRow);
 
   return NextResponse.json({
-    posts: page,
-    hasMore: offset + limit < all.length,
+    posts,
+    hasMore: posts.length === limit,
   });
 }

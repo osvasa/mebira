@@ -71,24 +71,7 @@ function mapPost(row: any): Post {
   };
 }
 
-// Deterministic shuffle using a numeric seed (Mulberry32 PRNG)
-function seededShuffle<T>(arr: T[], seed: number): T[] {
-  const out = [...arr];
-  let s = seed | 0;
-  function rand() {
-    s = (s + 0x6D2B79F5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  }
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
-
-export async function fetchPosts(seed: number): Promise<Post[]> {
+export async function fetchPosts(): Promise<Post[]> {
   let supabase: Awaited<ReturnType<typeof createClient>>;
   try {
     supabase = await createClient();
@@ -99,14 +82,13 @@ export async function fetchPosts(seed: number): Promise<Post[]> {
 
   const { data, error } = await supabase
     .from('posts')
-    .select('*, users(id, username, avatar, bio, followers, earnings)');
+    .select('*, users(id, username, avatar, bio, followers, earnings)')
+    .order('created_at', { ascending: false });
 
   if (error) { console.error('[fetchPosts] full error:', error); return []; }
   if (!data) return [];
-  return seededShuffle(data.map(mapPost), seed);
+  return data.map(mapPost);
 }
-
-export { seededShuffle };
 
 export async function fetchSuggestedUsers(): Promise<User[]> {
   const supabase = await createClient();

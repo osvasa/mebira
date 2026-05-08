@@ -12,14 +12,13 @@ import { Loader2 } from 'lucide-react';
 
 interface HomeFeedProps {
   posts: Post[];
-  seed: number;
   totalPosts: number;
   stories: Story[];
   trendingDestinations: TrendingDestination[];
   suggestedUsers: User[];
 }
 
-export function HomeFeed({ posts: initialPosts, seed, totalPosts, stories, trendingDestinations, suggestedUsers }: HomeFeedProps) {
+export function HomeFeed({ posts: initialPosts, totalPosts, stories, trendingDestinations, suggestedUsers }: HomeFeedProps) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [posts, setPosts] = useState<Post[]>(initialPosts);
   const [loading, setLoading] = useState(false);
@@ -50,7 +49,7 @@ export function HomeFeed({ posts: initialPosts, seed, totalPosts, stories, trend
     if (loading || !hasMore) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/posts?offset=${posts.length}&limit=10&seed=${seed}`);
+      const res = await fetch(`/api/posts?offset=${posts.length}&limit=10`);
       const data = await res.json();
       if (data.posts?.length) {
         setPosts((prev) => [...prev, ...data.posts]);

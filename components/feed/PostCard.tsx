@@ -543,8 +543,9 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
               {!videoExpanded && (
                 <button
                   onClick={() => {
-                    // Pause and mute inline video before expanding to prevent audio doubling
-                    if (videoRef.current) {
+                    // Mobile: pause inline video before opening VideoOverlay to prevent audio doubling
+                    // Desktop: same <video> element is reused, so don't pause
+                    if (isMobile && videoRef.current) {
                       videoRef.current.pause();
                       videoRef.current.muted = true;
                     }

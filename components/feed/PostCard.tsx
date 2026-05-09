@@ -37,7 +37,6 @@ import { postPriceDrops } from '@/lib/pricePulseData';
 import { createClient } from '@/lib/supabase/client';
 import { Pencil, Trash2, Loader2, X as XIcon } from 'lucide-react';
 import { RealtorOverlay } from '@/components/feed/RealtorOverlay';
-import { VideoOverlay } from '@/components/ui/VideoOverlay';
 
 const categoryConfig: Record<
   string,
@@ -481,31 +480,11 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         </div>
       </div>
 
-      {/* ── Backdrop when video is expanded (desktop only — mobile uses VideoOverlay) ── */}
-      {videoExpanded && isNativeVideo && !isMobile && (
+      {/* ── Backdrop when video is expanded ── */}
+      {videoExpanded && isNativeVideo && (
         <div
-          className="fixed inset-0 z-[9998] bg-black/80"
+          className="fixed inset-0 z-[9998] bg-black/90"
           onClick={() => setVideoExpanded(false)}
-        />
-      )}
-
-      {/* ── Mobile native video fullscreen uses shared VideoOverlay ── */}
-      {videoExpanded && isNativeVideo && isMobile && (
-        <VideoOverlay
-          src={post.videoUrl!}
-          open={true}
-          onClose={(time) => {
-            setVideoExpanded(false);
-            const v = videoRef.current;
-            if (v && time != null) {
-              v.currentTime = time;
-              v.muted = true;
-              setMuted(true);
-              v.play().catch(() => {});
-            }
-          }}
-          user={post.user}
-          initialTime={videoRef.current?.currentTime}
         />
       )}
 
@@ -515,7 +494,7 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
         <div
           ref={videoContainerRef}
           className={
-            videoExpanded && isNativeVideo && !isMobile
+            videoExpanded && isNativeVideo
               ? 'fixed inset-0 z-[9999] flex items-center justify-center'
               : `relative mx-0 sm:mx-3 rounded-none sm:rounded-xl overflow-hidden bg-slate-100 ${isShorts ? '' : 'aspect-[4/3]'}`
           }
@@ -534,29 +513,21 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
                 disablePictureInPicture
                 controlsList="nodownload nofullscreen noremoteplayback nopictureinpicture"
                 className={
-                  videoExpanded && !isMobile
-                    ? 'w-auto h-full max-h-[85vh] aspect-[9/16] object-contain bg-black rounded-2xl'
+                  videoExpanded
+                    ? 'w-auto h-full max-h-[90vh] aspect-[9/16] object-contain bg-black rounded-none sm:rounded-2xl'
                     : 'absolute inset-0 w-full h-full object-cover'
                 }
               />
-              {/* Tap to expand video overlay */}
+              {/* Tap to expand video */}
               {!videoExpanded && (
                 <button
-                  onClick={() => {
-                    // Mobile: pause inline video before opening VideoOverlay to prevent audio doubling
-                    // Desktop: same <video> element is reused, so don't pause
-                    if (isMobile && videoRef.current) {
-                      videoRef.current.pause();
-                      videoRef.current.muted = true;
-                    }
-                    setVideoExpanded(true);
-                  }}
+                  onClick={() => setVideoExpanded(true)}
                   className="absolute inset-0 z-[5]"
                   aria-label="Expand video"
                 />
               )}
-              {/* Close button + realtor overlay when expanded (desktop only — mobile uses VideoOverlay) */}
-              {videoExpanded && !isMobile && (
+              {/* Close button + realtor overlay when expanded */}
+              {videoExpanded && (
                 <>
                   <button
                     onClick={() => setVideoExpanded(false)}
@@ -595,13 +566,13 @@ export function PostCard({ post, currentUserId, onDelete, onUpdate }: PostCardPr
               allowFullScreen
             />
           ) : null}
-          {/* Mute / unmute toggle (hidden on mobile when expanded — VideoOverlay has its own) */}
+          {/* Mute / unmute toggle */}
           <button
             onClick={toggleMute}
             className={
-              videoExpanded && isNativeVideo && !isMobile
-                ? 'fixed bottom-6 right-4 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors'
-                : `absolute bottom-14 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors ${videoExpanded && isMobile ? 'hidden' : ''}`
+              videoExpanded && isNativeVideo
+                ? 'fixed bottom-6 right-6 z-[10000] w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors'
+                : 'absolute bottom-14 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors'
             }
             aria-label={muted ? 'Unmute' : 'Mute'}
           >

@@ -105,9 +105,18 @@ export async function fetchSuggestedUsers(): Promise<User[]> {
 
 export async function fetchTrendingDestinations(): Promise<TrendingDestination[]> {
   const supabase = await createClient();
+  const southFloridaCities = [
+    'Miami', 'Brickell', 'Coral Gables', 'Coconut Grove', 'Key Biscayne',
+    'Sunny Isles Beach', 'Aventura', 'Bal Harbour', 'Miami Beach', 'Edgewater',
+    'Downtown Miami', 'Doral', 'Pinecrest', 'Fort Lauderdale', 'Hollywood',
+    'Hallandale Beach', 'Boca Raton', 'Delray Beach', 'West Palm Beach',
+    'Palm Beach', 'Jupiter', 'Wellington',
+  ];
   const { data, error } = await supabase
     .from('posts')
-    .select('location, country, photo_url');
+    .select('location, country, photo_url')
+    .eq('country', 'United States')
+    .in('location', southFloridaCities);
 
   if (error) { console.error('[fetchTrendingDestinations]', error.message); return []; }
   if (!data) return [];
@@ -161,9 +170,18 @@ const DEFAULT_DESTINATION_IMAGE = 'https://images.pexels.com/photos/323780/pexel
 // Only include countries that have a curated image in DESTINATION_IMAGES
 export async function buildStories(): Promise<Story[]> {
   const supabase = await createClient();
+  const southFloridaCities = [
+    'Miami', 'Brickell', 'Coral Gables', 'Coconut Grove', 'Key Biscayne',
+    'Sunny Isles Beach', 'Aventura', 'Bal Harbour', 'Miami Beach', 'Edgewater',
+    'Downtown Miami', 'Doral', 'Pinecrest', 'Fort Lauderdale', 'Hollywood',
+    'Hallandale Beach', 'Boca Raton', 'Delray Beach', 'West Palm Beach',
+    'Palm Beach', 'Jupiter', 'Wellington',
+  ];
   const { data } = await supabase
     .from('posts')
-    .select('id, country, user_id, users(id, username, avatar, bio, followers, earnings)')
+    .select('id, country, location, user_id, users(id, username, avatar, bio, followers, earnings)')
+    .eq('country', 'United States')
+    .in('location', southFloridaCities)
     .order('created_at', { ascending: false });
 
   if (!data) return [];
@@ -171,17 +189,17 @@ export async function buildStories(): Promise<Story[]> {
   const seen = new Set<string>();
   const stories: Story[] = [];
   for (const row of data) {
-    const country = row.country;
-    if (!country) continue;
-    if (seen.has(country) || stories.length >= 7) continue;
-    const image = DESTINATION_IMAGES[country] || DEFAULT_DESTINATION_IMAGE;
-    seen.add(country);
+    const loc = row.location;
+    if (!loc) continue;
+    if (seen.has(loc) || stories.length >= 7) continue;
+    const image = DESTINATION_IMAGES[row.country || ''] || DEFAULT_DESTINATION_IMAGE;
+    seen.add(loc);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user = row.users ? mapUser(row.users as any) : { id: row.user_id, username: 'unknown', displayName: 'Unknown', avatar: '', bio: '', followerCount: 0, followingCount: 0, postCount: 0, totalEarnings: 0, isAI: false, isVerified: false, isFollowing: false };
     stories.push({
       id: `story-${row.id}`,
       user,
-      destination: country,
+      destination: loc,
       image,
     });
   }

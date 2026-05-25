@@ -8,9 +8,9 @@ interface StoriesRowProps {
 const counties = [
   { id: 'county-1', name: 'Miami-Dade County', image: 'https://images.unsplash.com/photo-1535498730771-e735b998cd64?w=800' },
   { id: 'county-2', name: 'Broward County', image: 'https://images.unsplash.com/photo-1593696954577-ab3d39317b97?w=800' },
-  { id: 'county-3', name: 'Palm Beach County', image: 'https://images.unsplash.com/photo-1583843569955-bb6c1f6a83b9?w=800' },
+  { id: 'county-3', name: 'Palm Beach County', image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800' },
   { id: 'county-4', name: 'Martin County', image: 'https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=800' },
-  { id: 'county-5', name: 'St. Lucie County', image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800' },
+  { id: 'county-5', name: 'St. Lucie County', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800' },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

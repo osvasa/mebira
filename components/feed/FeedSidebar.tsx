@@ -134,7 +134,7 @@ export function FeedSidebar({ trendingDestinations, suggestedUsers }: FeedSideba
         <h3 className="font-bold text-slate-900 text-sm mb-3">Popular Tags</h3>
         <div className="flex flex-wrap gap-2">
           {[
-            '#miami', '#dubai', '#barcelona', '#lisbon', '#nyc',
+            '#miami', '#brickell', '#coralgables', '#palmbeach', '#bocaraton',
             '#luxury', '#apartments', '#villas', '#forsale', '#rental',
           ].map((tag) => (
             <Link

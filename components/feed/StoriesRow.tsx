@@ -13,6 +13,7 @@ const counties = [
   { id: 'county-5', name: 'St. Lucie County', image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800' },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function StoriesRow({ stories }: StoriesRowProps) {
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4">

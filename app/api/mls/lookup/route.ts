@@ -3,9 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// SimplyRETS test credentials (returns realistic fake MLS data)
 const SIMPLYRETS_BASE = 'https://api.simplyrets.com';
-const SIMPLYRETS_AUTH = 'Basic ' + Buffer.from('simplyrets:simplyrets').toString('base64');
+const SIMPLYRETS_USER = process.env.SIMPLYRETS_USER || 'simplyrets';
+const SIMPLYRETS_PASS = process.env.SIMPLYRETS_PASS || 'simplyrets';
+const SIMPLYRETS_AUTH = 'Basic ' + Buffer.from(`${SIMPLYRETS_USER}:${SIMPLYRETS_PASS}`).toString('base64');
 
 interface SimplyRetsListing {
   mlsId: number;

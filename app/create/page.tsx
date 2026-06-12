@@ -40,7 +40,7 @@ export default function CreatePostPage() {
   const [postingAsName, setPostingAsName] = useState<string | null>(null);
 
   // Video
-  const [videoInputMode, setVideoInputMode] = useState<'url' | 'upload'>('url');
+  const [videoInputMode, setVideoInputMode] = useState<'url' | 'upload' | 'photos'>('url');
   const [videoUrl, setVideoUrl] = useState('');
   const [processedVideoUrl, setProcessedVideoUrl] = useState<string | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -87,6 +87,17 @@ export default function CreatePostPage() {
   const [mlsLoading, setMlsLoading] = useState(false);
   const [mlsError, setMlsError] = useState<string | null>(null);
   const [mlsLoaded, setMlsLoaded] = useState(false);
+  const [mlsPhotos, setMlsPhotos] = useState<string[]>([]);
+
+  // Photo-to-video generation
+  const [genPhotos, setGenPhotos] = useState<string[]>([]);
+  const [genSelected, setGenSelected] = useState<Set<number>>(new Set());
+  const [genExtraFiles, setGenExtraFiles] = useState<File[]>([]);
+  const [genExtraPreviews, setGenExtraPreviews] = useState<string[]>([]);
+  const [genRightsConfirmed, setGenRightsConfirmed] = useState(false);
+  const [genJobId, setGenJobId] = useState<string | null>(null);
+  const [genStatus, setGenStatus] = useState<string | null>(null);
+  const [genError, setGenError] = useState<string | null>(null);
 
   // Submit
   const [submitting, setSubmitting] = useState(false);
@@ -279,6 +290,9 @@ export default function CreatePostPage() {
         buildExpediaLink(data.location);
       }
       if (data.category) setSelectedCategory(data.category);
+      if (data.photos && Array.isArray(data.photos) && data.photos.length > 0) {
+        setMlsPhotos(data.photos);
+      }
       setAiGenerated(true);
       setMlsLoaded(true);
     } catch (err) {
@@ -437,7 +451,7 @@ export default function CreatePostPage() {
                 <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">optional</span>
               </span>
             </label>
-            <p className="text-xs text-slate-400 mb-3">Enter an MLS ID or property address to auto-fill details</p>
+            <p className="text-xs text-slate-400 mb-3">Enter an MLS ID or property address to auto-fill details and photos</p>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -511,6 +525,20 @@ export default function CreatePostPage() {
                     className={`px-4 py-2 text-xs font-bold -mb-px transition-colors ${videoInputMode === 'upload' ? 'text-sky-600 border-b-2 border-sky-500' : 'text-slate-400 hover:text-slate-600'}`}
                   >
                     Upload Video
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setVideoInputMode('photos');
+                      // Preselect first 8 MLS photos
+                      if (mlsPhotos.length > 0 && genPhotos.length === 0) {
+                        setGenPhotos(mlsPhotos.slice(0, 10));
+                        setGenSelected(new Set(mlsPhotos.slice(0, 8).map((_, i) => i)));
+                      }
+                    }}
+                    className={`px-4 py-2 text-xs font-bold -mb-px transition-colors ${videoInputMode === 'photos' ? 'text-sky-600 border-b-2 border-sky-500' : 'text-slate-400 hover:text-slate-600'}`}
+                  >
+                    Create From Photos
                   </button>
                 </div>
 
@@ -683,6 +711,197 @@ export default function CreatePostPage() {
                           }}
                         />
                       </label>
+                    )}
+                  </div>
+                )}
+
+                {/* Create From Photos tab */}
+                {videoInputMode === 'photos' && (
+                  <div>
+                    <p className="text-xs text-slate-400 mb-3">Select 3 to 10 photos and we will generate a video tour</p>
+
+                    {/* MLS photo grid */}
+                    {genPhotos.length > 0 && (
+                      <>
+                        <p className="text-[10px] text-slate-500 mb-2 font-semibold uppercase tracking-wider">MLS Photos</p>
+                        <div className="grid grid-cols-4 gap-2 mb-3">
+                          {genPhotos.map((url, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => {
+                                const next = new Set(genSelected);
+                                if (next.has(i)) next.delete(i);
+                                else if (next.size + genExtraPreviews.length < 10) next.add(i);
+                                setGenSelected(next);
+                              }}
+                              className={`aspect-[4/3] rounded-lg overflow-hidden border-2 transition-colors ${genSelected.has(i) ? 'border-sky-500' : 'border-transparent opacity-50'}`}
+                            >
+                              <img src={url} alt={`MLS ${i + 1}`} className="w-full h-full object-cover" />
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+
+                    {/* Extra photos upload */}
+                    <p className="text-[10px] text-slate-500 mb-2 font-semibold uppercase tracking-wider">
+                      {genPhotos.length > 0 ? 'Or add your own photos' : 'Add your photos'}
+                    </p>
+                    <label className="flex flex-col items-center justify-center w-full h-20 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-sky-400 hover:bg-sky-50/50 transition-colors mb-3">
+                      <span className="text-sm text-slate-500">Click to upload photos</span>
+                      <span className="text-xs text-slate-400">JPG, PNG</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className="hidden"
+                        onChange={(e) => {
+                          if (!e.target.files) return;
+                          const totalCurrent = genSelected.size + genExtraPreviews.length;
+                          const maxNew = 10 - totalCurrent;
+                          const files = Array.from(e.target.files).slice(0, Math.max(0, maxNew));
+                          setGenExtraFiles((prev) => [...prev, ...files]);
+                          setGenExtraPreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))]);
+                        }}
+                      />
+                    </label>
+
+                    {genExtraPreviews.length > 0 && (
+                      <div className="grid grid-cols-4 gap-2 mb-3">
+                        {genExtraPreviews.map((url, i) => (
+                          <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden border-2 border-sky-500 relative">
+                            <img src={url} alt={`Upload ${i + 1}`} className="w-full h-full object-cover" />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setGenExtraFiles((prev) => prev.filter((_, j) => j !== i));
+                                setGenExtraPreviews((prev) => prev.filter((_, j) => j !== i));
+                              }}
+                              className="absolute top-1 right-1 w-5 h-5 bg-black/50 rounded-full flex items-center justify-center text-white text-xs"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Count indicator */}
+                    {(() => {
+                      const total = genSelected.size + genExtraPreviews.length;
+                      return (
+                        <p className={`text-xs mb-3 ${total < 3 ? 'text-rose-400' : total > 10 ? 'text-rose-400' : 'text-slate-400'}`}>
+                          {total} of 3 to 10 photos selected
+                        </p>
+                      );
+                    })()}
+
+                    {/* Rights checkbox */}
+                    <label className="flex items-start gap-2 mb-4 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={genRightsConfirmed}
+                        onChange={(e) => setGenRightsConfirmed(e.target.checked)}
+                        className="mt-0.5 accent-sky-500"
+                      />
+                      <span className="text-xs text-slate-400">This is my own listing and I have rights to these photos.</span>
+                    </label>
+
+                    {/* Generate button */}
+                    {!genJobId && (
+                      <button
+                        type="button"
+                        disabled={
+                          genSelected.size + genExtraPreviews.length < 3 ||
+                          genSelected.size + genExtraPreviews.length > 10 ||
+                          !genRightsConfirmed
+                        }
+                        onClick={async () => {
+                          setGenError(null);
+                          // Collect selected MLS photo URLs
+                          const selectedUrls = genPhotos.filter((_, i) => genSelected.has(i));
+                          // Upload extra files to get URLs
+                          const extraUrls: string[] = [];
+                          for (const file of genExtraFiles) {
+                            const fd = new FormData();
+                            fd.append('image', file);
+                            const upRes = await fetch('/api/admin/upload-image', { method: 'POST', body: fd });
+                            if (upRes.ok) {
+                              const upData = await upRes.json();
+                              if (upData.url) extraUrls.push(upData.url);
+                            }
+                          }
+                          const allUrls = [...selectedUrls, ...extraUrls];
+                          if (allUrls.length < 3) {
+                            setGenError('Could not upload enough photos. Please try again.');
+                            return;
+                          }
+                          // Build listing from form state
+                          const listing = {
+                            title: title.trim() || 'Property Listing',
+                            description: description.trim(),
+                            price: price || null,
+                            bedrooms: bedrooms !== '' ? bedrooms : null,
+                            bathrooms: bathrooms !== '' ? bathrooms : null,
+                            size_sqft: sizeSqft !== '' ? sizeSqft : null,
+                            location: location.trim() || 'Unknown',
+                            category: selectedCategory,
+                          };
+                          const res = await fetch('/api/video-jobs', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ photo_urls: allUrls.slice(0, 10), listing }),
+                          });
+                          const data = await res.json();
+                          if (!res.ok) {
+                            setGenError(data.error || 'Failed to start video generation.');
+                            return;
+                          }
+                          setGenJobId(data.job_id);
+                          setGenStatus('queued');
+                          // Start polling
+                          const poll = setInterval(async () => {
+                            try {
+                              const pr = await fetch(`/api/video-jobs?id=${data.job_id}`);
+                              const pj = await pr.json();
+                              setGenStatus(pj.status);
+                              if (pj.status === 'done') {
+                                clearInterval(poll);
+                                setProcessedVideoUrl(pj.video_url);
+                                setThumbnailUrl(pj.thumbnail_url || null);
+                                setVideoPlatform('generated');
+                              } else if (pj.status === 'failed') {
+                                clearInterval(poll);
+                                setGenError('We could not create this video. Try different photos.');
+                              }
+                            } catch {
+                              // transient error, keep polling
+                            }
+                          }, 5000);
+                        }}
+                        className="w-full py-3.5 bg-[#2D9B4E] text-white rounded-xl text-base font-bold hover:bg-[#258442] transition-colors flex items-center justify-center gap-2 min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <ImageIcon className="w-5 h-5" />
+                        Generate My Video
+                      </button>
+                    )}
+
+                    {/* Polling state */}
+                    {genJobId && genStatus && genStatus !== 'done' && genStatus !== 'failed' && (
+                      <div className="flex flex-col items-center justify-center py-8">
+                        <Loader2 className="w-8 h-8 text-[#2D9B4E] animate-spin mb-3" />
+                        <p className="text-sm font-semibold text-slate-700">Creating your video...</p>
+                        <p className="text-xs text-slate-400 mt-1">This may take a minute. Do not close this page.</p>
+                      </div>
+                    )}
+
+                    {/* Error */}
+                    {genError && (
+                      <div className="flex items-start gap-2 mt-3 p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                        <AlertCircle className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
+                        <p className="text-xs text-rose-600">{genError}</p>
+                      </div>
                     )}
                   </div>
                 )}

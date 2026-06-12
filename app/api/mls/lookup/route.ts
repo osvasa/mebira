@@ -83,9 +83,9 @@ export async function POST(req: NextRequest) {
 
     let url: string;
     if (mlsId) {
-      url = `${SIMPLYRETS_BASE}/listings/${encodeURIComponent(mlsId)}`;
+      url = `${SIMPLYRETS_BASE}/properties/${encodeURIComponent(mlsId)}`;
     } else {
-      url = `${SIMPLYRETS_BASE}/listings?q=${encodeURIComponent(address!)}&limit=1`;
+      url = `${SIMPLYRETS_BASE}/properties?q=${encodeURIComponent(address!)}&limit=1`;
     }
 
     console.log(`[mls/lookup] Fetching: ${url}`);
@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
     const listings = Array.isArray(data) ? data : [];
     if (listings.length === 0) {
       return NextResponse.json(
-        { error: 'No listings found for that address.' },
+        { error: 'No demo listing matched, try a street name like 25th' },
         { status: 404 },
       );
     }

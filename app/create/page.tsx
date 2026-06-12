@@ -1017,6 +1017,7 @@ export default function CreatePostPage() {
                       type="number"
                       min={0}
                       max={20}
+                      step={1}
                       value={bedrooms}
                       onChange={(e) => setBedrooms(e.target.value === '' ? '' : parseInt(e.target.value))}
                       className="input text-sm"
@@ -1029,8 +1030,9 @@ export default function CreatePostPage() {
                       type="number"
                       min={0}
                       max={20}
+                      step={0.5}
                       value={bathrooms}
-                      onChange={(e) => setBathrooms(e.target.value === '' ? '' : parseInt(e.target.value))}
+                      onChange={(e) => setBathrooms(e.target.value === '' ? '' : parseFloat(e.target.value))}
                       className="input text-sm"
                       placeholder="0"
                     />
@@ -1040,6 +1042,7 @@ export default function CreatePostPage() {
                     <input
                       type="number"
                       min={0}
+                      step={1}
                       value={sizeSqft}
                       onChange={(e) => setSizeSqft(e.target.value === '' ? '' : parseInt(e.target.value))}
                       className="input text-sm"

@@ -292,6 +292,10 @@ export default function CreatePostPage() {
       if (data.category) setSelectedCategory(data.category);
       if (data.photos && Array.isArray(data.photos) && data.photos.length > 0) {
         setMlsPhotos(data.photos);
+        // Auto-switch to "Create From Photos" tab and preselect first 8
+        setVideoInputMode('photos');
+        setGenPhotos(data.photos.slice(0, 10));
+        setGenSelected(new Set(data.photos.slice(0, 8).map((_: string, i: number) => i)));
       }
       setAiGenerated(true);
       setMlsLoaded(true);
